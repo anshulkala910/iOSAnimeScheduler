@@ -16,6 +16,9 @@
 		B4136F992469AA9F00F8D1A5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F982469AA9F00F8D1A5 /* HomeViewController.swift */; };
 		B4136F9B2469AAC200F8D1A5 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F9A2469AAC200F8D1A5 /* AnalysisViewController.swift */; };
 		B4136F9D2469AD6900F8D1A5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F9C2469AD6900F8D1A5 /* SettingsViewController.swift */; };
+		B49E0889246A87E20035FC78 /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E0888246A87E20035FC78 /* Anime.swift */; };
+		B49E088B246A8C280035FC78 /* AnimeList.json in Resources */ = {isa = PBXBuildFile; fileRef = B49E088A246A8C280035FC78 /* AnimeList.json */; };
+		B49E088D246A8E630035FC78 /* JSONAnimeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E088C246A8E630035FC78 /* JSONAnimeReader.swift */; };
 		FCE993C99745A7943997B4F8 /* Pods_Anime_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DB2FD2221B457272FF3B6E /* Pods_Anime_Scheduler.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +37,9 @@
 		B4136F982469AA9F00F8D1A5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B4136F9A2469AAC200F8D1A5 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		B4136F9C2469AD6900F8D1A5 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B49E0888246A87E20035FC78 /* Anime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anime.swift; sourceTree = "<group>"; };
+		B49E088A246A8C280035FC78 /* AnimeList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AnimeList.json; sourceTree = "<group>"; };
+		B49E088C246A8E630035FC78 /* JSONAnimeReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAnimeReader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +117,9 @@
 		B4136FA12469ADD200F8D1A5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B49E088A246A8C280035FC78 /* AnimeList.json */,
+				B49E0888246A87E20035FC78 /* Anime.swift */,
+				B49E088C246A8E630035FC78 /* JSONAnimeReader.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -186,6 +195,7 @@
 			files = (
 				B4136F912469856A00F8D1A5 /* LaunchScreen.storyboard in Resources */,
 				B4136F8E2469856A00F8D1A5 /* Assets.xcassets in Resources */,
+				B49E088B246A8C280035FC78 /* AnimeList.json in Resources */,
 				B4136F8C2469856800F8D1A5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,9 +252,11 @@
 				B4136F892469856800F8D1A5 /* CalendarViewController.swift in Sources */,
 				B4136F852469856800F8D1A5 /* AppDelegate.swift in Sources */,
 				B4136F872469856800F8D1A5 /* SceneDelegate.swift in Sources */,
+				B49E0889246A87E20035FC78 /* Anime.swift in Sources */,
 				B4136F992469AA9F00F8D1A5 /* HomeViewController.swift in Sources */,
 				B4136F9B2469AAC200F8D1A5 /* AnalysisViewController.swift in Sources */,
 				B4136F9D2469AD6900F8D1A5 /* SettingsViewController.swift in Sources */,
+				B49E088D246A8E630035FC78 /* JSONAnimeReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
