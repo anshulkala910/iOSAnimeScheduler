@@ -19,7 +19,7 @@
 		B49E0889246A87E20035FC78 /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E0888246A87E20035FC78 /* Anime.swift */; };
 		B49E088B246A8C280035FC78 /* AnimeList.json in Resources */ = {isa = PBXBuildFile; fileRef = B49E088A246A8C280035FC78 /* AnimeList.json */; };
 		B49E088D246A8E630035FC78 /* JSONAnimeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E088C246A8E630035FC78 /* JSONAnimeReader.swift */; };
-		B49E0890246C16EA0035FC78 /* AnimeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B49E088E246C16EA0035FC78 /* AnimeModel.xcdatamodeld */; };
+		B49E0890246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B49E088E246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld */; };
 		FCE993C99745A7943997B4F8 /* Pods_Anime_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DB2FD2221B457272FF3B6E /* Pods_Anime_Scheduler.framework */; };
 /* End PBXBuildFile section */
 
@@ -92,7 +92,7 @@
 				B4136F842469856800F8D1A5 /* AppDelegate.swift */,
 				B4136F8D2469856A00F8D1A5 /* Assets.xcassets */,
 				B4136F922469856A00F8D1A5 /* Info.plist */,
-				B49E088E246C16EA0035FC78 /* AnimeModel.xcdatamodeld */,
+				B49E088E246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld */,
 			);
 			path = "Anime Scheduler";
 			sourceTree = "<group>";
@@ -259,7 +259,7 @@
 				B4136F992469AA9F00F8D1A5 /* HomeViewController.swift in Sources */,
 				B4136F9B2469AAC200F8D1A5 /* AnalysisViewController.swift in Sources */,
 				B4136F9D2469AD6900F8D1A5 /* SettingsViewController.swift in Sources */,
-				B49E0890246C16EA0035FC78 /* AnimeModel.xcdatamodeld in Sources */,
+				B49E0890246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld in Sources */,
 				B49E088D246A8E630035FC78 /* JSONAnimeReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,13 +462,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		B49E088E246C16EA0035FC78 /* AnimeModel.xcdatamodeld */ = {
+		B49E088E246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				B49E088F246C16EA0035FC78 /* AnimeModel.xcdatamodel */,
 			);
 			currentVersion = B49E088F246C16EA0035FC78 /* AnimeModel.xcdatamodel */;
-			path = AnimeModel.xcdatamodeld;
+			path = "Anime Scheduler.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
