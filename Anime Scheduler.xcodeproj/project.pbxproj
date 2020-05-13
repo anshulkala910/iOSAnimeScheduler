@@ -19,6 +19,7 @@
 		B49E0889246A87E20035FC78 /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E0888246A87E20035FC78 /* Anime.swift */; };
 		B49E088B246A8C280035FC78 /* AnimeList.json in Resources */ = {isa = PBXBuildFile; fileRef = B49E088A246A8C280035FC78 /* AnimeList.json */; };
 		B49E088D246A8E630035FC78 /* JSONAnimeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E088C246A8E630035FC78 /* JSONAnimeReader.swift */; };
+		B49E0890246C16EA0035FC78 /* AnimeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B49E088E246C16EA0035FC78 /* AnimeModel.xcdatamodeld */; };
 		FCE993C99745A7943997B4F8 /* Pods_Anime_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DB2FD2221B457272FF3B6E /* Pods_Anime_Scheduler.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,7 @@
 		B49E0888246A87E20035FC78 /* Anime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anime.swift; sourceTree = "<group>"; };
 		B49E088A246A8C280035FC78 /* AnimeList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AnimeList.json; sourceTree = "<group>"; };
 		B49E088C246A8E630035FC78 /* JSONAnimeReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONAnimeReader.swift; sourceTree = "<group>"; };
+		B49E088F246C16EA0035FC78 /* AnimeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AnimeModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,10 +88,11 @@
 				B4136FA12469ADD200F8D1A5 /* Model */,
 				B4136FA02469ADBB00F8D1A5 /* UI */,
 				B4136F9E2469AD8200F8D1A5 /* Controller */,
-				B4136F842469856800F8D1A5 /* AppDelegate.swift */,
 				B4136F862469856800F8D1A5 /* SceneDelegate.swift */,
+				B4136F842469856800F8D1A5 /* AppDelegate.swift */,
 				B4136F8D2469856A00F8D1A5 /* Assets.xcassets */,
 				B4136F922469856A00F8D1A5 /* Info.plist */,
+				B49E088E246C16EA0035FC78 /* AnimeModel.xcdatamodeld */,
 			);
 			path = "Anime Scheduler";
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				B4136F992469AA9F00F8D1A5 /* HomeViewController.swift in Sources */,
 				B4136F9B2469AAC200F8D1A5 /* AnalysisViewController.swift in Sources */,
 				B4136F9D2469AD6900F8D1A5 /* SettingsViewController.swift in Sources */,
+				B49E0890246C16EA0035FC78 /* AnimeModel.xcdatamodeld in Sources */,
 				B49E088D246A8E630035FC78 /* JSONAnimeReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,6 +460,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B49E088E246C16EA0035FC78 /* AnimeModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B49E088F246C16EA0035FC78 /* AnimeModel.xcdatamodel */,
+			);
+			currentVersion = B49E088F246C16EA0035FC78 /* AnimeModel.xcdatamodel */;
+			path = AnimeModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B4136F792469856800F8D1A5 /* Project object */;
 }
