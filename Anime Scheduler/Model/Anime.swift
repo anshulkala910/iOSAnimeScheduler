@@ -16,10 +16,6 @@ struct AnimeResponse: Decodable {
     let last_page: Int?
 }
 
-//struct Animes: Decodable {
-//    var results: [AnimeDetail]
-//}
-
 struct AnimeDetail: Decodable {
     let mal_id: Int?
     let url: String?

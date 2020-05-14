@@ -23,7 +23,7 @@
                                 </constraints>
                                 <state key="normal" image="plus" catalog="system"/>
                                 <connections>
-                                    <action selector="addAnime:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3B3-1H-yx8"/>
+                                    <segue destination="Tca-9Y-buJ" kind="show" id="ZcP-fb-cDO"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9r2-FX-fuI">
@@ -46,25 +46,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="CJo-WB-Loc">
-                                <rect key="frame" x="0.0" y="41" width="377" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="0Ko-pI-O9K"/>
                             <constraint firstItem="LCx-AO-0Ns" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="4" id="DTL-XI-dSH"/>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="top" secondItem="LCx-AO-0Ns" secondAttribute="bottom" constant="8" id="J8L-Gi-Byd"/>
-                            <constraint firstItem="CJo-WB-Loc" firstAttribute="bottom" secondItem="LCx-AO-0Ns" secondAttribute="bottom" constant="7" id="PxI-V9-LRm"/>
                             <constraint firstItem="GBT-8a-OSF" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="9" id="SOO-6Y-w7q"/>
                             <constraint firstItem="GBT-8a-OSF" firstAttribute="centerX" secondItem="9r2-FX-fuI" secondAttribute="centerX" id="U0O-CH-vdb"/>
-                            <constraint firstItem="CJo-WB-Loc" firstAttribute="top" secondItem="GBT-8a-OSF" secondAttribute="top" constant="-12" id="c2c-7v-veb"/>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ci6-3Y-wrr"/>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ngp-9c-haD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LCx-AO-0Ns" secondAttribute="trailing" constant="7" id="rZR-Je-byS"/>
-                            <constraint firstItem="CJo-WB-Loc" firstAttribute="leading" secondItem="9r2-FX-fuI" secondAttribute="leading" id="ruE-ID-Rzk"/>
-                            <constraint firstItem="CJo-WB-Loc" firstAttribute="centerX" secondItem="GBT-8a-OSF" secondAttribute="centerX" constant="-18.5" id="zv0-bU-Psp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -74,13 +66,28 @@
                     <connections>
                         <outlet property="addAnimeButton" destination="LCx-AO-0Ns" id="6pr-Jx-kjd"/>
                         <outlet property="currentlyWatchingTableView" destination="9r2-FX-fuI" id="JfP-LR-k66"/>
-                        <outlet property="searchBar" destination="CJo-WB-Loc" id="bEk-Xr-UZp"/>
                         <outlet property="titleLabel" destination="GBT-8a-OSF" id="y6C-0p-FV8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1008.6956521739131" y="132.58928571428572"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="APp-Zm-OGJ">
+            <objects>
+                <viewController id="Tca-9Y-buJ" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Zic-U3-WMi">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Wxf-Pe-3p9"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dAF-IW-Hdz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RBP-gn-Gie" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1009" y="890"/>
         </scene>
         <!--Calendar-->
         <scene sceneID="ZzQ-lT-pw3">
