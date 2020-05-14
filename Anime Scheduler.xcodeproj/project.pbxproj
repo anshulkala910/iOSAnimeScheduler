@@ -22,6 +22,7 @@
 		B49E0890246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B49E088E246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld */; };
 		B4F58ABF246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58ABD246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift */; };
 		B4F58AC0246C2CAF0021A376 /* Anime_Scheduler+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58ABE246C2CAF0021A376 /* Anime_Scheduler+CoreDataClass.swift */; };
+		B4F58AC2246C58DD0021A376 /* APIAnimeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58AC1246C58DD0021A376 /* APIAnimeReader.swift */; };
 		FCE993C99745A7943997B4F8 /* Pods_Anime_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DB2FD2221B457272FF3B6E /* Pods_Anime_Scheduler.framework */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		B49E088F246C16EA0035FC78 /* AnimeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AnimeModel.xcdatamodel; sourceTree = "<group>"; };
 		B4F58ABD246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Anime_Scheduler+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B4F58ABE246C2CAF0021A376 /* Anime_Scheduler+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Anime_Scheduler+CoreDataClass.swift"; sourceTree = "<group>"; };
+		B4F58AC1246C58DD0021A376 /* APIAnimeReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAnimeReader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 				B49E088A246A8C280035FC78 /* AnimeList.json */,
 				B49E0888246A87E20035FC78 /* Anime.swift */,
 				B49E088C246A8E630035FC78 /* JSONAnimeReader.swift */,
+				B4F58AC1246C58DD0021A376 /* APIAnimeReader.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 			files = (
 				B4136F892469856800F8D1A5 /* CalendarViewController.swift in Sources */,
 				B4136F852469856800F8D1A5 /* AppDelegate.swift in Sources */,
+				B4F58AC2246C58DD0021A376 /* APIAnimeReader.swift in Sources */,
 				B4F58AC0246C2CAF0021A376 /* Anime_Scheduler+CoreDataClass.swift in Sources */,
 				B4136F872469856800F8D1A5 /* SceneDelegate.swift in Sources */,
 				B49E0889246A87E20035FC78 /* Anime.swift in Sources */,
