@@ -73,21 +73,85 @@
             </objects>
             <point key="canvasLocation" x="1008.6956521739131" y="132.58928571428572"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Anime View Controller-->
         <scene sceneID="APp-Zm-OGJ">
             <objects>
-                <viewController id="Tca-9Y-buJ" sceneMemberID="viewController">
+                <viewController id="Tca-9Y-buJ" customClass="AddAnimeViewController" customModule="Anime_Scheduler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zic-U3-WMi">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QRK-zK-ItK">
+                                <rect key="frame" x="0.0" y="44" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HfN-cV-6Nt">
+                                <rect key="frame" x="0.0" y="100" width="414" height="664"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="80" id="JAM-cp-8qu" customClass="AnimeTableViewCellController" customModule="Anime_Scheduler" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JAM-cp-8qu" id="eP4-ZJ-tFl">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4vh-ba-bDQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="80"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="SXl-Re-fHZ"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1U-1Z-EAo">
+                                                    <rect key="frame" x="240" y="31.5" width="137" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="4vh-ba-bDQ" secondAttribute="bottom" id="4Tn-VF-3T4"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="B1U-1Z-EAo" secondAttribute="trailing" constant="17" id="TgN-p6-Yzb"/>
+                                                <constraint firstItem="4vh-ba-bDQ" firstAttribute="top" secondItem="eP4-ZJ-tFl" secondAttribute="top" id="UAN-8Y-pFJ"/>
+                                                <constraint firstItem="4vh-ba-bDQ" firstAttribute="leading" secondItem="eP4-ZJ-tFl" secondAttribute="leading" id="VLK-K8-6r6"/>
+                                                <constraint firstItem="B1U-1Z-EAo" firstAttribute="leading" secondItem="4vh-ba-bDQ" secondAttribute="trailing" constant="40" id="aMh-Wj-csI"/>
+                                                <constraint firstItem="B1U-1Z-EAo" firstAttribute="centerY" secondItem="4vh-ba-bDQ" secondAttribute="centerY" id="i2L-97-aQP"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
+                                        <connections>
+                                            <outlet property="animeImage" destination="4vh-ba-bDQ" id="MFn-9O-UTX"/>
+                                            <outlet property="animeTitle" destination="B1U-1Z-EAo" id="UwL-iW-kvV"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="HfN-cV-6Nt" firstAttribute="bottom" secondItem="Wxf-Pe-3p9" secondAttribute="bottom" id="8Xm-zf-LCl"/>
+                            <constraint firstItem="HfN-cV-6Nt" firstAttribute="top" secondItem="QRK-zK-ItK" secondAttribute="bottom" id="HZn-yf-xzh"/>
+                            <constraint firstItem="HfN-cV-6Nt" firstAttribute="centerX" secondItem="Zic-U3-WMi" secondAttribute="centerX" id="QRz-7H-g3y"/>
+                            <constraint firstItem="QRK-zK-ItK" firstAttribute="trailing" secondItem="Wxf-Pe-3p9" secondAttribute="trailing" id="XB8-Z4-b3k"/>
+                            <constraint firstItem="HfN-cV-6Nt" firstAttribute="leading" secondItem="QRK-zK-ItK" secondAttribute="leading" id="jkc-Ne-kVO"/>
+                            <constraint firstItem="QRK-zK-ItK" firstAttribute="top" secondItem="Wxf-Pe-3p9" secondAttribute="top" id="qlA-xK-luF"/>
+                            <constraint firstItem="HfN-cV-6Nt" firstAttribute="trailing" secondItem="Wxf-Pe-3p9" secondAttribute="trailing" id="zCy-5n-tVj"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Wxf-Pe-3p9"/>
                     </view>
                     <navigationItem key="navigationItem" id="dAF-IW-Hdz"/>
+                    <connections>
+                        <outlet property="animeSearchResults" destination="HfN-cV-6Nt" id="qRq-em-EvU"/>
+                        <outlet property="searchBar" destination="QRK-zK-ItK" id="VW8-hd-D4n"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RBP-gn-Gie" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1009" y="890"/>
+            <point key="canvasLocation" x="1008.6956521739131" y="889.95535714285711"/>
         </scene>
         <!--Calendar-->
         <scene sceneID="ZzQ-lT-pw3">
