@@ -16,6 +16,7 @@
 		B4136F992469AA9F00F8D1A5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F982469AA9F00F8D1A5 /* HomeViewController.swift */; };
 		B4136F9B2469AAC200F8D1A5 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F9A2469AAC200F8D1A5 /* AnalysisViewController.swift */; };
 		B4136F9D2469AD6900F8D1A5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F9C2469AD6900F8D1A5 /* SettingsViewController.swift */; };
+		B41A728E246EB69D0056BEA0 /* AddingAnimeFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41A728D246EB69D0056BEA0 /* AddingAnimeFormController.swift */; };
 		B49E0889246A87E20035FC78 /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E0888246A87E20035FC78 /* Anime.swift */; };
 		B49E0890246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B49E088E246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld */; };
 		B4F58ABF246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58ABD246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift */; };
@@ -41,6 +42,7 @@
 		B4136F982469AA9F00F8D1A5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B4136F9A2469AAC200F8D1A5 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		B4136F9C2469AD6900F8D1A5 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B41A728D246EB69D0056BEA0 /* AddingAnimeFormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingAnimeFormController.swift; sourceTree = "<group>"; };
 		B49E0888246A87E20035FC78 /* Anime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anime.swift; sourceTree = "<group>"; };
 		B49E088F246C16EA0035FC78 /* AnimeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AnimeModel.xcdatamodel; sourceTree = "<group>"; };
 		B4F58ABD246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Anime_Scheduler+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				B4136F9C2469AD6900F8D1A5 /* SettingsViewController.swift */,
 				B4F58AC5246D21550021A376 /* AddAnimeViewController.swift */,
 				B4F58AC7246D522A0021A376 /* AnimeTableViewCellController.swift */,
+				B41A728D246EB69D0056BEA0 /* AddingAnimeFormController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				B49E0889246A87E20035FC78 /* Anime.swift in Sources */,
 				B4F58ABF246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift in Sources */,
 				B4F58AC8246D522A0021A376 /* AnimeTableViewCellController.swift in Sources */,
+				B41A728E246EB69D0056BEA0 /* AddingAnimeFormController.swift in Sources */,
 				B4136F992469AA9F00F8D1A5 /* HomeViewController.swift in Sources */,
 				B4136F9B2469AAC200F8D1A5 /* AnalysisViewController.swift in Sources */,
 				B4136F9D2469AD6900F8D1A5 /* SettingsViewController.swift in Sources */,

@@ -30,7 +30,6 @@ class AddAnimeViewController: UIViewController {
         searchBar.placeholder = "Enter anime name"
     }
     
-
     /*
     // MARK: - Navigation
 
@@ -48,10 +47,17 @@ extension AddAnimeViewController: UITableViewDelegate{
     /**
      This function is called whenever a cell is tapped
      */
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("you tapped me")
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let anime = listOfAnimes[indexPath.row]
+//        performSegue(withIdentifier: "addAnimeForm", sender: anime)
+//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addAnimeForm"{
+            let animeFormController = segue.destination as! AddingAnimeFormController
+            let animeDetail = listOfAnimes[animeSearchResults.indexPathForSelectedRow!.row]
+            animeFormController.animeDetail = animeDetail
+        }
     }
-    
 }
 
 extension AddAnimeViewController: UITableViewDataSource{
