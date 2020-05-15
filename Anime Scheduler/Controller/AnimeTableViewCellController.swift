@@ -10,9 +10,9 @@ import UIKit
 
 class AnimeTableViewCellController: UITableViewCell {
 
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var animeImage: UIImageView!
-    @IBOutlet weak var animeTitle: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

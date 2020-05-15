@@ -93,39 +93,38 @@
                                 <rect key="frame" x="0.0" y="100" width="414" height="664"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="80" id="JAM-cp-8qu" customClass="AnimeTableViewCellController" customModule="Anime_Scheduler" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="PKm-sF-hr2" detailTextLabel="LQH-sV-0js" imageView="AXa-6A-Hj5" style="IBUITableViewCellStyleSubtitle" id="JAM-cp-8qu" customClass="AnimeTableViewCellController" customModule="Anime_Scheduler" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JAM-cp-8qu" id="eP4-ZJ-tFl">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4vh-ba-bDQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="80"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="SXl-Re-fHZ"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1U-1Z-EAo">
-                                                    <rect key="frame" x="240" y="31.5" width="137" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PKm-sF-hr2">
+                                                    <rect key="frame" x="59" y="10" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LQH-sV-0js">
+                                                    <rect key="frame" x="59" y="31.5" width="33" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="pencil.circle.fill" catalog="system" id="AXa-6A-Hj5">
+                                                    <rect key="frame" x="22" y="18" width="20" height="19"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="4vh-ba-bDQ" secondAttribute="bottom" id="4Tn-VF-3T4"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="B1U-1Z-EAo" secondAttribute="trailing" constant="17" id="TgN-p6-Yzb"/>
-                                                <constraint firstItem="4vh-ba-bDQ" firstAttribute="top" secondItem="eP4-ZJ-tFl" secondAttribute="top" id="UAN-8Y-pFJ"/>
-                                                <constraint firstItem="4vh-ba-bDQ" firstAttribute="leading" secondItem="eP4-ZJ-tFl" secondAttribute="leading" id="VLK-K8-6r6"/>
-                                                <constraint firstItem="B1U-1Z-EAo" firstAttribute="leading" secondItem="4vh-ba-bDQ" secondAttribute="trailing" constant="40" id="aMh-Wj-csI"/>
-                                                <constraint firstItem="B1U-1Z-EAo" firstAttribute="centerY" secondItem="4vh-ba-bDQ" secondAttribute="centerY" id="i2L-97-aQP"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                         <connections>
-                                            <outlet property="animeImage" destination="4vh-ba-bDQ" id="MFn-9O-UTX"/>
-                                            <outlet property="animeTitle" destination="B1U-1Z-EAo" id="UwL-iW-kvV"/>
+                                            <outlet property="animeImage" destination="AXa-6A-Hj5" id="dIE-ms-s6W"/>
+                                            <outlet property="detailLabel" destination="LQH-sV-0js" id="CEM-v4-f7k"/>
+                                            <outlet property="titleLabel" destination="PKm-sF-hr2" id="R2D-JW-9LX"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -266,6 +265,7 @@
         <image name="chart.bar" catalog="system" width="128" height="90"/>
         <image name="gear" catalog="system" width="128" height="119"/>
         <image name="house" catalog="system" width="128" height="110"/>
+        <image name="pencil.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
     </resources>
 </document>

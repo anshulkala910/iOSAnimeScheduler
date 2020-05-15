@@ -16,7 +16,7 @@ struct AnimeRequest {
         // a name with spaces can be searched
         let modifiedAnimeName = animeName.replacingOccurrences(of: " ", with: "%20")
         //the url for an anime search with custom anime name
-        let URLString = "https://api.jikan.moe/v3/search/anime?q=\(modifiedAnimeName)&limit=10"
+        let URLString = "https://api.jikan.moe/v3/search/anime?q=\(modifiedAnimeName)&limit=14"
         //get URL object if valid
         guard let resourceURL = URL(string: URLString) else {
             fatalError()
