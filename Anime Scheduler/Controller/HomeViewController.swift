@@ -21,12 +21,14 @@ class HomeViewController: UIViewController {
             }
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         currentlyWatchingTableView.delegate = self
         currentlyWatchingTableView.dataSource = self
         let fetchRequest: NSFetchRequest<Anime_Scheduler> = Anime_Scheduler.fetchRequest()
         
+        //gets the saved list from Core Data everytime the app is run
         do {
             let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
             self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime

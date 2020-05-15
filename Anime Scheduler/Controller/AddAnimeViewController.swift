@@ -45,12 +45,9 @@ class AddAnimeViewController: UIViewController {
 extension AddAnimeViewController: UITableViewDelegate{
     
     /**
-     This function is called whenever a cell is tapped
+     This function is called whenever a cell is tapped and the anime details are transferred over to the destination controller, which
+     is AddingAnimeFormController in this case
      */
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let anime = listOfAnimes[indexPath.row]
-//        performSegue(withIdentifier: "addAnimeForm", sender: anime)
-//    }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addAnimeForm"{
             let animeFormController = segue.destination as! AddingAnimeFormController

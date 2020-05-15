@@ -154,7 +154,7 @@
             </objects>
             <point key="canvasLocation" x="1918.840579710145" y="889.95535714285711"/>
         </scene>
-        <!--Adding Anime Form Controller-->
+        <!--You're Watching-->
         <scene sceneID="xuA-7U-Rdf">
             <objects>
                 <viewController id="SmC-II-jEd" customClass="AddingAnimeFormController" customModule="Anime_Scheduler" customModuleProvider="target" sceneMemberID="viewController">
@@ -176,8 +176,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DHH-j7-M4A"/>
                     </view>
-                    <navigationItem key="navigationItem" id="G2b-5f-eWo"/>
+                    <navigationItem key="navigationItem" title="You're Watching" id="G2b-5f-eWo"/>
                     <connections>
+                        <outlet property="navigationBar" destination="G2b-5f-eWo" id="G6F-2N-B9N"/>
                         <outlet property="testLabel" destination="QcF-GF-3dp" id="OOn-ee-NEC"/>
                     </connections>
                 </viewController>

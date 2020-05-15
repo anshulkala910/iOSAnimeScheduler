@@ -11,12 +11,13 @@ import UIKit
 class AddingAnimeFormController: UIViewController {
 
     @IBOutlet weak var testLabel: UILabel!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     var animeDetail: AnimeDetail!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        testLabel.text = animeDetail.title
-        // Do any additional setup after loading the view.
+        let animeName = "\"\(animeDetail.title ?? "...")\""
+        navigationBar.title = "Adding \(animeName)"
     }
     
 
