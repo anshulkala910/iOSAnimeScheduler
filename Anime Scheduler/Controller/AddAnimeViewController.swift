@@ -53,6 +53,11 @@ extension AddAnimeViewController: UITableViewDelegate{
             let animeFormController = segue.destination as! AddingAnimeFormController
             let animeDetail = listOfAnimes[animeSearchResults.indexPathForSelectedRow!.row]
             animeFormController.animeDetail = animeDetail
+            
+            // These lines change the text of the back button item for the destination controller
+            let backButtonItem = UIBarButtonItem()
+            backButtonItem.title = ""
+            navigationItem.backBarButtonItem = backButtonItem
         }
     }
 }

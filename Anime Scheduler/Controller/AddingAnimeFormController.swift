@@ -10,7 +10,6 @@ import UIKit
 
 class AddingAnimeFormController: UIViewController {
 
-    @IBOutlet weak var testLabel: UILabel!
     @IBOutlet weak var navigationBar: UINavigationItem!
     var animeDetail: AnimeDetail!
     
@@ -18,6 +17,7 @@ class AddingAnimeFormController: UIViewController {
         super.viewDidLoad()
         let animeName = "\"\(animeDetail.title ?? "...")\""
         navigationBar.title = "Adding \(animeName)"
+        navigationBar.backBarButtonItem?.title = " "
     }
     
 
