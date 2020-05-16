@@ -11,41 +11,33 @@ import UIKit
 class AddingAnimeFormController: UIViewController {
 
     @IBOutlet weak var navigationBar: UINavigationItem!
-    @IBOutlet weak var viewContainer: UIView!
+    @IBOutlet weak var byEpisodesView: UIView!
+    @IBOutlet weak var byDatesView: UIView!
     
     var animeDetail: AnimeDetail!
     var optionList = ["By start and end date", "By episodes/day"]
-    var views: [UIView]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let animeName = "\"\(animeDetail.title ?? "...")\""
         navigationBar.title = "Adding \(animeName)"
         navigationBar.backBarButtonItem?.title = " "
-        
-        views = [UIView]()
-        views.append(AddAnimeByDatesController().view)
-        views.append(AddAnimeByEpisodesController().view)
-        
-        for v in views {
-            viewContainer.addSubview(v)
-        }
-        viewContainer.bringSubviewToFront(views[0])
+        byDatesView.alpha = 1
+        byEpisodesView.alpha = 0
     }
     
     
     @IBAction func didChangeSegment(_ sender: UISegmentedControl) {
-        viewContainer.bringSubviewToFront(views[sender.selectedSegmentIndex])
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "byDates"{
-            
+        if sender.selectedSegmentIndex == 0 {
+            byDatesView.alpha = 1
+            byEpisodesView.alpha = 0
         }
-        else if segue.identifier == "byEpisodes"{
-            
+        else {
+            byDatesView.alpha = 0
+            byEpisodesView.alpha = 1
         }
     }
+
     /*
     // MARK: - Navigation
 

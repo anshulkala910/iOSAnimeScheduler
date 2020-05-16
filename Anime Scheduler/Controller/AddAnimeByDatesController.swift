@@ -10,13 +10,43 @@ import UIKit
 
 class AddAnimeByDatesController: UIViewController {
 
+    @IBOutlet weak var startDateTextField: UITextField!
+
+    let datePicker = UIDatePicker()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        createDatePicker()
+    }
+    
+    func createDatePicker(){
+        startDateTextField.placeholder = getCurrentDate()
+        startDateTextField.textAlignment = .center
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonPressed))
+        toolbar.setItems([doneButton], animated: true)
+        startDateTextField.inputAccessoryView = toolbar
+        startDateTextField.inputView = datePicker
+        datePicker.datePickerMode = .date
     }
 
-
+    func getCurrentDate() -> String {
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        return dateFormatter.string(from: currentDate)
+    }
+    @objc func doneButtonPressed(){
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        startDateTextField.text = dateFormatter.string(from: datePicker.date)
+        view.endEditing(true)
+    }
     /*
     // MARK: - Navigation
 
