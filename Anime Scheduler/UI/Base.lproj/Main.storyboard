@@ -353,17 +353,37 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ma2-KY-lfI">
+                                <rect key="frame" x="238" y="119" width="150" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="HXG-XY-gvL"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose End Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4x-bm-rO3">
+                                <rect key="frame" x="28" y="126" width="133" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="ma2-KY-lfI" secondAttribute="trailing" constant="6" id="JKP-xK-RZy"/>
+                            <constraint firstItem="ma2-KY-lfI" firstAttribute="top" secondItem="DA6-Of-RY1" secondAttribute="bottom" constant="21" id="Zhe-db-tTl"/>
                             <constraint firstItem="DA6-Of-RY1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Lfw-qA-RiG" secondAttribute="trailing" constant="8" symbolic="YES" id="b5r-2d-b0g"/>
+                            <constraint firstItem="z4x-bm-rO3" firstAttribute="top" secondItem="Lfw-qA-RiG" secondAttribute="bottom" constant="34.5" id="gtn-8f-xKu"/>
+                            <constraint firstItem="ma2-KY-lfI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="z4x-bm-rO3" secondAttribute="trailing" constant="8" symbolic="YES" id="icS-Gy-kp1"/>
                             <constraint firstItem="DA6-Of-RY1" firstAttribute="top" secondItem="YNN-Jm-Lhl" secondAttribute="topMargin" constant="20" id="onP-5U-n03"/>
+                            <constraint firstItem="z4x-bm-rO3" firstAttribute="leading" secondItem="YNN-Jm-Lhl" secondAttribute="leadingMargin" constant="8" id="pUm-NN-0nc"/>
                             <constraint firstItem="Lfw-qA-RiG" firstAttribute="leading" secondItem="YNN-Jm-Lhl" secondAttribute="leadingMargin" constant="8" id="pod-Fk-MW0"/>
                             <constraint firstItem="Lfw-qA-RiG" firstAttribute="top" secondItem="YNN-Jm-Lhl" secondAttribute="topMargin" constant="27" id="sOV-Qg-n7F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DA6-Of-RY1" secondAttribute="trailing" constant="6" id="tLG-Dj-cvm"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="endDateTextField" destination="ma2-KY-lfI" id="QE4-rp-anY"/>
                         <outlet property="startDateTextField" destination="DA6-Of-RY1" id="H2j-PO-1mt"/>
                     </connections>
                 </viewController>

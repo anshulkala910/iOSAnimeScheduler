@@ -10,6 +10,8 @@ import UIKit
 
 class AddAnimeByEpisodesController: UIViewController {
 
+    var animeDetail: AnimeDetail!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
