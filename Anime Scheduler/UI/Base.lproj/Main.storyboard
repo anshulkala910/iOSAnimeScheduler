@@ -161,12 +161,39 @@
                     <view key="view" contentMode="scaleToFill" id="fDc-Xx-MKJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="XmB-Zu-1R9">
+                                <rect key="frame" x="64" y="98" width="286" height="32"/>
+                                <segments>
+                                    <segment title="By Start/End Date"/>
+                                    <segment title="By #Episodes/Day"/>
+                                </segments>
+                                <color key="selectedSegmentTintColor" systemColor="placeholderTextColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="didChangeSegment:" destination="SmC-II-jEd" eventType="valueChanged" id="cnI-cK-zqK"/>
+                                </connections>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FYz-2U-h2c">
+                                <rect key="frame" x="0.0" y="137" width="414" height="226"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="FYz-2U-h2c" firstAttribute="trailing" secondItem="DHH-j7-M4A" secondAttribute="trailing" id="BoX-aQ-NhT"/>
+                            <constraint firstItem="FYz-2U-h2c" firstAttribute="top" secondItem="XmB-Zu-1R9" secondAttribute="bottom" constant="8" id="Vwh-iR-RPz"/>
+                            <constraint firstItem="XmB-Zu-1R9" firstAttribute="leading" secondItem="DHH-j7-M4A" secondAttribute="leading" constant="64" id="ihW-Re-V4x"/>
+                            <constraint firstItem="XmB-Zu-1R9" firstAttribute="top" secondItem="DHH-j7-M4A" secondAttribute="top" constant="10" id="r0B-3p-Ua3"/>
+                            <constraint firstItem="FYz-2U-h2c" firstAttribute="leading" secondItem="DHH-j7-M4A" secondAttribute="leading" id="tSn-SD-X8P"/>
+                            <constraint firstItem="XmB-Zu-1R9" firstAttribute="centerX" secondItem="fDc-Xx-MKJ" secondAttribute="centerX" id="wau-03-5JL"/>
+                            <constraint firstItem="DHH-j7-M4A" firstAttribute="bottom" secondItem="FYz-2U-h2c" secondAttribute="bottom" constant="450" id="zRs-Hn-nhx"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="DHH-j7-M4A"/>
                     </view>
                     <navigationItem key="navigationItem" title="You're Watching" id="G2b-5f-eWo"/>
                     <connections>
                         <outlet property="navigationBar" destination="G2b-5f-eWo" id="G6F-2N-B9N"/>
+                        <outlet property="viewContainer" destination="FYz-2U-h2c" id="quB-OR-BHT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r8d-PH-QWc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
