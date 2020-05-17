@@ -14,10 +14,12 @@ class AddAnimeByDatesController: UIViewController {
     @IBOutlet weak var endDateTextField: UITextField!
     @IBOutlet weak var checkDetailsButton: UIButton!
     @IBOutlet weak var addAnimeButton: UIButton!
+    @IBOutlet weak var textView: UITextView!
     
     var animeDetail: AnimeDetail!
     
-    let datePicker = UIDatePicker()
+    let startDatePicker = UIDatePicker()
+    let endDatePicker = UIDatePicker()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +35,8 @@ class AddAnimeByDatesController: UIViewController {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonPressedStartDate))
         toolbar.setItems([doneButton], animated: true)
         startDateTextField.inputAccessoryView = toolbar
-        startDateTextField.inputView = datePicker
-        datePicker.datePickerMode = .date
+        startDateTextField.inputView = startDatePicker
+        startDatePicker.datePickerMode = .date
     }
     
     func createEndDatePicker(){
@@ -46,8 +48,8 @@ class AddAnimeByDatesController: UIViewController {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonPressedEndDate))
         toolbar.setItems([doneButton], animated: true)
         endDateTextField.inputAccessoryView = toolbar
-        endDateTextField.inputView = datePicker
-        datePicker.datePickerMode = .date
+        endDateTextField.inputView = endDatePicker
+        endDatePicker.datePickerMode = .date
     }
 
     func getCurrentDate() -> String {
@@ -62,7 +64,7 @@ class AddAnimeByDatesController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
-        startDateTextField.text = dateFormatter.string(from: datePicker.date)
+        startDateTextField.text = dateFormatter.string(from: startDatePicker.date)
         view.endEditing(true)
     }
     
@@ -71,7 +73,7 @@ class AddAnimeByDatesController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
-        endDateTextField.text = dateFormatter.string(from: datePicker.date)
+        endDateTextField.text = dateFormatter.string(from: endDatePicker.date)
         view.endEditing(true)
     }
     

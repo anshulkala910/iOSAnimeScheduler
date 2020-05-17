@@ -174,7 +174,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Wn-2B-cK5">
                                 <rect key="frame" x="0.0" y="139" width="414" height="625"/>
                                 <connections>
-                                    <segue destination="d4G-52-LHf" kind="embed" id="Bo0-ax-Hc8"/>
+                                    <segue destination="d4G-52-LHf" kind="embed" identifier="byEpisodesSegue" id="Bo0-ax-Hc8"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -348,7 +348,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose Start Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lfw-qA-RiG">
-                                <rect key="frame" x="28" y="71" width="141" height="20.5"/>
+                                <rect key="frame" x="28" y="71" width="202" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -362,7 +362,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose End Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4x-bm-rO3">
-                                <rect key="frame" x="28" y="126" width="133" height="20.5"/>
+                                <rect key="frame" x="28" y="126" width="202" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -385,6 +385,14 @@
                                     <action selector="checkDetails:" destination="ucB-Cf-w3T" eventType="touchUpInside" id="eJj-cV-tnH"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ull-0g-BPW">
+                                <rect key="frame" x="87" y="248" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -393,9 +401,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="ma2-KY-lfI" secondAttribute="trailing" constant="6" id="JKP-xK-RZy"/>
                             <constraint firstItem="hgR-Hl-hNd" firstAttribute="bottom" secondItem="xHW-SP-rtq" secondAttribute="bottom" constant="20" id="REo-fd-Rov"/>
                             <constraint firstItem="ma2-KY-lfI" firstAttribute="top" secondItem="DA6-Of-RY1" secondAttribute="bottom" constant="21" id="Zhe-db-tTl"/>
-                            <constraint firstItem="DA6-Of-RY1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Lfw-qA-RiG" secondAttribute="trailing" constant="8" symbolic="YES" id="b5r-2d-b0g"/>
+                            <constraint firstItem="DA6-Of-RY1" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Lfw-qA-RiG" secondAttribute="trailing" constant="8" symbolic="YES" id="b5r-2d-b0g"/>
                             <constraint firstItem="z4x-bm-rO3" firstAttribute="top" secondItem="Lfw-qA-RiG" secondAttribute="bottom" constant="34.5" id="gtn-8f-xKu"/>
-                            <constraint firstItem="ma2-KY-lfI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="z4x-bm-rO3" secondAttribute="trailing" constant="8" symbolic="YES" id="icS-Gy-kp1"/>
+                            <constraint firstItem="ma2-KY-lfI" firstAttribute="leading" relation="lessThanOrEqual" secondItem="z4x-bm-rO3" secondAttribute="trailing" constant="8" symbolic="YES" id="icS-Gy-kp1"/>
                             <constraint firstItem="xHW-SP-rtq" firstAttribute="centerX" secondItem="hgR-Hl-hNd" secondAttribute="centerX" constant="-92.5" id="ihm-Du-B4p"/>
                             <constraint firstItem="DA6-Of-RY1" firstAttribute="top" secondItem="YNN-Jm-Lhl" secondAttribute="topMargin" constant="20" id="onP-5U-n03"/>
                             <constraint firstItem="z4x-bm-rO3" firstAttribute="leading" secondItem="YNN-Jm-Lhl" secondAttribute="leadingMargin" constant="8" id="pUm-NN-0nc"/>
@@ -410,6 +418,7 @@
                         <outlet property="checkDetailsButton" destination="xHW-SP-rtq" id="sQs-sA-Rzp"/>
                         <outlet property="endDateTextField" destination="ma2-KY-lfI" id="QE4-rp-anY"/>
                         <outlet property="startDateTextField" destination="DA6-Of-RY1" id="H2j-PO-1mt"/>
+                        <outlet property="textView" destination="ull-0g-BPW" id="an2-d2-aJd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z4G-jZ-7cb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -425,27 +434,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fxC-s5-C3I">
-                                <rect key="frame" x="304" y="119" width="69" height="34"/>
+                                <rect key="frame" x="281.5" y="119" width="69" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="69" id="mc5-38-XoN"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Episodes per Day" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A1A-5a-pUs">
-                                <rect key="frame" x="20" y="126" width="224" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episodes per Day" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A1A-5a-pUs">
+                                <rect key="frame" x="28" y="126" width="245.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose Start Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CpQ-ph-pWJ">
-                                <rect key="frame" x="40" y="71" width="141" height="20.5"/>
+                                <rect key="frame" x="28" y="71" width="202" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uYr-fy-Pbq">
-                                <rect key="frame" x="251" y="64" width="150" height="34"/>
+                                <rect key="frame" x="238" y="64" width="150" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="u2K-Cc-b5H"/>
                                 </constraints>
@@ -471,23 +480,31 @@
                                     <action selector="checkDetails:" destination="d4G-52-LHf" eventType="touchUpInside" id="qs0-Uo-Ux9"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xZ2-Up-4cf">
+                                <rect key="frame" x="87" y="248" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="fxC-s5-C3I" firstAttribute="top" secondItem="uYr-fy-Pbq" secondAttribute="bottom" constant="21" id="2oK-SF-u3x"/>
                             <constraint firstItem="A1A-5a-pUs" firstAttribute="top" secondItem="CpQ-ph-pWJ" secondAttribute="bottom" constant="34.5" id="3O4-Dw-z1p"/>
                             <constraint firstItem="hhv-sU-2pe" firstAttribute="centerX" secondItem="OlR-pa-WLt" secondAttribute="centerX" constant="92.5" id="4Ha-5K-iBH"/>
-                            <constraint firstItem="OlR-pa-WLt" firstAttribute="trailing" secondItem="fxC-s5-C3I" secondAttribute="trailing" constant="41" id="6DB-5f-e0z"/>
+                            <constraint firstItem="OlR-pa-WLt" firstAttribute="trailing" secondItem="fxC-s5-C3I" secondAttribute="trailing" constant="63.5" id="6DB-5f-e0z"/>
                             <constraint firstItem="uYr-fy-Pbq" firstAttribute="top" secondItem="OlR-pa-WLt" secondAttribute="top" constant="20" id="7Qw-J1-DAf"/>
                             <constraint firstItem="e0d-Ij-qB6" firstAttribute="centerX" secondItem="OlR-pa-WLt" secondAttribute="centerX" constant="-92.5" id="8nN-Nq-LHP"/>
                             <constraint firstItem="CpQ-ph-pWJ" firstAttribute="top" secondItem="OlR-pa-WLt" secondAttribute="top" constant="27" id="BKA-ng-HVx"/>
-                            <constraint firstItem="fxC-s5-C3I" firstAttribute="leading" secondItem="A1A-5a-pUs" secondAttribute="trailing" constant="60" id="d3S-5c-T0M"/>
-                            <constraint firstItem="A1A-5a-pUs" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="20" id="ejF-aE-dIf"/>
+                            <constraint firstItem="fxC-s5-C3I" firstAttribute="leading" relation="lessThanOrEqual" secondItem="A1A-5a-pUs" secondAttribute="trailing" constant="8" symbolic="YES" id="d3S-5c-T0M"/>
+                            <constraint firstItem="A1A-5a-pUs" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="28" id="ejF-aE-dIf"/>
                             <constraint firstItem="OlR-pa-WLt" firstAttribute="bottom" secondItem="e0d-Ij-qB6" secondAttribute="bottom" constant="20" id="enl-Qc-uAB"/>
                             <constraint firstItem="OlR-pa-WLt" firstAttribute="bottom" secondItem="hhv-sU-2pe" secondAttribute="bottom" constant="20" id="gRF-Pq-wtt"/>
-                            <constraint firstItem="OlR-pa-WLt" firstAttribute="trailing" secondItem="uYr-fy-Pbq" secondAttribute="trailing" constant="13" id="jzs-VB-UZg"/>
-                            <constraint firstItem="uYr-fy-Pbq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CpQ-ph-pWJ" secondAttribute="trailing" constant="70" id="lfc-t6-v4Y"/>
-                            <constraint firstItem="CpQ-ph-pWJ" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="40" id="nkr-TS-LDU"/>
+                            <constraint firstItem="OlR-pa-WLt" firstAttribute="trailing" secondItem="uYr-fy-Pbq" secondAttribute="trailing" constant="26" id="jzs-VB-UZg"/>
+                            <constraint firstItem="uYr-fy-Pbq" firstAttribute="leading" relation="lessThanOrEqual" secondItem="CpQ-ph-pWJ" secondAttribute="trailing" constant="8" symbolic="YES" id="lfc-t6-v4Y"/>
+                            <constraint firstItem="CpQ-ph-pWJ" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="28" id="nkr-TS-LDU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OlR-pa-WLt"/>
                     </view>
@@ -495,12 +512,13 @@
                         <outlet property="addAnimeButton" destination="hhv-sU-2pe" id="wEG-DM-M2K"/>
                         <outlet property="checkDetailsButton" destination="e0d-Ij-qB6" id="Kgk-iN-B5g"/>
                         <outlet property="numberOfEpisdoes" destination="fxC-s5-C3I" id="7lH-sZ-nTa"/>
-                        <outlet property="startDateLabel" destination="uYr-fy-Pbq" id="HAM-ar-Hmh"/>
+                        <outlet property="startDate" destination="uYr-fy-Pbq" id="hWl-BO-YaO"/>
+                        <outlet property="textView" destination="xZ2-Up-4cf" id="qmD-Kn-mz7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jlp-ko-rMp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3457" y="1587"/>
+            <point key="canvasLocation" x="3456.521739130435" y="1586.71875"/>
         </scene>
     </scenes>
     <resources>
