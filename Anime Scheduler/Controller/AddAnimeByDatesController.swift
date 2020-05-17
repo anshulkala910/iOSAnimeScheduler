@@ -12,7 +12,9 @@ class AddAnimeByDatesController: UIViewController {
 
     @IBOutlet weak var startDateTextField: UITextField!
     @IBOutlet weak var endDateTextField: UITextField!
-
+    @IBOutlet weak var checkDetailsButton: UIButton!
+    @IBOutlet weak var addAnimeButton: UIButton!
+    
     var animeDetail: AnimeDetail!
     
     let datePicker = UIDatePicker()
@@ -71,6 +73,14 @@ class AddAnimeByDatesController: UIViewController {
         dateFormatter.timeStyle = .none
         endDateTextField.text = dateFormatter.string(from: datePicker.date)
         view.endEditing(true)
+    }
+    
+    @IBAction func addAnime(_ sender: Any) {
+        
+    }
+    
+    @IBAction func checkDetails(_ sender: Any) {
+        
     }
     /*
     // MARK: - Navigation

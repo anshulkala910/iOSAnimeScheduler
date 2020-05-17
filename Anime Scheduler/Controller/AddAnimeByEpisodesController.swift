@@ -9,7 +9,12 @@
 import UIKit
 
 class AddAnimeByEpisodesController: UIViewController {
-
+ 
+    @IBOutlet weak var startDate: UITextField!
+    @IBOutlet weak var numberOfEpisdoes: UITextField!
+    @IBOutlet weak var checkDetailsButton: UIButton!
+    @IBOutlet weak var addAnimeButton: UIButton!
+    
     var animeDetail: AnimeDetail!
     
     override func viewDidLoad() {
@@ -18,7 +23,13 @@ class AddAnimeByEpisodesController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-
+    @IBAction func addAnime(_ sender: Any) {
+        
+    }
+    
+    @IBAction func checkDetails(_ sender: Any) {
+        
+    }
     /*
     // MARK: - Navigation
 
