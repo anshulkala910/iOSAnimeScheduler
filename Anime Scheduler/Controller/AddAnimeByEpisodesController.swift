@@ -68,7 +68,18 @@ class AddAnimeByEpisodesController: UIViewController {
     }
     
     @objc func doneButtonNumberPad(){
+        let numberOfEpisodes = Int(numberOfEpisdoes.text ?? "1")
+        if numberOfEpisodes! > animeDetail.episodes! {
+            showAlert()
+        }
         view.endEditing(true)
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "Error", message: "Invalid Number: Please enter a number that is less than \((animeDetail.episodes ?? 1) + 1) ", preferredStyle: .alert)
+        let dismiss = UIAlertAction.init(title: "Dismiss", style: .default , handler: nil)
+        alert.addAction(dismiss)
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func addAnime(_ sender: Any) {
@@ -76,6 +87,11 @@ class AddAnimeByEpisodesController: UIViewController {
     }
     
     @IBAction func checkDetails(_ sender: Any) {
+        let numberOfEpisodes = Int(numberOfEpisdoes.text ?? "1")
+        if numberOfEpisodes! > animeDetail.episodes! {
+            showAlert()
+            return
+        }
         let endDate = getEndDate()
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -88,7 +104,13 @@ class AddAnimeByEpisodesController: UIViewController {
         let numberEpisodes = animeDetail.episodes
         let numberEpisodesPerDay = Int(numberOfEpisdoes.text ?? "1")
         var dayComponent = DateComponents()
-        dayComponent.day = (numberEpisodes ?? 1)/(numberEpisodesPerDay ?? 1)
+        let additionalDays = (numberEpisodes ?? 1)/(numberEpisodesPerDay ?? 1) - 1
+        if (numberEpisodes ?? 1)%(numberEpisodesPerDay ?? 1) != 0{
+            dayComponent.day = additionalDays + 1
+        }
+        else {
+            dayComponent.day = additionalDays
+        }
         let theCalendar = Calendar.current
         let startDate = startDatePicker.date
         let nextDate = theCalendar.date(byAdding: dayComponent, to: startDate)
