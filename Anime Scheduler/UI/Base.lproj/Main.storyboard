@@ -168,7 +168,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tbt-IH-noe">
                                 <rect key="frame" x="0.0" y="139" width="414" height="625"/>
                                 <connections>
-                                    <segue destination="ucB-Cf-w3T" kind="embed" id="AyH-Fq-eZS"/>
+                                    <segue destination="ucB-Cf-w3T" kind="embed" identifier="byDatesSegue" id="AyH-Fq-eZS"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Wn-2B-cK5">
@@ -344,7 +344,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="9LU-Zx-lXL"/>
                                 </constraints>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose Start Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lfw-qA-RiG">
@@ -358,7 +358,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="HXG-XY-gvL"/>
                                 </constraints>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose End Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4x-bm-rO3">
@@ -381,6 +381,7 @@
                             <constraint firstItem="Lfw-qA-RiG" firstAttribute="top" secondItem="YNN-Jm-Lhl" secondAttribute="topMargin" constant="27" id="sOV-Qg-n7F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DA6-Of-RY1" secondAttribute="trailing" constant="6" id="tLG-Dj-cvm"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="hgR-Hl-hNd"/>
                     </view>
                     <connections>
                         <outlet property="endDateTextField" destination="ma2-KY-lfI" id="QE4-rp-anY"/>
@@ -437,6 +438,7 @@
                             <constraint firstItem="nN4-C4-4DR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xiQ-7q-ud2" secondAttribute="trailing" constant="8" symbolic="YES" id="vzb-nM-fdo"/>
                             <constraint firstAttribute="bottom" secondItem="z8G-5a-eUF" secondAttribute="bottom" id="w3w-SR-3Et"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="OlR-pa-WLt"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jlp-ko-rMp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

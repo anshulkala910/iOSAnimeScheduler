@@ -62,8 +62,6 @@ class AddAnimeByDatesController: UIViewController {
         dateFormatter.timeStyle = .none
         startDateTextField.text = dateFormatter.string(from: datePicker.date)
         view.endEditing(true)
-        animeDetail = AnimePassing.anime
-        print(animeDetail.title!)
     }
     
     @objc func doneButtonPressedEndDate(){

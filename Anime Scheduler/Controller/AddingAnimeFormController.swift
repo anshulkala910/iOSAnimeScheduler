@@ -8,10 +8,6 @@
 
 import UIKit
 
-struct AnimePassing {
-    static var anime = AddingAnimeFormController.animeDetailCopy
-}
-
 class AddingAnimeFormController: UIViewController {
 
     @IBOutlet weak var navigationBar: UINavigationItem!
@@ -19,7 +15,6 @@ class AddingAnimeFormController: UIViewController {
     @IBOutlet weak var byDatesView: UIView!
     
     var animeDetail: AnimeDetail!
-    static var animeDetailCopy: AnimeDetail!
     var optionList = ["By start and end date", "By episodes/day"]
     
     override func viewDidLoad() {
@@ -29,10 +24,18 @@ class AddingAnimeFormController: UIViewController {
         navigationBar.backBarButtonItem?.title = " "
         byDatesView.alpha = 1
         byEpisodesView.alpha = 0
-        AddingAnimeFormController.animeDetailCopy = animeDetail
-        AnimePassing.anime = animeDetail
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "byDatesSegue"{
+            let animeDateController = segue.destination as! AddAnimeByDatesController
+            animeDateController.animeDetail = animeDetail
+        }
+        else if segue.identifier == "byEpisodesSegue"{
+            let animeEpisodeController = segue.destination as! AddAnimeByEpisodesController
+            animeEpisodeController.animeDetail = animeDetail
+        }
+    }
     
     @IBAction func didChangeSegment(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
