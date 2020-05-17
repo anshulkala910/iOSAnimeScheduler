@@ -21,6 +21,8 @@ class AddAnimeByEpisodesController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        textView.isEditable = false
+        textView.textAlignment = .center
         createStartDatePicker()
         createNumberPad()
         // Do any additional setup after loading the view.
@@ -75,7 +77,11 @@ class AddAnimeByEpisodesController: UIViewController {
     
     @IBAction func checkDetails(_ sender: Any) {
         let endDate = getEndDate()
-        textView.text = "\(endDate)"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        let endDateString = dateFormatter.string(from: endDate)
+        textView.text = "You will finish \(animeDetail.title ?? "...") on \(endDateString)"
     }
     
     func getEndDate() -> Date {

@@ -480,9 +480,8 @@
                                     <action selector="checkDetails:" destination="d4G-52-LHf" eventType="touchUpInside" id="qs0-Uo-Ux9"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xZ2-Up-4cf">
-                                <rect key="frame" x="87" y="248" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xZ2-Up-4cf">
+                                <rect key="frame" x="20" y="248" width="374" height="302"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -498,6 +497,9 @@
                             <constraint firstItem="uYr-fy-Pbq" firstAttribute="top" secondItem="OlR-pa-WLt" secondAttribute="top" constant="20" id="7Qw-J1-DAf"/>
                             <constraint firstItem="e0d-Ij-qB6" firstAttribute="centerX" secondItem="OlR-pa-WLt" secondAttribute="centerX" constant="-92.5" id="8nN-Nq-LHP"/>
                             <constraint firstItem="CpQ-ph-pWJ" firstAttribute="top" secondItem="OlR-pa-WLt" secondAttribute="top" constant="27" id="BKA-ng-HVx"/>
+                            <constraint firstItem="xZ2-Up-4cf" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="20" id="Uco-Cr-BhD"/>
+                            <constraint firstItem="OlR-pa-WLt" firstAttribute="trailing" secondItem="xZ2-Up-4cf" secondAttribute="trailing" constant="20" id="WED-LR-3P8"/>
+                            <constraint firstItem="hhv-sU-2pe" firstAttribute="top" secondItem="xZ2-Up-4cf" secondAttribute="bottom" constant="25" id="YSn-bL-vag"/>
                             <constraint firstItem="fxC-s5-C3I" firstAttribute="leading" relation="lessThanOrEqual" secondItem="A1A-5a-pUs" secondAttribute="trailing" constant="8" symbolic="YES" id="d3S-5c-T0M"/>
                             <constraint firstItem="A1A-5a-pUs" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="28" id="ejF-aE-dIf"/>
                             <constraint firstItem="OlR-pa-WLt" firstAttribute="bottom" secondItem="e0d-Ij-qB6" secondAttribute="bottom" constant="20" id="enl-Qc-uAB"/>
@@ -505,6 +507,7 @@
                             <constraint firstItem="OlR-pa-WLt" firstAttribute="trailing" secondItem="uYr-fy-Pbq" secondAttribute="trailing" constant="26" id="jzs-VB-UZg"/>
                             <constraint firstItem="uYr-fy-Pbq" firstAttribute="leading" relation="lessThanOrEqual" secondItem="CpQ-ph-pWJ" secondAttribute="trailing" constant="8" symbolic="YES" id="lfc-t6-v4Y"/>
                             <constraint firstItem="CpQ-ph-pWJ" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="28" id="nkr-TS-LDU"/>
+                            <constraint firstItem="xZ2-Up-4cf" firstAttribute="top" secondItem="fxC-s5-C3I" secondAttribute="bottom" constant="95" id="sHF-Mr-8sl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OlR-pa-WLt"/>
                     </view>
