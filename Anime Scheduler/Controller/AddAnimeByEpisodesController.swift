@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class AddAnimeByEpisodesController: UIViewController {
  
@@ -85,6 +86,23 @@ class AddAnimeByEpisodesController: UIViewController {
     @IBAction func addAnime(_ sender: Any) {
         
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "Unwind"{
+//            let homeController = segue.destination as! HomeViewController
+//            let storedAnime = StoredAnime(context: AppDelegate.context)
+//            storedAnime.title = animeDetail.title
+//            storedAnime.synopsis = animeDetail.synopsis
+//            storedAnime.startDate = startDatePicker.date
+//            storedAnime.img_url = animeDetail.image_url
+//            storedAnime.episodesPerDay = Int16(numberOfEpisdoes.text!) ?? 1
+//            storedAnime.endDate = getEndDate()
+//            AppDelegate.saveContext()
+//            homeController.currentlyWatchingAnime.append(storedAnime)
+//        }
+//        print(segue.identifier)
+//    }
+    
     
     @IBAction func checkDetails(_ sender: Any) {
         let numberOfEpisodes = Int(numberOfEpisdoes.text ?? "1")

@@ -374,6 +374,7 @@
                                 </state>
                                 <connections>
                                     <action selector="addAnime:" destination="ucB-Cf-w3T" eventType="touchUpInside" id="fep-7d-nQc"/>
+                                    <segue destination="qUr-YO-cwt" kind="unwind" unwindAction="unwindSegueFromDates:" id="CAV-Tx-MQo"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHW-SP-rtq">
@@ -422,6 +423,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z4G-jZ-7cb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="qUr-YO-cwt" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2198.5507246376815" y="1586.71875"/>
         </scene>
@@ -469,6 +471,7 @@
                                 <connections>
                                     <action selector="addAnime:" destination="d4G-52-LHf" eventType="touchUpInside" id="1vj-TV-zNz"/>
                                     <action selector="addAnime:" destination="ucB-Cf-w3T" eventType="touchUpInside" id="a2y-uh-UgW"/>
+                                    <segue destination="Es6-G9-X63" kind="unwind" unwindAction="unwindSegueFromEpisodes:" id="MNt-YJ-EEE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0d-Ij-qB6">
@@ -520,6 +523,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jlp-ko-rMp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="Es6-G9-X63" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3456.521739130435" y="1586.71875"/>
         </scene>

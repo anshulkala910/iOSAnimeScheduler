@@ -19,10 +19,10 @@
 		B4186B16246FC4BC0068C665 /* AddAnimeByDatesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4186B14246FC4BC0068C665 /* AddAnimeByDatesController.swift */; };
 		B4186B1A246FC4D50068C665 /* AddAnimeByEpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4186B18246FC4D50068C665 /* AddAnimeByEpisodesController.swift */; };
 		B41A728E246EB69D0056BEA0 /* AddingAnimeFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41A728D246EB69D0056BEA0 /* AddingAnimeFormController.swift */; };
+		B43040592471863800653BE2 /* StoredAnime+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43040572471863800653BE2 /* StoredAnime+CoreDataClass.swift */; };
+		B430405A2471863800653BE2 /* StoredAnime+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43040582471863800653BE2 /* StoredAnime+CoreDataProperties.swift */; };
 		B49E0889246A87E20035FC78 /* Anime.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E0888246A87E20035FC78 /* Anime.swift */; };
 		B49E0890246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B49E088E246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld */; };
-		B4F58ABF246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58ABD246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift */; };
-		B4F58AC0246C2CAF0021A376 /* Anime_Scheduler+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58ABE246C2CAF0021A376 /* Anime_Scheduler+CoreDataClass.swift */; };
 		B4F58AC2246C58DD0021A376 /* APIAnimeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58AC1246C58DD0021A376 /* APIAnimeReader.swift */; };
 		B4F58AC6246D21550021A376 /* AddAnimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58AC5246D21550021A376 /* AddAnimeViewController.swift */; };
 		B4F58AC8246D522A0021A376 /* AnimeTableViewCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58AC7246D522A0021A376 /* AnimeTableViewCellController.swift */; };
@@ -47,10 +47,10 @@
 		B4186B14246FC4BC0068C665 /* AddAnimeByDatesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAnimeByDatesController.swift; sourceTree = "<group>"; };
 		B4186B18246FC4D50068C665 /* AddAnimeByEpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAnimeByEpisodesController.swift; sourceTree = "<group>"; };
 		B41A728D246EB69D0056BEA0 /* AddingAnimeFormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingAnimeFormController.swift; sourceTree = "<group>"; };
+		B43040572471863800653BE2 /* StoredAnime+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredAnime+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		B43040582471863800653BE2 /* StoredAnime+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoredAnime+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		B49E0888246A87E20035FC78 /* Anime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anime.swift; sourceTree = "<group>"; };
 		B49E088F246C16EA0035FC78 /* AnimeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AnimeModel.xcdatamodel; sourceTree = "<group>"; };
-		B4F58ABD246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Anime_Scheduler+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		B4F58ABE246C2CAF0021A376 /* Anime_Scheduler+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Anime_Scheduler+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B4F58AC1246C58DD0021A376 /* APIAnimeReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIAnimeReader.swift; sourceTree = "<group>"; };
 		B4F58AC5246D21550021A376 /* AddAnimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAnimeViewController.swift; sourceTree = "<group>"; };
 		B4F58AC7246D522A0021A376 /* AnimeTableViewCellController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimeTableViewCellController.swift; sourceTree = "<group>"; };
@@ -79,8 +79,6 @@
 		B4136F782469856800F8D1A5 = {
 			isa = PBXGroup;
 			children = (
-				B4F58ABE246C2CAF0021A376 /* Anime_Scheduler+CoreDataClass.swift */,
-				B4F58ABD246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift */,
 				B4136F832469856800F8D1A5 /* Anime Scheduler */,
 				B4136F822469856800F8D1A5 /* Products */,
 				D2EB92779DEB301C94B640E1 /* Pods */,
@@ -139,6 +137,8 @@
 		B4136FA12469ADD200F8D1A5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B43040572471863800653BE2 /* StoredAnime+CoreDataClass.swift */,
+				B43040582471863800653BE2 /* StoredAnime+CoreDataProperties.swift */,
 				B49E0888246A87E20035FC78 /* Anime.swift */,
 				B4F58AC1246C58DD0021A376 /* APIAnimeReader.swift */,
 			);
@@ -272,13 +272,13 @@
 				B4136F892469856800F8D1A5 /* CalendarViewController.swift in Sources */,
 				B4136F852469856800F8D1A5 /* AppDelegate.swift in Sources */,
 				B4186B16246FC4BC0068C665 /* AddAnimeByDatesController.swift in Sources */,
+				B43040592471863800653BE2 /* StoredAnime+CoreDataClass.swift in Sources */,
 				B4F58AC2246C58DD0021A376 /* APIAnimeReader.swift in Sources */,
+				B430405A2471863800653BE2 /* StoredAnime+CoreDataProperties.swift in Sources */,
 				B4F58AC6246D21550021A376 /* AddAnimeViewController.swift in Sources */,
-				B4F58AC0246C2CAF0021A376 /* Anime_Scheduler+CoreDataClass.swift in Sources */,
 				B4136F872469856800F8D1A5 /* SceneDelegate.swift in Sources */,
 				B4186B1A246FC4D50068C665 /* AddAnimeByEpisodesController.swift in Sources */,
 				B49E0889246A87E20035FC78 /* Anime.swift in Sources */,
-				B4F58ABF246C2CAF0021A376 /* Anime_Scheduler+CoreDataProperties.swift in Sources */,
 				B4F58AC8246D522A0021A376 /* AnimeTableViewCellController.swift in Sources */,
 				B41A728E246EB69D0056BEA0 /* AddingAnimeFormController.swift in Sources */,
 				B4136F992469AA9F00F8D1A5 /* HomeViewController.swift in Sources */,

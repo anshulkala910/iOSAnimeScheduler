@@ -17,7 +17,7 @@ class AddAnimeByDatesController: UIViewController {
     @IBOutlet weak var textView: UITextView!
     
     var animeDetail: AnimeDetail!
-    
+    var numberOfEpisodes: Int!
     let startDatePicker = UIDatePicker()
     let endDatePicker = UIDatePicker()
     

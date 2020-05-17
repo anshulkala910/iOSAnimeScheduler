@@ -12,21 +12,20 @@ class HomeViewController: UIViewController {
     
     @IBOutlet var currentlyWatchingTableView: UITableView!
     @IBOutlet weak var addAnimeButton: UIButton!
-    @IBOutlet weak var titleLabel: UILabel!
     
-    var currentlyWatchingAnime = [Anime_Scheduler](){
-        didSet{
-            DispatchQueue.main.async {
-                self.currentlyWatchingTableView.reloadData()
-            }
-        }
-    }
+    var currentlyWatchingAnime = [StoredAnime]()//{
+//        didSet{
+//            DispatchQueue.main.async {
+//                self.currentlyWatchingTableView.reloadData()
+//            }
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         currentlyWatchingTableView.delegate = self
         currentlyWatchingTableView.dataSource = self
-        let fetchRequest: NSFetchRequest<Anime_Scheduler> = Anime_Scheduler.fetchRequest()
+        let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
         
         //gets the saved list from Core Data everytime the app is run
         do {
@@ -37,6 +36,33 @@ class HomeViewController: UIViewController {
         
     }
     
+    @IBAction func unwindSegueFromEpisodes(_ sender: UIStoryboardSegue) {
+        let addAnimeEpisodesController = sender.source as! AddAnimeByEpisodesController
+        let storedAnime = StoredAnime(context: AppDelegate.context)
+        storedAnime.title = addAnimeEpisodesController.animeDetail.title
+        storedAnime.synopsis = addAnimeEpisodesController.animeDetail.synopsis
+        storedAnime.startDate = addAnimeEpisodesController.startDatePicker.date
+        storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
+        storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisdoes.text!) ?? 1
+        storedAnime.endDate = addAnimeEpisodesController.getEndDate()
+        AppDelegate.saveContext()
+        self.currentlyWatchingAnime.append(storedAnime)
+        self.currentlyWatchingTableView.reloadData()
+    }
+    
+    @IBAction func unwindSegueFromDates(_ sender: UIStoryboardSegue) {
+        let addAnimeDatesController = sender.source as! AddAnimeByDatesController
+        let storedAnime = StoredAnime(context: AppDelegate.context)
+        storedAnime.title = addAnimeDatesController.animeDetail.title
+        storedAnime.synopsis = addAnimeDatesController.animeDetail.synopsis
+        storedAnime.startDate = addAnimeDatesController.startDatePicker.date
+        storedAnime.img_url = addAnimeDatesController.animeDetail.image_url
+        storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes)
+        storedAnime.endDate = addAnimeDatesController.endDatePicker.date
+        AppDelegate.saveContext()
+        self.currentlyWatchingAnime.append(storedAnime)
+        self.currentlyWatchingTableView.reloadData()
+    }
 
     /*
      // MARK: - Navigation
