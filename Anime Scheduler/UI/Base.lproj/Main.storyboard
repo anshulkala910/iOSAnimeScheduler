@@ -412,9 +412,8 @@
                                     <action selector="checkDetails:" destination="ucB-Cf-w3T" eventType="touchUpInside" id="eJj-cV-tnH"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ull-0g-BPW">
-                                <rect key="frame" x="87" y="248" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ull-0g-BPW">
+                                <rect key="frame" x="20" y="248" width="374" height="302"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -423,10 +422,14 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="RMI-WD-bat" firstAttribute="top" secondItem="ull-0g-BPW" secondAttribute="bottom" constant="25" id="3uu-i5-4hr"/>
                             <constraint firstItem="hgR-Hl-hNd" firstAttribute="bottom" secondItem="RMI-WD-bat" secondAttribute="bottom" constant="20" id="5hZ-UD-ea8"/>
+                            <constraint firstItem="hgR-Hl-hNd" firstAttribute="trailing" secondItem="ull-0g-BPW" secondAttribute="trailing" constant="20" id="D6n-1q-8jl"/>
                             <constraint firstItem="RMI-WD-bat" firstAttribute="centerX" secondItem="hgR-Hl-hNd" secondAttribute="centerX" constant="92.5" id="Eln-pN-Rdu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ma2-KY-lfI" secondAttribute="trailing" constant="6" id="JKP-xK-RZy"/>
+                            <constraint firstItem="ull-0g-BPW" firstAttribute="top" secondItem="ma2-KY-lfI" secondAttribute="bottom" constant="95" id="Ovj-GO-a4F"/>
                             <constraint firstItem="hgR-Hl-hNd" firstAttribute="bottom" secondItem="xHW-SP-rtq" secondAttribute="bottom" constant="20" id="REo-fd-Rov"/>
+                            <constraint firstItem="ull-0g-BPW" firstAttribute="leading" secondItem="hgR-Hl-hNd" secondAttribute="leading" constant="20" id="SDg-xM-82A"/>
                             <constraint firstItem="ma2-KY-lfI" firstAttribute="top" secondItem="DA6-Of-RY1" secondAttribute="bottom" constant="21" id="Zhe-db-tTl"/>
                             <constraint firstItem="DA6-Of-RY1" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Lfw-qA-RiG" secondAttribute="trailing" constant="8" symbolic="YES" id="b5r-2d-b0g"/>
                             <constraint firstItem="z4x-bm-rO3" firstAttribute="top" secondItem="Lfw-qA-RiG" secondAttribute="bottom" constant="34.5" id="gtn-8f-xKu"/>
