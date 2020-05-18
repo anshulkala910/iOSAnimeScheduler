@@ -100,8 +100,13 @@ extension HomeViewController: UITableViewDataSource{
      */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let anime = currentlyWatchingAnime[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) //uses the "cell" template over and over
-        cell.textLabel?.text = anime.title
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell //uses the "cell" template over and over
+        let url = URL(string: anime.img_url!)
+        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+        cell.animeImage.image = UIImage(data: data!)
+        cell.titleLabel.text = anime.title
+        cell.detailLabel.text = "\(anime.episodesPerDay ) episodes/day"
+        cell.titleLabel.sizeToFit()
         return cell
     }
 }
