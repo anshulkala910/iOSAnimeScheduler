@@ -71,8 +71,11 @@ extension HomeViewController: UITableViewDelegate{
     /**
      This function is called whenever a cell is tapped
      */
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("you tapped me")
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "checkAnimeDetails" {
+            let checkDetailsController = segue.destination as! CheckDetailsViewController
+            checkDetailsController.animeStored = currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row]
+        }
     }
     
 }

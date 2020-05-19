@@ -51,6 +51,7 @@
                                             <outlet property="animeImage" destination="gZk-Se-RZb" id="KNb-SX-8jU"/>
                                             <outlet property="detailLabel" destination="Kka-6y-NEd" id="U7A-zq-IxY"/>
                                             <outlet property="titleLabel" destination="Ruf-u2-qXW" id="FCv-8e-4Yc"/>
+                                            <segue destination="P2Q-Rx-KdB" kind="show" identifier="checkAnimeDetails" id="qfV-kV-00S"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -299,7 +300,38 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrz-Ey-4mi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="897"/>
+            <point key="canvasLocation" x="132" y="890"/>
+        </scene>
+        <!--Check Details View Controller-->
+        <scene sceneID="haw-dm-SsV">
+            <objects>
+                <viewController id="P2Q-Rx-KdB" customClass="CheckDetailsViewController" customModule="Anime_Scheduler" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NAJ-Ur-bph">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cl7-cl-Qsv">
+                                <rect key="frame" x="186" y="106" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Cl7-cl-Qsv" firstAttribute="top" secondItem="UXX-1D-Wn8" secondAttribute="top" constant="18" id="Ce4-Bj-n2N"/>
+                            <constraint firstItem="Cl7-cl-Qsv" firstAttribute="centerX" secondItem="NAJ-Ur-bph" secondAttribute="centerX" id="Psg-Gv-xvr"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="UXX-1D-Wn8"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Puv-4s-bCJ"/>
+                    <connections>
+                        <outlet property="animeTitleLabeL" destination="Cl7-cl-Qsv" id="Vcb-wU-pZW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kib-pt-lzl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1009" y="890"/>
         </scene>
         <!--Analysis-->
         <scene sceneID="ALf-hT-ovE">
