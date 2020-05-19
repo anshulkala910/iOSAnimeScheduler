@@ -13,13 +13,13 @@ class HomeViewController: UIViewController {
     @IBOutlet var currentlyWatchingTableView: UITableView!
     @IBOutlet weak var addAnimeButton: UIButton!
     
-    var currentlyWatchingAnime = [StoredAnime]()//{
-//        didSet{
-//            DispatchQueue.main.async {
-//                self.currentlyWatchingTableView.reloadData()
-//            }
-//        }
-//    }
+    var currentlyWatchingAnime = [StoredAnime](){
+        didSet{
+            DispatchQueue.main.async {
+                self.currentlyWatchingTableView.reloadData()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,5 +99,26 @@ extension HomeViewController: UITableViewDataSource{
         cell.detailLabel.text = "\(anime.episodesPerDay ) episodes/day"
         cell.titleLabel.sizeToFit()
         return cell
+    }
+    
+    /**
+     This functions helps in deleting a row
+     */
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    /**
+     This function deletes the anime from a specifi row from Core Data and the global array 
+     */
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            currentlyWatchingTableView.beginUpdates()
+            AppDelegate.context.delete(currentlyWatchingAnime[indexPath.row])
+            currentlyWatchingAnime.remove(at: indexPath.row)
+            currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
+            currentlyWatchingTableView.endUpdates()
+            AppDelegate.saveContext()
+        }
     }
 }
