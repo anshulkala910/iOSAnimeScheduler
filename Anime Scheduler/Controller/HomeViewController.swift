@@ -43,7 +43,7 @@ class HomeViewController: UIViewController {
         storedAnime.synopsis = addAnimeEpisodesController.animeDetail.synopsis
         storedAnime.startDate = addAnimeEpisodesController.startDatePicker.date
         storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
-        storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisdoes.text!) ?? 1
+        storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
         storedAnime.endDate = addAnimeEpisodesController.getEndDate()
         AppDelegate.saveContext()
         self.currentlyWatchingAnime.append(storedAnime)
@@ -57,7 +57,8 @@ class HomeViewController: UIViewController {
         storedAnime.synopsis = addAnimeDatesController.animeDetail.synopsis
         storedAnime.startDate = addAnimeDatesController.startDatePicker.date
         storedAnime.img_url = addAnimeDatesController.animeDetail.image_url
-        storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes)
+        storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes.episodesPerDay)
+        storedAnime.numberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
         storedAnime.endDate = addAnimeDatesController.endDatePicker.date
         AppDelegate.saveContext()
         self.currentlyWatchingAnime.append(storedAnime)

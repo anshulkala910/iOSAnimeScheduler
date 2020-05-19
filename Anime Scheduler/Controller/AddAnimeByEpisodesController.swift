@@ -12,7 +12,7 @@ import CoreData
 class AddAnimeByEpisodesController: UIViewController {
  
     @IBOutlet weak var startDate: UITextField!
-    @IBOutlet weak var numberOfEpisdoes: UITextField!
+    @IBOutlet weak var numberOfEpisodes: UITextField!
     @IBOutlet weak var checkDetailsButton: UIButton!
     @IBOutlet weak var addAnimeButton: UIButton!
     @IBOutlet weak var textView: UITextView!
@@ -43,13 +43,13 @@ class AddAnimeByEpisodesController: UIViewController {
     }
     
     func createNumberPad() {
-        numberOfEpisdoes.placeholder = "1"
-        numberOfEpisdoes.textAlignment = .center
+        numberOfEpisodes.placeholder = "1"
+        numberOfEpisodes.textAlignment = .center
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonNumberPad))
         toolbar.setItems([doneButton], animated: true)
-        numberOfEpisdoes.inputAccessoryView = toolbar
+        numberOfEpisodes.inputAccessoryView = toolbar
     }
     func getCurrentDate() -> String {
         let currentDate = Date()
@@ -69,8 +69,8 @@ class AddAnimeByEpisodesController: UIViewController {
     }
     
     @objc func doneButtonNumberPad(){
-        let numberOfEpisodes = Int(numberOfEpisdoes.text ?? "1")
-        if numberOfEpisodes! > animeDetail.episodes! {
+        let numberEpisodes = Int(numberOfEpisodes.text ?? "1")
+        if numberEpisodes! > animeDetail.episodes! {
             showAlert()
         }
         view.endEditing(true)
@@ -89,8 +89,8 @@ class AddAnimeByEpisodesController: UIViewController {
     
     
     @IBAction func checkDetails(_ sender: Any) {
-        let numberOfEpisodes = Int(numberOfEpisdoes.text ?? "1")
-        if numberOfEpisodes! > animeDetail.episodes! {
+        let numberEpisodes = Int(numberOfEpisodes.text ?? "1")
+        if numberEpisodes! > animeDetail.episodes! {
             showAlert()
             return
         }
@@ -104,7 +104,7 @@ class AddAnimeByEpisodesController: UIViewController {
     
     func getEndDate() -> Date {
         let numberEpisodes = animeDetail.episodes
-        let numberEpisodesPerDay = Int(numberOfEpisdoes.text ?? "1")
+        let numberEpisodesPerDay = Int(numberOfEpisodes.text ?? "1")
         var dayComponent = DateComponents()
         let additionalDays = (numberEpisodes ?? 1)/(numberEpisodesPerDay ?? 1) - 1
         if (numberEpisodes ?? 1)%(numberEpisodesPerDay ?? 1) != 0{

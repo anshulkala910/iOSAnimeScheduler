@@ -546,7 +546,7 @@
                     <connections>
                         <outlet property="addAnimeButton" destination="hhv-sU-2pe" id="wEG-DM-M2K"/>
                         <outlet property="checkDetailsButton" destination="e0d-Ij-qB6" id="Kgk-iN-B5g"/>
-                        <outlet property="numberOfEpisdoes" destination="fxC-s5-C3I" id="7lH-sZ-nTa"/>
+                        <outlet property="numberOfEpisodes" destination="fxC-s5-C3I" id="Oxb-vK-snz"/>
                         <outlet property="startDate" destination="uYr-fy-Pbq" id="hWl-BO-YaO"/>
                         <outlet property="textView" destination="xZ2-Up-4cf" id="qmD-Kn-mz7"/>
                     </connections>
