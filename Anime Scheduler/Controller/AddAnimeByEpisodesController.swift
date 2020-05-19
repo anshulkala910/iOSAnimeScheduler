@@ -19,14 +19,16 @@ class AddAnimeByEpisodesController: UIViewController {
     
     var animeDetail: AnimeDetail!
     let startDatePicker = UIDatePicker()
+    let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.isEditable = false
         textView.textAlignment = .center
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
         createStartDatePicker()
         createNumberPad()
-        // Do any additional setup after loading the view.
     }
 
     func createStartDatePicker(){
@@ -47,24 +49,19 @@ class AddAnimeByEpisodesController: UIViewController {
         numberOfEpisodes.textAlignment = .center
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
+        
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonNumberPad))
         toolbar.setItems([doneButton], animated: true)
         numberOfEpisodes.inputAccessoryView = toolbar
     }
+    
     func getCurrentDate() -> String {
         let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        return dateFormatter.string(from: currentDate)
+        return getDateStringFromTextField(currentDate)
     }
     
     @objc func doneButtonPressedStartDate(){
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        startDate.text = dateFormatter.string(from: startDatePicker.date)
+        startDate.text = getDateStringFromTextField(startDatePicker.date)
         view.endEditing(true)
     }
     
@@ -83,6 +80,13 @@ class AddAnimeByEpisodesController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    //HELPER FUNCTIONS
+    private func getDateStringFromTextField(_ date: Date) -> String{
+        return dateFormatter.string(from: date)
+    }
+    
+    //HELPER FUNCTIONS END
+    
     @IBAction func addAnime(_ sender: Any) {
         
     }
@@ -95,10 +99,7 @@ class AddAnimeByEpisodesController: UIViewController {
             return
         }
         let endDate = getEndDate()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        let endDateString = dateFormatter.string(from: endDate)
+        let endDateString = getDateStringFromTextField(endDate)
         textView.text = "You will finish \(animeDetail.title ?? "...") on \(endDateString)"
     }
     
