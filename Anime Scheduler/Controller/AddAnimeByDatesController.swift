@@ -10,7 +10,7 @@ import UIKit
 
 struct NumberOfEpisodes {
     var episodesPerDay: Int
-    var episodesOnLastDay: Int
+    var numberOfLastDays: Int
     var flag: Int
     var endDateSuggestion: String
 }
@@ -41,6 +41,7 @@ class AddAnimeByDatesController: UIViewController {
         startDateTextField.textAlignment = .center
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
+        
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonPressedStartDate))
         toolbar.setItems([doneButton], animated: true)
         startDateTextField.inputAccessoryView = toolbar
@@ -63,28 +64,28 @@ class AddAnimeByDatesController: UIViewController {
 
     func getCurrentDate() -> String {
         let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        return dateFormatter.string(from: currentDate)
+        return getDateStringFromTextField(currentDate)
     }
     @objc func doneButtonPressedStartDate(){
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        startDateTextField.text = dateFormatter.string(from: startDatePicker.date)
+        startDateTextField.text = getDateStringFromTextField(startDatePicker.date)
         view.endEditing(true)
     }
     
     @objc func doneButtonPressedEndDate(){
-        
+        endDateTextField.text = getDateStringFromTextField(endDatePicker.date)
+        view.endEditing(true)
+    }
+    
+    
+    //HELPER FUNCTIONS
+    private func getDateStringFromTextField(_ date: Date) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
-        endDateTextField.text = dateFormatter.string(from: endDatePicker.date)
-        view.endEditing(true)
+        return dateFormatter.string(from: date)
     }
+    
+    //HELPER FUNCTIONS END
     
     @IBAction func addAnime(_ sender: Any) {
         
@@ -95,11 +96,11 @@ class AddAnimeByDatesController: UIViewController {
         if numberOfEpisodesPerDay.flag == 1 {
             textView.text = "You will finish \(animeDetail.title ?? "...") before the end date even if you watch 1 episode per day \n\n Advise: Change end date to \(numberOfEpisodesPerDay.endDateSuggestion)"
         }
-        else if numberOfEpisodesPerDay.episodesOnLastDay == 0 || numberOfEpisodesPerDay.episodesOnLastDay == numberOfEpisodesPerDay.episodesPerDay{
+        else if numberOfEpisodesPerDay.numberOfLastDays == 0 {
             textView.text = "You will watch \(numberOfEpisodesPerDay.episodesPerDay) episodes per day"
         }
         else {
-            textView.text = "You will watch \(numberOfEpisodesPerDay.episodesPerDay) episodes per day and \(numberOfEpisodesPerDay.episodesOnLastDay) episodes on the last day"
+            textView.text = "You will watch \(numberOfEpisodesPerDay.episodesPerDay) episodes per day and \(numberOfEpisodesPerDay.episodesPerDay + 1) episodes on the last \(numberOfEpisodesPerDay.numberOfLastDays) days "
         }
     }
     
@@ -112,7 +113,7 @@ class AddAnimeByDatesController: UIViewController {
         var answer: NumberOfEpisodes
         if (animeDetail.episodes ?? 1) % differenceInDays == 0 {
             numberOfEpisodesPerDay = (animeDetail.episodes ?? 1)/differenceInDays
-            answer = NumberOfEpisodes(episodesPerDay: numberOfEpisodesPerDay, episodesOnLastDay: 0, flag: 0, endDateSuggestion: "")
+            answer = NumberOfEpisodes(episodesPerDay: numberOfEpisodesPerDay, numberOfLastDays: 0, flag: 0, endDateSuggestion: "")
         }
         else if (animeDetail.episodes ?? 1) < differenceInDays {
             var dayComponent = DateComponents()
@@ -124,12 +125,12 @@ class AddAnimeByDatesController: UIViewController {
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .none
             let endDateStringSuggestion = dateFormatter.string(from: nextDate ?? endDatePicker.date)
-            answer = NumberOfEpisodes(episodesPerDay: 0, episodesOnLastDay: animeDetail.episodes ?? 1, flag: 1, endDateSuggestion: endDateStringSuggestion)
+            answer = NumberOfEpisodes(episodesPerDay: 0, numberOfLastDays: animeDetail.episodes ?? 1, flag: 1, endDateSuggestion: endDateStringSuggestion)
         }
         else {
             numberOfEpisodesPerDay = (animeDetail.episodes ?? 1)/differenceInDays
-            let episodesOnLastDay = ((animeDetail.episodes ?? 1) % differenceInDays) + numberOfEpisodesPerDay
-            answer = NumberOfEpisodes(episodesPerDay: numberOfEpisodesPerDay, episodesOnLastDay: episodesOnLastDay, flag: 0, endDateSuggestion: "")
+            let numberOfLastDays = (animeDetail.episodes ?? 1) % differenceInDays
+            answer = NumberOfEpisodes(episodesPerDay: numberOfEpisodesPerDay, numberOfLastDays: numberOfLastDays, flag: 0, endDateSuggestion: "")
         }
         return answer
     }
