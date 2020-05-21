@@ -310,23 +310,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yFN-ud-sWJ">
-                                <rect key="frame" x="186" y="117" width="42" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="HIII" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Lv4-PZ-7C0">
+                                <rect key="frame" x="37" y="147" width="347" height="129"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="347" id="q0k-hA-QKH"/>
+                                    <constraint firstAttribute="height" constant="129" id="yZE-AF-RqZ"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="yFN-ud-sWJ" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" id="5UZ-pb-4Yf"/>
-                            <constraint firstItem="yFN-ud-sWJ" firstAttribute="top" secondItem="UXX-1D-Wn8" secondAttribute="top" constant="29" id="mKR-ys-eDg"/>
+                            <constraint firstItem="Lv4-PZ-7C0" firstAttribute="top" secondItem="UXX-1D-Wn8" secondAttribute="top" constant="59" id="OhJ-rB-BCx"/>
+                            <constraint firstItem="Lv4-PZ-7C0" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="3.5" id="bRr-Fn-TcD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UXX-1D-Wn8"/>
                     </view>
                     <navigationItem key="navigationItem" id="Puv-4s-bCJ"/>
                     <connections>
-                        <outlet property="episodesFinishedLabel" destination="yFN-ud-sWJ" id="uJ4-Gp-uBt"/>
+                        <outlet property="episodesFinishedView" destination="Lv4-PZ-7C0" id="PfW-Mi-ISf"/>
                         <outlet property="navigationBar" destination="Puv-4s-bCJ" id="kne-IU-zm2"/>
                     </connections>
                 </viewController>
