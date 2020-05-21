@@ -34,6 +34,9 @@ class HomeViewController: UIViewController {
             self.currentlyWatchingTableView.reloadData()
         } catch {}
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         updateEpisodesFinished()
     }
     

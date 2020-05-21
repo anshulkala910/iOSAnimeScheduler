@@ -22,9 +22,12 @@ class CheckDetailsViewController: UIViewController {
         navigationBar.title = animeStored.title
         episodesFinishedView.isEditable = false
         episodesFinishedView.textAlignment = .center
-        episodesFinishedView.text = "You should be finished with \(animeStored.episodesFinished) episodes at the end of today"
         createNumberPad()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        episodesFinishedView.text = "You should be finished with \(animeStored.episodesFinished) episodes at the end of today"
     }
     
     func createNumberPad() {
