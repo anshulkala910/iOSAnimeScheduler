@@ -67,7 +67,7 @@ class AddAnimeByEpisodesController: UIViewController {
     
     @objc func doneButtonNumberPad(){
         let numberEpisodes = Int(numberOfEpisodes.text ?? "1")
-        if numberEpisodes! > animeDetail.episodes! {
+        if (numberEpisodes ?? 1) > animeDetail.episodes! {
             showAlert()
         }
         view.endEditing(true)

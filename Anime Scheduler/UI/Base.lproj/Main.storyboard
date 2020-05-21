@@ -310,7 +310,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="HIII" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Lv4-PZ-7C0">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Lv4-PZ-7C0">
                                 <rect key="frame" x="37" y="147" width="347" height="129"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
@@ -321,11 +321,46 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished more or less episodes? Update below!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymJ-IN-FIb">
+                                <rect key="frame" x="27" y="443" width="360" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished Episodes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ft0-bo-GqF">
+                                <rect key="frame" x="52" y="543" width="138" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buJ-Ht-7c3">
+                                <rect key="frame" x="185" y="704" width="51" height="30"/>
+                                <state key="normal" title="Update"/>
+                                <connections>
+                                    <action selector="update:" destination="P2Q-Rx-KdB" eventType="touchUpInside" id="bFv-Xb-tDW"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gU1-yI-CV9">
+                                <rect key="frame" x="288" y="536" width="50" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="WuR-gm-TdF"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="buJ-Ht-7c3" secondAttribute="bottom" constant="30" id="08c-x9-QXu"/>
+                            <constraint firstItem="gU1-yI-CV9" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="106" id="AM5-TR-2ol"/>
+                            <constraint firstItem="buJ-Ht-7c3" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="3.5" id="E9Y-A8-UBw"/>
+                            <constraint firstItem="ymJ-IN-FIb" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" id="JQa-zR-gjt"/>
+                            <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="ft0-bo-GqF" secondAttribute="bottom" constant="200" id="L1a-me-APO"/>
                             <constraint firstItem="Lv4-PZ-7C0" firstAttribute="top" secondItem="UXX-1D-Wn8" secondAttribute="top" constant="59" id="OhJ-rB-BCx"/>
+                            <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="gU1-yI-CV9" secondAttribute="bottom" constant="194" id="ZWU-SU-V9s"/>
                             <constraint firstItem="Lv4-PZ-7C0" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="3.5" id="bRr-Fn-TcD"/>
+                            <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="ymJ-IN-FIb" secondAttribute="bottom" constant="300" id="ccG-dU-tuz"/>
+                            <constraint firstItem="ft0-bo-GqF" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="-86" id="mgV-r1-VD4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UXX-1D-Wn8"/>
                     </view>
@@ -333,6 +368,8 @@
                     <connections>
                         <outlet property="episodesFinishedView" destination="Lv4-PZ-7C0" id="PfW-Mi-ISf"/>
                         <outlet property="navigationBar" destination="Puv-4s-bCJ" id="kne-IU-zm2"/>
+                        <outlet property="updateButton" destination="buJ-Ht-7c3" id="10j-wJ-1Np"/>
+                        <outlet property="updateFinishedEpisodesLabel" destination="gU1-yI-CV9" id="Eic-1t-jSj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kib-pt-lzl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -71,6 +71,7 @@ class HomeViewController: UIViewController {
         storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
         storedAnime.endDate = addAnimeEpisodesController.getEndDate()
         storedAnime.episodesFinished = 0
+        storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
         AppDelegate.saveContext()
         self.currentlyWatchingAnime.append(storedAnime)
         self.currentlyWatchingTableView.reloadData()
@@ -87,6 +88,7 @@ class HomeViewController: UIViewController {
         storedAnime.numberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
         storedAnime.endDate = addAnimeDatesController.endDatePicker.date
         storedAnime.episodesFinished = 0
+        storedAnime.episodes = Int16(addAnimeDatesController.animeDetail.episodes!)
         AppDelegate.saveContext()
         self.currentlyWatchingAnime.append(storedAnime)
         self.currentlyWatchingTableView.reloadData()
