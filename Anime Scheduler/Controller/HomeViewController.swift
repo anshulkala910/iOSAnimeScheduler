@@ -34,6 +34,31 @@ class HomeViewController: UIViewController {
             self.currentlyWatchingTableView.reloadData()
         } catch {}
         
+        updateEpisodesFinished()
+    }
+    
+    /**
+     This function will update the number of episodes finished each day 
+     */
+    func updateEpisodesFinished() {
+        let currentDate = Date()
+        //get every anime and determine the difference in days between current date and start date
+        //TO DO: Take care of special case when number of last days is reached
+        for anime in currentlyWatchingAnime{
+            let differenceFromCurrent = Calendar.current.dateComponents([.day], from: anime.startDate!, to: currentDate).day ?? 1
+            let durationOfWatch = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day ?? 1) + 1
+            let differenceInDays = (differenceFromCurrent) + 1
+            if (durationOfWatch - differenceInDays) < anime.numberOfLastDays {
+                let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
+                let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
+                let numberOfSpecialDays = Int16(differenceInDays) - numberOfNormalDays
+                let episodesDuringSpecialDays = numberOfSpecialDays * (anime.episodesPerDay + 1)
+                anime.episodesFinished = episodesDuringNormalDays + episodesDuringSpecialDays
+            }
+            else{
+                anime.episodesFinished = Int16(differenceInDays) * anime.episodesPerDay
+            }
+        }
     }
     
     @IBAction func unwindSegueFromEpisodes(_ sender: UIStoryboardSegue) {
@@ -45,6 +70,7 @@ class HomeViewController: UIViewController {
         storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
         storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
         storedAnime.endDate = addAnimeEpisodesController.getEndDate()
+        storedAnime.episodesFinished = 0
         AppDelegate.saveContext()
         self.currentlyWatchingAnime.append(storedAnime)
         self.currentlyWatchingTableView.reloadData()
@@ -60,6 +86,7 @@ class HomeViewController: UIViewController {
         storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes.episodesPerDay)
         storedAnime.numberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
         storedAnime.endDate = addAnimeDatesController.endDatePicker.date
+        storedAnime.episodesFinished = 0
         AppDelegate.saveContext()
         self.currentlyWatchingAnime.append(storedAnime)
         self.currentlyWatchingTableView.reloadData()
@@ -75,6 +102,12 @@ extension HomeViewController: UITableViewDelegate{
         if segue.identifier == "checkAnimeDetails" {
             let checkDetailsController = segue.destination as! CheckDetailsViewController
             checkDetailsController.animeStored = currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row]
+            
+            // These lines change the text of the back button item for the destination controller
+            let backButtonItem = UIBarButtonItem()
+            backButtonItem.title = "Home"
+            navigationItem.backBarButtonItem = backButtonItem
+            (currentlyWatchingTableView.cellForRow(at: currentlyWatchingTableView.indexPathForSelectedRow!))?.isSelected = false
         }
     }
     

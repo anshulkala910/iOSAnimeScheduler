@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="676"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="cell" textLabel="Ruf-u2-qXW" detailTextLabel="Kka-6y-NEd" imageView="gZk-Se-RZb" style="IBUITableViewCellStyleSubtitle" id="ShE-2M-e0J" customClass="HomeAnimeTableViewCell" customModule="Anime_Scheduler" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="cell" textLabel="Ruf-u2-qXW" detailTextLabel="Kka-6y-NEd" imageView="gZk-Se-RZb" style="IBUITableViewCellStyleSubtitle" id="ShE-2M-e0J" customClass="HomeAnimeTableViewCell" customModule="Anime_Scheduler" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ShE-2M-e0J" id="xs6-aE-OmY">
@@ -310,8 +310,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cl7-cl-Qsv">
-                                <rect key="frame" x="186" y="106" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yFN-ud-sWJ">
+                                <rect key="frame" x="186" y="117" width="42" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -319,19 +319,20 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Cl7-cl-Qsv" firstAttribute="top" secondItem="UXX-1D-Wn8" secondAttribute="top" constant="18" id="Ce4-Bj-n2N"/>
-                            <constraint firstItem="Cl7-cl-Qsv" firstAttribute="centerX" secondItem="NAJ-Ur-bph" secondAttribute="centerX" id="Psg-Gv-xvr"/>
+                            <constraint firstItem="yFN-ud-sWJ" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" id="5UZ-pb-4Yf"/>
+                            <constraint firstItem="yFN-ud-sWJ" firstAttribute="top" secondItem="UXX-1D-Wn8" secondAttribute="top" constant="29" id="mKR-ys-eDg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UXX-1D-Wn8"/>
                     </view>
                     <navigationItem key="navigationItem" id="Puv-4s-bCJ"/>
                     <connections>
-                        <outlet property="animeTitleLabeL" destination="Cl7-cl-Qsv" id="Vcb-wU-pZW"/>
+                        <outlet property="episodesFinishedLabel" destination="yFN-ud-sWJ" id="uJ4-Gp-uBt"/>
+                        <outlet property="navigationBar" destination="Puv-4s-bCJ" id="kne-IU-zm2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kib-pt-lzl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1009" y="890"/>
+            <point key="canvasLocation" x="1008.6956521739131" y="889.95535714285711"/>
         </scene>
         <!--Analysis-->
         <scene sceneID="ALf-hT-ovE">

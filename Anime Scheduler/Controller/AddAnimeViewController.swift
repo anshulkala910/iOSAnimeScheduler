@@ -48,6 +48,7 @@ extension AddAnimeViewController: UITableViewDelegate{
             let backButtonItem = UIBarButtonItem()
             backButtonItem.title = ""
             navigationItem.backBarButtonItem = backButtonItem
+            (animeSearchResults.cellForRow(at: animeSearchResults.indexPathForSelectedRow!))?.isSelected = false
         }
     }
 }

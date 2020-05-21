@@ -75,6 +75,9 @@ class AddAnimeByDatesController: UIViewController {
     }
     
     @objc func doneButtonPressedEndDate(){
+        if endDatePicker.date < startDatePicker.date {
+            showAlert()
+        }
         endDateTextField.text = getDateStringFromTextField(endDatePicker.date)
         view.endEditing(true)
     }
@@ -83,6 +86,13 @@ class AddAnimeByDatesController: UIViewController {
     //HELPER FUNCTIONS
     private func getDateStringFromTextField(_ date: Date) -> String{
         return dateFormatter.string(from: date)
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "Error", message: "Invalid End Date: Please enter a date that is after the start date ", preferredStyle: .alert)
+        let dismiss = UIAlertAction.init(title: "Dismiss", style: .default , handler: nil)
+        alert.addAction(dismiss)
+        present(alert, animated: true, completion: nil)
     }
     
     //HELPER FUNCTIONS END

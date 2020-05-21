@@ -21,7 +21,6 @@ class AddingAnimeFormController: UIViewController {
         super.viewDidLoad()
         let animeName = "\"\(animeDetail.title ?? "...")\""
         navigationBar.title = "Adding \(animeName)"
-        navigationBar.backBarButtonItem?.title = " "
         byDatesView.alpha = 1
         byEpisodesView.alpha = 0
     }

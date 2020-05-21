@@ -10,23 +10,17 @@ import UIKit
 
 class CheckDetailsViewController: UIViewController {
 
+    @IBOutlet weak var navigationBar: UINavigationItem!
+    @IBOutlet weak var episodesFinishedLabel: UILabel!
+    
     var animeStored: StoredAnime!
-    @IBOutlet weak var animeTitleLabeL: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        animeTitleLabeL.text = animeStored.title
-        // Do any additional setup after loading the view.
+        navigationBar.title = animeStored.title
+        episodesFinishedLabel.text = "You should be finished with \(animeStored.episodesFinished) episodes at the end of today"
+        
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
