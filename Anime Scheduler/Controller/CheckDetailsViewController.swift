@@ -12,37 +12,42 @@ class CheckDetailsViewController: UIViewController {
 
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var episodesFinishedView: UITextView!
-    @IBOutlet weak var updateFinishedEpisodesLabel: UITextField!
+    @IBOutlet weak var updateFinishedEpisodesField: UITextField!
     @IBOutlet weak var updateButton: UIButton!
+    @IBOutlet weak var slider: UISwitch!
+    @IBOutlet weak var field: UITextField!
+    @IBOutlet weak var label: UILabel!
     
     var animeStored: StoredAnime!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBar.title = animeStored.title
+        slider.isOn = false
+        label.text = "Episodes/day"
+        label.textAlignment = .center
         episodesFinishedView.isEditable = false
         episodesFinishedView.textAlignment = .center
-        createNumberPad()
-        
+        createNumberPadEpisodesFinished()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         episodesFinishedView.text = "You should be finished with \(animeStored.episodesFinished) episodes at the end of today"
     }
     
-    func createNumberPad() {
-        updateFinishedEpisodesLabel.placeholder = "1"
-        updateFinishedEpisodesLabel.textAlignment = .center
+    func createNumberPadEpisodesFinished() {
+        updateFinishedEpisodesField.placeholder = "1"
+        updateFinishedEpisodesField.textAlignment = .center
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonNumberPad))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonEpisodesFinished))
         toolbar.setItems([doneButton], animated: true)
-        updateFinishedEpisodesLabel.inputAccessoryView = toolbar
+        updateFinishedEpisodesField.inputAccessoryView = toolbar
     }
     
-    @objc func doneButtonNumberPad(){
-        let numberEpisodes = Int(updateFinishedEpisodesLabel.text ?? "1")
+    @objc func doneButtonEpisodesFinished(){
+        let numberEpisodes = Int(updateFinishedEpisodesField.text ?? "1")
         if (numberEpisodes ?? 1) > animeStored.episodes {
             showAlert()
         }
@@ -58,13 +63,22 @@ class CheckDetailsViewController: UIViewController {
     }
     
     @IBAction func update(_ sender: Any) {
-        let episodesFinished = Int16(updateFinishedEpisodesLabel.text ?? "1")
+        let episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1")
         animeStored.episodesFinished = episodesFinished ?? 1
         updateOtherAttributes()
     }
     
     private func updateOtherAttributes() {
          
+    }
+    
+    @IBAction func enableUpdateByDates(_ sender: Any) {
+        if slider.isOn {
+            label.text = "End Date"
+        }
+        else {
+            label.text = "Episodes/day"
+        }
     }
     
 }

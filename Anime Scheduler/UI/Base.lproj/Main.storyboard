@@ -311,65 +311,107 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Lv4-PZ-7C0">
-                                <rect key="frame" x="37" y="147" width="347" height="129"/>
+                                <rect key="frame" x="37" y="113" width="347" height="90"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="347" id="q0k-hA-QKH"/>
-                                    <constraint firstAttribute="height" constant="129" id="yZE-AF-RqZ"/>
+                                    <constraint firstAttribute="height" constant="90" id="yZE-AF-RqZ"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished more or less episodes? Update below!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymJ-IN-FIb">
-                                <rect key="frame" x="27" y="443" width="360" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished Episodes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ft0-bo-GqF">
-                                <rect key="frame" x="52" y="543" width="138" height="21"/>
+                                <rect key="frame" x="52" y="288" width="138" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buJ-Ht-7c3">
-                                <rect key="frame" x="185" y="704" width="51" height="30"/>
+                                <rect key="frame" x="185" y="714" width="51" height="30"/>
                                 <state key="normal" title="Update"/>
                                 <connections>
                                     <action selector="update:" destination="P2Q-Rx-KdB" eventType="touchUpInside" id="bFv-Xb-tDW"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gU1-yI-CV9">
-                                <rect key="frame" x="288" y="536" width="50" height="34"/>
+                                <rect key="frame" x="302" y="282" width="50" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="WuR-gm-TdF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished more/less episodes? Update below!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymJ-IN-FIb">
+                                <rect key="frame" x="36.5" y="211" width="341" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update by End Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIx-aH-K1G">
+                                <rect key="frame" x="46" y="375" width="154" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Date" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jh-Ww-cHM">
+                                <rect key="frame" x="52" y="462" width="107" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="Azz-nX-Af2"/>
+                                    <constraint firstAttribute="width" constant="107" id="Wz0-cx-pTd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcg-n1-y9b">
+                                <rect key="frame" x="303" y="370" width="51" height="31"/>
+                                <connections>
+                                    <action selector="enableUpdateByDates:" destination="P2Q-Rx-KdB" eventType="valueChanged" id="7fS-8W-qS3"/>
+                                </connections>
+                            </switch>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M7K-Rn-JyD">
+                                <rect key="frame" x="266" y="455" width="102" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="102" id="BsA-0D-sdB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="buJ-Ht-7c3" secondAttribute="bottom" constant="30" id="08c-x9-QXu"/>
-                            <constraint firstItem="gU1-yI-CV9" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="106" id="AM5-TR-2ol"/>
+                            <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="buJ-Ht-7c3" secondAttribute="bottom" constant="20" id="08c-x9-QXu"/>
+                            <constraint firstItem="gU1-yI-CV9" firstAttribute="top" secondItem="ymJ-IN-FIb" secondAttribute="bottom" constant="50" id="8jS-ct-D5g"/>
+                            <constraint firstItem="gU1-yI-CV9" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="120" id="AM5-TR-2ol"/>
+                            <constraint firstItem="9Jh-Ww-cHM" firstAttribute="top" secondItem="hIx-aH-K1G" secondAttribute="bottom" constant="66" id="DUb-68-HTl"/>
                             <constraint firstItem="buJ-Ht-7c3" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="3.5" id="E9Y-A8-UBw"/>
+                            <constraint firstItem="fcg-n1-y9b" firstAttribute="leading" secondItem="hIx-aH-K1G" secondAttribute="trailing" constant="103" id="FFt-QO-S85"/>
+                            <constraint firstItem="UXX-1D-Wn8" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9Jh-Ww-cHM" secondAttribute="trailing" symbolic="YES" id="HUv-h0-cLC"/>
+                            <constraint firstItem="M7K-Rn-JyD" firstAttribute="leading" secondItem="9Jh-Ww-cHM" secondAttribute="trailing" constant="107" id="Hec-vc-Mi5"/>
                             <constraint firstItem="ymJ-IN-FIb" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" id="JQa-zR-gjt"/>
-                            <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="ft0-bo-GqF" secondAttribute="bottom" constant="200" id="L1a-me-APO"/>
-                            <constraint firstItem="Lv4-PZ-7C0" firstAttribute="top" secondItem="UXX-1D-Wn8" secondAttribute="top" constant="59" id="OhJ-rB-BCx"/>
-                            <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="gU1-yI-CV9" secondAttribute="bottom" constant="194" id="ZWU-SU-V9s"/>
+                            <constraint firstItem="ft0-bo-GqF" firstAttribute="top" secondItem="ymJ-IN-FIb" secondAttribute="bottom" constant="56" id="NHd-9q-RSe"/>
+                            <constraint firstItem="Lv4-PZ-7C0" firstAttribute="top" secondItem="UXX-1D-Wn8" secondAttribute="top" constant="25" id="OhJ-rB-BCx"/>
                             <constraint firstItem="Lv4-PZ-7C0" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="3.5" id="bRr-Fn-TcD"/>
-                            <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="ymJ-IN-FIb" secondAttribute="bottom" constant="300" id="ccG-dU-tuz"/>
+                            <constraint firstItem="ymJ-IN-FIb" firstAttribute="top" secondItem="Lv4-PZ-7C0" secondAttribute="bottom" priority="250" constant="8" symbolic="YES" id="eej-4Q-Yel"/>
+                            <constraint firstItem="9Jh-Ww-cHM" firstAttribute="leading" secondItem="UXX-1D-Wn8" secondAttribute="leading" constant="52" id="fCI-WZ-Q3k"/>
+                            <constraint firstItem="hIx-aH-K1G" firstAttribute="top" secondItem="ft0-bo-GqF" secondAttribute="bottom" constant="66" id="i4r-fd-2TK"/>
                             <constraint firstItem="ft0-bo-GqF" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="-86" id="mgV-r1-VD4"/>
+                            <constraint firstItem="hIx-aH-K1G" firstAttribute="centerX" secondItem="UXX-1D-Wn8" secondAttribute="centerX" constant="-84" id="q7t-Fr-hEJ"/>
+                            <constraint firstItem="M7K-Rn-JyD" firstAttribute="top" secondItem="fcg-n1-y9b" secondAttribute="bottom" constant="54" id="qqL-51-BDW"/>
+                            <constraint firstItem="fcg-n1-y9b" firstAttribute="top" secondItem="gU1-yI-CV9" secondAttribute="bottom" constant="54" id="sTF-rv-JYe"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UXX-1D-Wn8"/>
                     </view>
                     <navigationItem key="navigationItem" id="Puv-4s-bCJ"/>
                     <connections>
                         <outlet property="episodesFinishedView" destination="Lv4-PZ-7C0" id="PfW-Mi-ISf"/>
+                        <outlet property="field" destination="M7K-Rn-JyD" id="zNH-EU-v8U"/>
+                        <outlet property="label" destination="9Jh-Ww-cHM" id="LXd-IT-mR0"/>
                         <outlet property="navigationBar" destination="Puv-4s-bCJ" id="kne-IU-zm2"/>
+                        <outlet property="slider" destination="fcg-n1-y9b" id="HeO-fz-W79"/>
                         <outlet property="updateButton" destination="buJ-Ht-7c3" id="10j-wJ-1Np"/>
-                        <outlet property="updateFinishedEpisodesLabel" destination="gU1-yI-CV9" id="Eic-1t-jSj"/>
+                        <outlet property="updateFinishedEpisodesField" destination="gU1-yI-CV9" id="wz1-wm-xvl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kib-pt-lzl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
