@@ -19,6 +19,9 @@ class CheckDetailsViewController: UIViewController {
     @IBOutlet weak var label: UILabel!
     
     var animeStored: StoredAnime!
+    let datePicker = UIDatePicker()
+    let dateFormatter = DateFormatter()
+    let controller = AddAnimeViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +29,13 @@ class CheckDetailsViewController: UIViewController {
         slider.isOn = false
         label.text = "Episodes/day"
         label.textAlignment = .center
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
         episodesFinishedView.isEditable = false
+        field.textAlignment = .center
         episodesFinishedView.textAlignment = .center
         createNumberPadEpisodesFinished()
+        createNumberPadEpisodesPerDay()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,14 +56,33 @@ class CheckDetailsViewController: UIViewController {
     @objc func doneButtonEpisodesFinished(){
         let numberEpisodes = Int(updateFinishedEpisodesField.text ?? "1")
         if (numberEpisodes ?? 1) > animeStored.episodes {
-            showAlert()
+            showAlert("Invalid Number: Please enter a number that is less than \((animeStored.episodes) + 1)")
         }
         view.endEditing(true)
     }
     
+    func createNumberPadEpisodesPerDay() {
+        field.placeholder = "1"
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        field.keyboardType = .numberPad
+        field.inputView = .none
+        field.inputAccessoryView = .none
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonEpisodesPerDay))
+        toolbar.setItems([doneButton], animated: true)
+        field.inputAccessoryView = toolbar
+    }
     
-    func showAlert() {
-        let alert = UIAlertController(title: "Error", message: "Invalid Number: Please enter a number that is less than \((animeStored.episodes) + 1) ", preferredStyle: .alert)
+    @objc func doneButtonEpisodesPerDay(){
+        let episodesPerDay = Int(field.text ?? "1")
+        if (episodesPerDay ?? 1) > (animeStored.episodes - Int16(updateFinishedEpisodesField.text ?? "1")!) {
+            showAlert("Invalid Number: Please enter a number that is less than \((animeStored.episodes - Int16(updateFinishedEpisodesField.text!)!))")
+        }
+        view.endEditing(true)
+    }
+    
+    func showAlert(_ message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let dismiss = UIAlertAction.init(title: "Dismiss", style: .default , handler: nil)
         alert.addAction(dismiss)
         present(alert, animated: true, completion: nil)
@@ -72,12 +98,46 @@ class CheckDetailsViewController: UIViewController {
          
     }
     
+    func createDatePicker() {
+        field.placeholder = getCurrentDate()
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonPressedDate))
+        toolbar.setItems([doneButton], animated: true)
+        field.inputAccessoryView = toolbar
+        field.inputView = datePicker
+        datePicker.datePickerMode = .date
+    }
+    
+    @objc func doneButtonPressedDate(){
+        field.text = getDateStringFromTextField(datePicker.date)
+        view.endEditing(true)
+    }
+    
+    private func getDateStringFromTextField(_ date: Date) -> String{
+        return dateFormatter.string(from: date)
+    }
+    
+    func getCurrentDate() -> String {
+        let currentDate = Date()
+        return getDateStringFromTextField(currentDate)
+    }
+    
+    private func clearField (_ fieldRemoved: UITextField){
+        fieldRemoved.text?.removeAll()
+    }
+    
     @IBAction func enableUpdateByDates(_ sender: Any) {
         if slider.isOn {
             label.text = "End Date"
+            clearField(field)
+            createDatePicker()
         }
         else {
             label.text = "Episodes/day"
+            clearField(field)
+            createNumberPadEpisodesPerDay()
         }
     }
     
