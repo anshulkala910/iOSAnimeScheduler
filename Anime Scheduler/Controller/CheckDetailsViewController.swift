@@ -115,6 +115,7 @@ class CheckDetailsViewController: UIViewController {
             updatedEndDate = endDate
             let endDateString = dateFormatter.string(from: endDate)
             textView.text = "You will finish \(animeStored.title ?? "...") on \(endDateString)"
+            animeStored.episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1") ?? 1
         }
     }
     

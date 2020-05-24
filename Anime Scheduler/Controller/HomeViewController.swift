@@ -96,6 +96,18 @@ class HomeViewController: UIViewController {
         self.currentlyWatchingAnime.append(storedAnime)
         self.currentlyWatchingTableView.reloadData()
     }
+    
+    //NEED FIX
+    @IBAction func unwindSegueFromUpdate(_ sender: UIStoryboardSegue){
+        let updateCotnroller = sender.source as! CheckDetailsViewController
+        let updatedStoredAnime = updateCotnroller.animeStored
+        let anime = currentlyWatchingAnime.first
+        anime!.episodesFinished = updatedStoredAnime?.episodesFinished as! Int16
+        print(updatedStoredAnime?.episodesFinished)
+        print(currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row].episodesFinished)
+        AppDelegate.saveContext()
+        self.currentlyWatchingTableView.reloadData()
+    }
 }
 
 extension HomeViewController: UITableViewDelegate{
@@ -107,7 +119,7 @@ extension HomeViewController: UITableViewDelegate{
         if segue.identifier == "checkAnimeDetails" {
             let checkDetailsController = segue.destination as! CheckDetailsViewController
             checkDetailsController.animeStored = currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row]
-            
+            print(currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row].episodesFinished)
             // These lines change the text of the back button item for the destination controller
             let backButtonItem = UIBarButtonItem()
             backButtonItem.title = "Home"
