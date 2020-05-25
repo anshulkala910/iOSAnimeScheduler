@@ -33,10 +33,6 @@ class HomeViewController: UIViewController {
             self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
             self.currentlyWatchingTableView.reloadData()
         } catch {}
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         updateEpisodesFinished()
     }
     
@@ -56,10 +52,10 @@ class HomeViewController: UIViewController {
                 let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
                 let numberOfSpecialDays = Int16(differenceInDays) - numberOfNormalDays
                 let episodesDuringSpecialDays = numberOfSpecialDays * (anime.episodesPerDay + 1)
-                anime.episodesFinished = episodesDuringNormalDays + episodesDuringSpecialDays
+                anime.episodesFinished += episodesDuringNormalDays + episodesDuringSpecialDays
             }
             else{
-                anime.episodesFinished = Int16(differenceInDays) * anime.episodesPerDay
+                anime.episodesFinished += Int16(differenceInDays) * anime.episodesPerDay
             }
         }
     }
@@ -101,10 +97,7 @@ class HomeViewController: UIViewController {
     @IBAction func unwindSegueFromUpdate(_ sender: UIStoryboardSegue){
         let updateCotnroller = sender.source as! CheckDetailsViewController
         let updatedStoredAnime = updateCotnroller.animeStored
-        let anime = currentlyWatchingAnime.first
-        anime!.episodesFinished = updatedStoredAnime?.episodesFinished as! Int16
-        print(updatedStoredAnime?.episodesFinished)
-        print(currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row].episodesFinished)
+        currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row] = updatedStoredAnime!
         AppDelegate.saveContext()
         self.currentlyWatchingTableView.reloadData()
     }
@@ -119,7 +112,6 @@ extension HomeViewController: UITableViewDelegate{
         if segue.identifier == "checkAnimeDetails" {
             let checkDetailsController = segue.destination as! CheckDetailsViewController
             checkDetailsController.animeStored = currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row]
-            print(currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row].episodesFinished)
             // These lines change the text of the back button item for the destination controller
             let backButtonItem = UIBarButtonItem()
             backButtonItem.title = "Home"

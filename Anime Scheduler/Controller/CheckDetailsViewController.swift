@@ -120,15 +120,15 @@ class CheckDetailsViewController: UIViewController {
     }
     
     @IBAction func update(_ sender: Any) {
+        animeStored.startDate = getTomorrowsDate()
+        animeStored.episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1") ?? 1
         if slider.isOn{
             animeStored.endDate = datePicker.date
-            animeStored.episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1") ?? 1
             animeStored.episodesPerDay = updateEpisodesPerDay
             animeStored.numberOfLastDays = Int16(updatedLastDays)
         }
         else {
             animeStored.endDate = updatedEndDate
-            animeStored.episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1") ?? 1
             animeStored.episodesPerDay = Int16(field.text ?? "1") ?? 1
         }
     }
