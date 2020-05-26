@@ -39,6 +39,7 @@ class CheckDetailsViewController: UIViewController {
         dateFormatter.timeStyle = .none
         episodesFinishedView.isEditable = false
         field.textAlignment = .center
+        textView.isEditable = false
         episodesFinishedView.textAlignment = .center
         createNumberPadEpisodesFinished()
         createNumberPadEpisodesPerDay()

@@ -33,9 +33,27 @@ class HomeViewController: UIViewController {
             self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
             self.currentlyWatchingTableView.reloadData()
         } catch {}
-        updateEpisodesFinished()
+        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        updateEpisodesFinished()
+        updateUpdatedFlag()
+    }
+    
+    
+    func updateUpdatedFlag() {
+        let currentDate = Date()
+        for anime in currentlyWatchingAnime {
+            let dateComparator = Calendar.current.compare(currentDate, to: anime.dateEpisodesFinishedUpdatedOn!, toGranularity: .day)
+            if (dateComparator == .orderedSame){
+                anime.updatedFlag = true
+            }
+            else {
+                anime.updatedFlag = false
+            }
+        }
+    }
     /**
      This function will update the number of episodes finished each day 
      */
@@ -44,19 +62,27 @@ class HomeViewController: UIViewController {
         //get every anime and determine the difference in days between current date and start date
         //TO DO: Take care of special case when number of last days is reached
         for anime in currentlyWatchingAnime{
-            let differenceFromCurrent = Calendar.current.dateComponents([.day], from: anime.startDate!, to: currentDate).day ?? 1
+            if anime.updatedFlag == true {
+                continue
+            }
+            var differenceFromCurrent = Calendar.current.dateComponents([.day], from: anime.dateEpisodesFinishedUpdatedOn!, to: currentDate).day ?? 1
             let durationOfWatch = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day ?? 1) + 1
-            let differenceInDays = (differenceFromCurrent) + 1
-            if (durationOfWatch - differenceInDays) < anime.numberOfLastDays {
+            let dateComparison = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
+            if (differenceFromCurrent != 0 || dateComparison == .orderedSame ){
+                differenceFromCurrent += 1
+            }
+            if (durationOfWatch - differenceFromCurrent) < anime.numberOfLastDays {
                 let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
                 let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
-                let numberOfSpecialDays = Int16(differenceInDays) - numberOfNormalDays
+                let numberOfSpecialDays = Int16(differenceFromCurrent) - numberOfNormalDays
                 let episodesDuringSpecialDays = numberOfSpecialDays * (anime.episodesPerDay + 1)
                 anime.episodesFinished += episodesDuringNormalDays + episodesDuringSpecialDays
             }
             else{
-                anime.episodesFinished += Int16(differenceInDays) * anime.episodesPerDay
+                anime.episodesFinished += Int16(differenceFromCurrent) * anime.episodesPerDay
             }
+            anime.dateEpisodesFinishedUpdatedOn = currentDate
+            anime.updatedFlag = true
         }
     }
     
@@ -71,6 +97,8 @@ class HomeViewController: UIViewController {
         storedAnime.endDate = addAnimeEpisodesController.getEndDate()
         storedAnime.episodesFinished = 0
         storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
+        storedAnime.dateEpisodesFinishedUpdatedOn = storedAnime.startDate
+        storedAnime.updatedFlag = false
         AppDelegate.saveContext()
         self.currentlyWatchingAnime.append(storedAnime)
         self.currentlyWatchingTableView.reloadData()
@@ -88,18 +116,27 @@ class HomeViewController: UIViewController {
         storedAnime.endDate = addAnimeDatesController.endDatePicker.date
         storedAnime.episodesFinished = 0
         storedAnime.episodes = Int16(addAnimeDatesController.animeDetail.episodes!)
+        storedAnime.dateEpisodesFinishedUpdatedOn = storedAnime.startDate
+        storedAnime.updatedFlag = false
         AppDelegate.saveContext()
         self.currentlyWatchingAnime.append(storedAnime)
         self.currentlyWatchingTableView.reloadData()
     }
     
-    //NEED FIX
+    
     @IBAction func unwindSegueFromUpdate(_ sender: UIStoryboardSegue){
         let updateCotnroller = sender.source as! CheckDetailsViewController
         let updatedStoredAnime = updateCotnroller.animeStored
+        updatedStoredAnime!.dateEpisodesFinishedUpdatedOn = updatedStoredAnime!.startDate
+        updatedStoredAnime?.updatedFlag = false
         currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row] = updatedStoredAnime!
         AppDelegate.saveContext()
         self.currentlyWatchingTableView.reloadData()
+    }
+    private func getEarlyDate() -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        return formatter.date(from: "1970/12/31 23:59") ?? Date()
     }
 }
 
