@@ -12,18 +12,20 @@ class AddAnimeViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var animeSearchResults: UITableView!
-    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
 
     var listOfAnimes = [AnimeDetail](){
         didSet{
             DispatchQueue.main.async {
                 self.animeSearchResults.reloadData()
+                self.spinner.stopAnimating()
             }
         }
     }
             
     override func viewDidLoad() {
         super.viewDidLoad()
+        spinner.color = .label
         animeSearchResults.delegate = self
         animeSearchResults.dataSource = self
         searchBar.delegate = self
@@ -80,6 +82,7 @@ extension AddAnimeViewController: UITableViewDataSource{
 
 extension AddAnimeViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        spinner.startAnimating()
         guard let searchBarText = searchBar.text else { return}
         let animeRequest = AnimeRequest(animeName: searchBarText)
         animeRequest.getAnimes {[weak self] result in

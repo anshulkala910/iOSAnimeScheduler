@@ -150,6 +150,10 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="4hx-QJ-8YM">
+                                <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
+                                <color key="color" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -157,6 +161,8 @@
                             <constraint firstItem="HfN-cV-6Nt" firstAttribute="top" secondItem="QRK-zK-ItK" secondAttribute="bottom" id="HZn-yf-xzh"/>
                             <constraint firstItem="HfN-cV-6Nt" firstAttribute="centerX" secondItem="Zic-U3-WMi" secondAttribute="centerX" id="QRz-7H-g3y"/>
                             <constraint firstItem="QRK-zK-ItK" firstAttribute="trailing" secondItem="Wxf-Pe-3p9" secondAttribute="trailing" id="XB8-Z4-b3k"/>
+                            <constraint firstItem="4hx-QJ-8YM" firstAttribute="centerY" secondItem="HfN-cV-6Nt" secondAttribute="centerY" constant="-6" id="Xmx-eX-EOO"/>
+                            <constraint firstItem="4hx-QJ-8YM" firstAttribute="centerX" secondItem="HfN-cV-6Nt" secondAttribute="centerX" id="bEG-sa-Ho4"/>
                             <constraint firstItem="HfN-cV-6Nt" firstAttribute="leading" secondItem="QRK-zK-ItK" secondAttribute="leading" id="jkc-Ne-kVO"/>
                             <constraint firstItem="QRK-zK-ItK" firstAttribute="top" secondItem="Wxf-Pe-3p9" secondAttribute="top" id="qlA-xK-luF"/>
                             <constraint firstItem="HfN-cV-6Nt" firstAttribute="trailing" secondItem="Wxf-Pe-3p9" secondAttribute="trailing" id="zCy-5n-tVj"/>
@@ -167,6 +173,7 @@
                     <connections>
                         <outlet property="animeSearchResults" destination="HfN-cV-6Nt" id="qRq-em-EvU"/>
                         <outlet property="searchBar" destination="QRK-zK-ItK" id="VW8-hd-D4n"/>
+                        <outlet property="spinner" destination="4hx-QJ-8YM" id="125-WW-gND"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RBP-gn-Gie" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
