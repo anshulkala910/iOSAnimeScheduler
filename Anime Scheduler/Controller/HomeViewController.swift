@@ -41,7 +41,6 @@ class HomeViewController: UIViewController {
         updateUpdatedFlag()
     }
     
-    
     func updateUpdatedFlag() {
         let currentDate = Date()
         for anime in currentlyWatchingAnime {

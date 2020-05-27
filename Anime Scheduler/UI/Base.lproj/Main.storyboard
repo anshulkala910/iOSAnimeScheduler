@@ -274,18 +274,65 @@
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="dataSource" destination="glB-dN-rcT" id="WYZ-JU-w4P"/>
+                                    <outlet property="delegate" destination="glB-dN-rcT" id="wzP-3k-h0B"/>
+                                </connections>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LdB-x2-KT1">
+                                <rect key="frame" x="0.0" y="352" width="414" height="461"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="NH2-Iq-vAJ" detailTextLabel="exu-Mj-RDJ" imageView="TYC-tj-UNw" style="IBUITableViewCellStyleSubtitle" id="TWi-c4-u0m" customClass="HomeAnimeTableViewCell" customModule="Anime_Scheduler" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TWi-c4-u0m" id="q0I-Zy-u7e">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NH2-Iq-vAJ">
+                                                    <rect key="frame" x="59" y="10" width="33.5" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="exu-Mj-RDJ">
+                                                    <rect key="frame" x="59" y="31.5" width="44" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="pencil.circle.fill" catalog="system" id="TYC-tj-UNw">
+                                                    <rect key="frame" x="22" y="18" width="20" height="19"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="glB-dN-rcT" id="A0b-7u-lh4"/>
+                                    <outlet property="delegate" destination="glB-dN-rcT" id="a0V-GK-ngZ"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="uEV-WV-nS0" firstAttribute="bottom" secondItem="LdB-x2-KT1" secondAttribute="bottom" id="9f8-CA-b58"/>
+                            <constraint firstItem="LdB-x2-KT1" firstAttribute="centerX" secondItem="uEV-WV-nS0" secondAttribute="centerX" id="HLz-LF-zgw"/>
+                            <constraint firstItem="LdB-x2-KT1" firstAttribute="leading" secondItem="6gO-q4-WgZ" secondAttribute="leading" id="LuC-xl-zlg"/>
                             <constraint firstItem="6gO-q4-WgZ" firstAttribute="leading" secondItem="uEV-WV-nS0" secondAttribute="leading" id="Pfv-AQ-V1P"/>
                             <constraint firstItem="6gO-q4-WgZ" firstAttribute="top" secondItem="uEV-WV-nS0" secondAttribute="top" id="hri-dd-3wz"/>
+                            <constraint firstItem="LdB-x2-KT1" firstAttribute="top" secondItem="6gO-q4-WgZ" secondAttribute="bottom" constant="8" id="xgh-XA-rhW"/>
                             <constraint firstItem="6gO-q4-WgZ" firstAttribute="centerX" secondItem="glB-dN-rcT" secondAttribute="centerX" id="xpL-Gf-nvO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uEV-WV-nS0"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Calendar" image="calendar" catalog="system" id="awt-fi-pS8"/>
                     <connections>
+                        <outlet property="animeWatchingTableView" destination="LdB-x2-KT1" id="nDV-Aw-Rsu"/>
                         <outlet property="calendar" destination="6gO-q4-WgZ" id="CSi-Xw-g3C"/>
                     </connections>
                 </viewController>
@@ -482,7 +529,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="RwK-1s-EdC" kind="relationship" relationship="viewControllers" id="Rxc-dk-Scu"/>
-                        <segue destination="W7R-28-x3z" kind="relationship" relationship="viewControllers" id="vXR-Vz-Gjz"/>
+                        <segue destination="W7R-28-x3z" kind="relationship" relationship="viewControllers" destinationCreationSelector="segueToCalendar" id="vXR-Vz-Gjz"/>
                         <segue destination="CGP-qN-aJJ" kind="relationship" relationship="viewControllers" id="icg-GE-PlC"/>
                         <segue destination="z4j-rl-i82" kind="relationship" relationship="viewControllers" id="K4m-5b-VLZ"/>
                     </connections>
