@@ -24,6 +24,7 @@ class CalendarViewController: UIViewController {
         calendar.dataSource = self
         animeWatchingTableView.delegate = self
         animeWatchingTableView.dataSource = self
+        animeWatchingTableView.allowsSelection = false
         let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
         
         //gets the saved list from Core Data everytime the app is run
@@ -67,11 +68,16 @@ extension CalendarViewController: FSCalendarDelegate{
 }
 
 extension CalendarViewController: FSCalendarDataSource {
-
+    
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        for anime in currentlyWatchingAnime {
+            if date.compare(anime.startDate!) == .orderedDescending && date.compare(anime.endDate!) == .orderedAscending {
+                return 1
+            }
+        }
         return 0
     }
-
+    
 }
 
 extension CalendarViewController: UITableViewDelegate{
@@ -90,7 +96,7 @@ extension CalendarViewController: UITableViewDataSource{
         let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
         cell.animeImage.image = UIImage(data: data!)
         cell.titleLabel.text = anime.title
-        cell.detailLabel.text = "\(anime.episodesPerDay ) episodes"
+        cell.detailLabel.text = "\(anime.episodesPerDay ) episodes" //TO DO: NEED TO CHANGE ACC. TO +1 EPISODES/DAY
         cell.titleLabel.sizeToFit()
         return cell
     }

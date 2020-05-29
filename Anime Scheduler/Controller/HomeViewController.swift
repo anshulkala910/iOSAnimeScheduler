@@ -177,7 +177,7 @@ extension HomeViewController: UITableViewDataSource{
         let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
         cell.animeImage.image = UIImage(data: data!)
         cell.titleLabel.text = anime.title
-        cell.detailLabel.text = "\(anime.episodesPerDay ) episodes/day"
+        cell.detailLabel.text = "\(anime.episodesPerDay ) episodes/day" //TO DO: NEED TO CHANGE ACC. TO +1 EPISODES/DAY
         cell.titleLabel.sizeToFit()
         return cell
     }
