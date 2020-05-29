@@ -15,7 +15,6 @@ class CalendarViewController: UIViewController {
     @IBOutlet var calendar: FSCalendar!
     @IBOutlet weak var animeWatchingTableView: UITableView!
     
-    var dateSelected: Date!
     var currentlyWatchingAnime = [StoredAnime]()
     var animeOnMonth = [StoredAnime]()
     
@@ -32,30 +31,27 @@ class CalendarViewController: UIViewController {
             let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
             self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
         } catch {}
-        dateSelected = calendar.today
-        populateMonthAnime()
+        populateMonthAnime(calendar!.today!)
     }
     
     /**
      This function is called when a certain date is selected
      */
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        dateSelected = date
-        populateMonthAnime()
+        populateMonthAnime(date)
     }
     
     /**
      This function is called when a certain date is deselected
      */
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        dateSelected = calendar.today
-        populateMonthAnime() // populate the array showing animes for TODAY
+        populateMonthAnime(calendar.today!) // populate the array showing animes for TODAY
     }
     
-    private func populateMonthAnime() {
+    private func populateMonthAnime(_ date: Date) {
         animeOnMonth.removeAll()
         for anime in currentlyWatchingAnime {
-            if dateSelected.compare(anime.startDate!) == .orderedDescending && dateSelected.compare(anime.endDate!) == .orderedAscending {
+            if date.compare(anime.startDate!) == .orderedDescending && date.compare(anime.endDate!) == .orderedAscending {
                 animeOnMonth.append(anime)
             }
         }
