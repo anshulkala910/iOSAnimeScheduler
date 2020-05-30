@@ -54,7 +54,7 @@ class CalendarViewController: UIViewController {
         for anime in currentlyWatchingAnime {
             let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
             let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
-            if startDateComparator == .orderedDescending && endDateComparator == .orderedAscending {
+            if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
                 animeOnMonth.append(anime)
             }
         }
@@ -75,7 +75,7 @@ extension CalendarViewController: FSCalendarDataSource {
         for anime in currentlyWatchingAnime {
             let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
             let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
-            if startDateComparator == .orderedDescending && endDateComparator == .orderedAscending {
+            if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
                 return 1
             }
         }
