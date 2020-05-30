@@ -132,11 +132,6 @@ class HomeViewController: UIViewController {
         AppDelegate.saveContext()
         self.currentlyWatchingTableView.reloadData()
     }
-    private func getEarlyDate() -> Date {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        return formatter.date(from: "1970/12/31 23:59") ?? Date()
-    }
 }
 
 extension HomeViewController: UITableViewDelegate{
