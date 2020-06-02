@@ -106,8 +106,8 @@
 				B4136FA12469ADD200F8D1A5 /* Model */,
 				B4136FA02469ADBB00F8D1A5 /* UI */,
 				B4136F9E2469AD8200F8D1A5 /* Controller */,
-				B4136F862469856800F8D1A5 /* SceneDelegate.swift */,
 				B4136F842469856800F8D1A5 /* AppDelegate.swift */,
+				B4136F862469856800F8D1A5 /* SceneDelegate.swift */,
 				B4136F8D2469856A00F8D1A5 /* Assets.xcassets */,
 				B4136F922469856A00F8D1A5 /* Info.plist */,
 				B49E088E246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld */,
@@ -118,18 +118,13 @@
 		B4136F9E2469AD8200F8D1A5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B4136F882469856800F8D1A5 /* CalendarViewController.swift */,
-				B4136F982469AA9F00F8D1A5 /* HomeViewController.swift */,
-				B4136F9A2469AAC200F8D1A5 /* AnalysisViewController.swift */,
-				B4136F9C2469AD6900F8D1A5 /* SettingsViewController.swift */,
+				B43040772482795900653BE2 /* Home Pages */,
+				B43040762482793D00653BE2 /* CellController */,
 				B4F58AC5246D21550021A376 /* AddAnimeViewController.swift */,
-				B4F58AC7246D522A0021A376 /* AnimeTableViewCellController.swift */,
 				B41A728D246EB69D0056BEA0 /* AddingAnimeFormController.swift */,
 				B4186B14246FC4BC0068C665 /* AddAnimeByDatesController.swift */,
 				B4186B18246FC4D50068C665 /* AddAnimeByEpisodesController.swift */,
-				B430405B2472919400653BE2 /* HomeAnimeTableViewCell.swift */,
 				B430406124741F0000653BE2 /* CheckDetailsViewController.swift */,
-				B4304073247FBEB300653BE2 /* CalendarTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -152,6 +147,27 @@
 				B4F58AC1246C58DD0021A376 /* APIAnimeReader.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B43040762482793D00653BE2 /* CellController */ = {
+			isa = PBXGroup;
+			children = (
+				B4F58AC7246D522A0021A376 /* AnimeTableViewCellController.swift */,
+				B4304073247FBEB300653BE2 /* CalendarTableViewCell.swift */,
+				B430405B2472919400653BE2 /* HomeAnimeTableViewCell.swift */,
+			);
+			path = CellController;
+			sourceTree = "<group>";
+		};
+		B43040772482795900653BE2 /* Home Pages */ = {
+			isa = PBXGroup;
+			children = (
+				B4136F882469856800F8D1A5 /* CalendarViewController.swift */,
+				B4136F982469AA9F00F8D1A5 /* HomeViewController.swift */,
+				B4136F9A2469AAC200F8D1A5 /* AnalysisViewController.swift */,
+				B4136F9C2469AD6900F8D1A5 /* SettingsViewController.swift */,
+			);
+			path = "Home Pages";
 			sourceTree = "<group>";
 		};
 		D2EB92779DEB301C94B640E1 /* Pods */ = {

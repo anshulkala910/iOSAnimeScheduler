@@ -59,7 +59,6 @@ class HomeViewController: UIViewController {
     func updateEpisodesFinished() {
         let currentDate = Date()
         //get every anime and determine the difference in days between current date and start date
-        //TO DO: Take care of special case when number of last days is reached
         for anime in currentlyWatchingAnime{
             if anime.updatedFlag == true {
                 continue
@@ -70,7 +69,7 @@ class HomeViewController: UIViewController {
             if (differenceFromCurrent != 0 || dateComparison == .orderedSame ){
                 differenceFromCurrent += 1
             }
-            if (durationOfWatch - differenceFromCurrent) < anime.numberOfLastDays {
+            if (durationOfWatch - differenceFromCurrent) <= anime.numberOfLastDays {
                 let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
                 let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
                 let numberOfSpecialDays = Int16(differenceFromCurrent) - numberOfNormalDays
@@ -172,7 +171,12 @@ extension HomeViewController: UITableViewDataSource{
         let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
         cell.animeImage.image = UIImage(data: data!)
         cell.titleLabel.text = anime.title
-        cell.detailLabel.text = "\(anime.episodesPerDay ) episodes/day" //TO DO: NEED TO CHANGE ACC. TO +1 EPISODES/DAY
+        if CalendarViewController.checkIfInLastDays(anime, Date()) {
+            cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes/day"
+        }
+        else {
+            cell.detailLabel.text = "\(anime.episodesPerDay) episodes/day"
+        }
         cell.titleLabel.sizeToFit()
         return cell
     }
