@@ -46,6 +46,10 @@ class CheckDetailsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        let dateComparator = Calendar.current.compare(animeStored.endDate!, to: Date(), toGranularity: .day)
+        if dateComparator == .orderedSame {
+            episodesFinishedView.text = "\(animeStored.episodes - animeStored.episodesFinished) episodes"
+        }
         episodesFinishedView.text = "You should be finished with \(animeStored.episodesFinished) episodes at the end of today"
     }
     
