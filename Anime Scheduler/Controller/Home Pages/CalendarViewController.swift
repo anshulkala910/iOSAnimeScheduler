@@ -126,10 +126,6 @@ extension CalendarViewController: UITableViewDataSource{
         if (differenceFromCurrent != 0 || dateComparison == .orderedSame ){
             differenceFromCurrent += 1
         }
-        print(anime.title)
-        print(anime.numberOfLastDays)
-        print(durationOfWatch)
-        print(differenceFromCurrent)
         if (durationOfWatch - differenceFromCurrent) < anime.numberOfLastDays {
             return true
         }
