@@ -97,7 +97,6 @@ class HomeViewController: UIViewController {
         storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
         storedAnime.dateEpisodesFinishedUpdatedOn = storedAnime.startDate
         storedAnime.updatedFlag = false
-        storedAnime.numberOfLastDays = 0
         AppDelegate.saveContext()
         self.currentlyWatchingAnime.append(storedAnime)
         self.currentlyWatchingTableView.reloadData()
