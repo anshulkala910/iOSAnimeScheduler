@@ -100,11 +100,14 @@ extension CalendarViewController: UITableViewDataSource{
         let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
         cell.animeImage.image = UIImage(data: data!)
         cell.titleLabel.text = anime.title
+        var episodesWatchedOnNormalDays: Int = 0
         let dateComparator = Calendar.current.compare(anime.endDate!, to: calendar.selectedDate ?? Date(), toGranularity: .day)
-        //MARK: TO DO
-        //need to think of the logic to calculate no. of episodes to watch on last day
-        if dateComparator == .orderedSame {
-            cell.detailLabel.text = "\(anime.episodes - anime.episodesFinished) episodes"
+        if anime.numberOfLastDays == 0 {
+            let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
+            episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
+        }
+        if dateComparator == .orderedSame && anime.numberOfLastDays == 0 {
+            cell.detailLabel.text = "\(Int(anime.episodes) - episodesWatchedOnNormalDays) episodes"
         }
         else if CalendarViewController.checkIfInLastDays(anime, calendar.selectedDate ?? Date()) {
             cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes"
