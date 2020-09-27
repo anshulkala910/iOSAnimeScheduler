@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A275E65710D967B0582ABE24 /* Pods_Anime_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DB2FD2221B457272FF3B6E /* Pods_Anime_Scheduler.framework */; };
 		B4136F852469856800F8D1A5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F842469856800F8D1A5 /* AppDelegate.swift */; };
 		B4136F872469856800F8D1A5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F862469856800F8D1A5 /* SceneDelegate.swift */; };
 		B4136F892469856800F8D1A5 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F882469856800F8D1A5 /* CalendarViewController.swift */; };
@@ -29,7 +30,6 @@
 		B4F58AC2246C58DD0021A376 /* APIAnimeReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58AC1246C58DD0021A376 /* APIAnimeReader.swift */; };
 		B4F58AC6246D21550021A376 /* AddAnimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58AC5246D21550021A376 /* AddAnimeViewController.swift */; };
 		B4F58AC8246D522A0021A376 /* AnimeTableViewCellController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58AC7246D522A0021A376 /* AnimeTableViewCellController.swift */; };
-		FCE993C99745A7943997B4F8 /* Pods_Anime_Scheduler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00DB2FD2221B457272FF3B6E /* Pods_Anime_Scheduler.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCE993C99745A7943997B4F8 /* Pods_Anime_Scheduler.framework in Frameworks */,
+				A275E65710D967B0582ABE24 /* Pods_Anime_Scheduler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +389,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -444,7 +444,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -458,10 +458,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6804F963AC05C180796F0A5D /* Pods-Anime Scheduler.debug.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5C8657UP4V;
+				EXCLUDED_ARCHS = arm64;
 				INFOPLIST_FILE = "Anime Scheduler/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -477,10 +480,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 23DE36F53444A4908E616B40 /* Pods-Anime Scheduler.release.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5C8657UP4V;
+				EXCLUDED_ARCHS = arm64;
 				INFOPLIST_FILE = "Anime Scheduler/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
