@@ -113,7 +113,12 @@ extension CalendarViewController: UITableViewDataSource{
             cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes"
         }
         else {
-            cell.detailLabel.text = "\(anime.episodesPerDay) episodes"
+            if anime.episodesPerDay == 1 {
+                cell.detailLabel.text = "1 episode"
+            }
+            else {
+                cell.detailLabel.text = "\(anime.episodesPerDay) episodes"
+            }
         }
         cell.titleLabel.sizeToFit()
         return cell

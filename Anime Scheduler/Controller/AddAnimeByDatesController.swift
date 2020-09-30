@@ -107,10 +107,20 @@ class AddAnimeByDatesController: UIViewController {
             textView.text = "You will finish \(animeDetail.title ?? "...") before the end date even if you watch 1 episode per day \n\n Advise: Change end date to \(numberOfEpisodes.endDateSuggestion)"
         }
         else if numberOfEpisodes.numberOfLastDays == 0 {
-            textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day"
+            if numberOfEpisodes.episodesPerDay == 1{
+                textView.text = "You will watch 1 episode per day"
+            }
+            else {
+                textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day"
+            }
         }
         else {
-            textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day and \(numberOfEpisodes.episodesPerDay + 1) episodes on the last \(numberOfEpisodes.numberOfLastDays) days "
+            if numberOfEpisodes.episodesPerDay == 1 {
+                textView.text = "You will watch 1 episode per day and \(numberOfEpisodes.episodesPerDay + 1) episodes on the last \(numberOfEpisodes.numberOfLastDays) days "
+            }
+            else {
+                textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day and \(numberOfEpisodes.episodesPerDay + 1) episodes on the last \(numberOfEpisodes.numberOfLastDays) days "
+            }
         }
     }
     
