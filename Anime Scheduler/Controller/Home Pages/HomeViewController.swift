@@ -33,6 +33,7 @@ class HomeViewController: UIViewController {
             self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
             self.currentlyWatchingTableView.reloadData()
         } catch {}
+        updateEpisodesFinished()
         
     }
     
@@ -58,22 +59,34 @@ class HomeViewController: UIViewController {
      */
     func updateEpisodesFinished() {
         let currentDate = Date()
+        let start = Calendar.current.ordinality(of: .day, in: .era, for: currentDate)!
         //get every anime and determine the difference in days between current date and start date
         for anime in currentlyWatchingAnime{
+            print(anime.title)
+            print(anime.startDate)
             if anime.updatedFlag == true {
                 continue
             }
-            var differenceFromCurrent = Calendar.current.dateComponents([.day], from: anime.dateEpisodesFinishedUpdatedOn!, to: currentDate).day ?? 1
+            let animeStartDate = Calendar.current.ordinality(of: .day, in: .era, for: anime.startDate!)
+            
+            var differenceFromCurrent = start - animeStartDate!
+            print(differenceFromCurrent)
             let durationOfWatch = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day ?? 1) + 1
-            let dateComparison = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
-            if (differenceFromCurrent != 0 || dateComparison == .orderedSame ){
+            print(durationOfWatch)
+            let dateComparisonFromStart = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
+            if (dateComparisonFromStart == .orderedSame){
                 differenceFromCurrent += 1
             }
+            print(anime.numberOfLastDays)
             if (durationOfWatch - differenceFromCurrent) <= anime.numberOfLastDays {
                 let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
+                print(numberOfNormalDays)
                 let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
+                print(episodesDuringNormalDays)
                 let numberOfSpecialDays = Int16(differenceFromCurrent) - numberOfNormalDays
+                print(numberOfSpecialDays)
                 let episodesDuringSpecialDays = numberOfSpecialDays * (anime.episodesPerDay + 1)
+                print(episodesDuringSpecialDays)
                 anime.episodesFinished += episodesDuringNormalDays + episodesDuringSpecialDays
             }
             else{
