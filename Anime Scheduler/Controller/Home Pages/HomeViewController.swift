@@ -34,7 +34,7 @@ class HomeViewController: UIViewController {
             self.currentlyWatchingTableView.reloadData()
         } catch {}
         updateEpisodesFinished()
-        
+        self.currentlyWatchingTableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
         let currentDate = Date()
         for anime in currentlyWatchingAnime {
             let dateComparator = Calendar.current.compare(currentDate, to: anime.dateEpisodesFinishedUpdatedOn!, toGranularity: .day)
-            if (dateComparator == .orderedSame){
+            if (dateComparator == .orderedSame && Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day) != .orderedSame){
                 anime.updatedFlag = true
             }
             else {
@@ -94,6 +94,7 @@ class HomeViewController: UIViewController {
             }
             anime.dateEpisodesFinishedUpdatedOn = currentDate
             anime.updatedFlag = true
+            AppDelegate.saveContext()
         }
     }
     
