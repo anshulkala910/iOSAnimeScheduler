@@ -33,7 +33,6 @@ class HomeViewController: UIViewController {
             self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
             self.currentlyWatchingTableView.reloadData()
         } catch {}
-        updateEpisodesFinished()
         self.currentlyWatchingTableView.reloadData()
     }
     
@@ -46,7 +45,7 @@ class HomeViewController: UIViewController {
         let currentDate = Date()
         for anime in currentlyWatchingAnime {
             let dateComparator = Calendar.current.compare(currentDate, to: anime.dateEpisodesFinishedUpdatedOn!, toGranularity: .day)
-            if (dateComparator == .orderedSame && Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day) != .orderedSame){
+            if (dateComparator == .orderedSame || (Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day) == .orderedSame && anime.updatedFlag == true)){
                 anime.updatedFlag = true
             }
             else {
@@ -67,9 +66,9 @@ class HomeViewController: UIViewController {
             if anime.updatedFlag == true {
                 continue
             }
-            let animeStartDate = Calendar.current.ordinality(of: .day, in: .era, for: anime.startDate!)
+            let lastUpdatedDate = Calendar.current.ordinality(of: .day, in: .era, for: anime.dateEpisodesFinishedUpdatedOn!)
             
-            var differenceFromCurrent = start - animeStartDate!
+            var differenceFromCurrent = start - lastUpdatedDate!
             print(differenceFromCurrent)
             let durationOfWatch = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day ?? 1) + 1
             print(durationOfWatch)
