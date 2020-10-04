@@ -55,31 +55,22 @@ class HomeViewController: UIViewController {
         let start = Calendar.current.ordinality(of: .day, in: .era, for: currentDate)!
         //get every anime and determine the difference in days between current date and start date
         for anime in currentlyWatchingAnime{
-            print(anime.title)
-            print(anime.startDate)
             if anime.updatedFlag == true {
                 continue
             }
             let lastUpdatedDate = Calendar.current.ordinality(of: .day, in: .era, for: anime.dateEpisodesFinishedUpdatedOn!)
             
             var differenceFromCurrent = start - lastUpdatedDate!
-            print(differenceFromCurrent)
             let durationOfWatch = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day ?? 1) + 1
-            print(durationOfWatch)
             let dateComparisonFromStart = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
             if (dateComparisonFromStart == .orderedSame){
                 differenceFromCurrent += 1
             }
-            print(anime.numberOfLastDays)
             if (durationOfWatch - differenceFromCurrent) <= anime.numberOfLastDays {
                 let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
-                print(numberOfNormalDays)
                 let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
-                print(episodesDuringNormalDays)
                 let numberOfSpecialDays = Int16(differenceFromCurrent) - numberOfNormalDays
-                print(numberOfSpecialDays)
                 let episodesDuringSpecialDays = numberOfSpecialDays * (anime.episodesPerDay + 1)
-                print(episodesDuringSpecialDays)
                 anime.episodesFinished += episodesDuringNormalDays + episodesDuringSpecialDays
             }
             else{
@@ -196,7 +187,7 @@ extension HomeViewController: UITableViewDataSource{
     }
     
     /**
-     This function deletes the anime from a specifi row from Core Data and the global array 
+     This function deletes the anime from a specific row from Core Data and the global array
      */
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
