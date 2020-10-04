@@ -13,18 +13,15 @@ class HomeViewController: UIViewController {
     @IBOutlet var currentlyWatchingTableView: UITableView!
     @IBOutlet weak var addAnimeButton: UIButton!
     
-    var currentlyWatchingAnime = [StoredAnime](){
-        didSet{
-            DispatchQueue.main.async {
-                self.currentlyWatchingTableView.reloadData()
-            }
-        }
-    }
+    var currentlyWatchingAnime = [StoredAnime]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         currentlyWatchingTableView.delegate = self
         currentlyWatchingTableView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
         
         //gets the saved list from Core Data everytime the app is run
@@ -34,9 +31,6 @@ class HomeViewController: UIViewController {
             self.currentlyWatchingTableView.reloadData()
         } catch {}
         self.currentlyWatchingTableView.reloadData()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         updateEpisodesFinished()
         updateUpdatedFlag()
     }

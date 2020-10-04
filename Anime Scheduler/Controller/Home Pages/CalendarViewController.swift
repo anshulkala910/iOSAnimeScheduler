@@ -25,6 +25,9 @@ class CalendarViewController: UIViewController {
         animeWatchingTableView.delegate = self
         animeWatchingTableView.dataSource = self
         animeWatchingTableView.allowsSelection = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
         
         //gets the saved list from Core Data everytime the app is run
@@ -34,7 +37,6 @@ class CalendarViewController: UIViewController {
         } catch {}
         populateMonthAnime(calendar!.today!)
     }
-    
     /**
      This function is called when a certain date is selected
      */
