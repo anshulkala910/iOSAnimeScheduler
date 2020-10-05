@@ -17,8 +17,6 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        currentlyWatchingTableView.delegate = self
-        currentlyWatchingTableView.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,8 +29,10 @@ class HomeViewController: UIViewController {
             self.currentlyWatchingTableView.reloadData()
         } catch {}
         self.currentlyWatchingTableView.reloadData()
-        updateEpisodesFinished()
         updateUpdatedFlag()
+        updateEpisodesFinished()
+        currentlyWatchingTableView.delegate = self
+        currentlyWatchingTableView.dataSource = self
     }
     
     func updateUpdatedFlag() {
