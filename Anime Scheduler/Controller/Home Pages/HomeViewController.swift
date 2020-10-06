@@ -39,7 +39,10 @@ class HomeViewController: UIViewController {
         let currentDate = Date()
         for anime in currentlyWatchingAnime {
             let dateComparator = Calendar.current.compare(currentDate, to: anime.dateEpisodesFinishedUpdatedOn!, toGranularity: .day)
-            if (dateComparator == .orderedSame || (Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day) == .orderedSame && anime.updatedFlag == true)){
+            let startDateComparator = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
+            
+            //if currentDate == updatedOn && startDate!= currentDate || startDate == currentDate && updatedFlag = true
+            if ((dateComparator == .orderedSame && startDateComparator != .orderedSame) || (startDateComparator == .orderedSame && anime.updatedFlag == true)){
                 anime.updatedFlag = true
             }
             else {

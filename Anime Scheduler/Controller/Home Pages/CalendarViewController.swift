@@ -130,7 +130,7 @@ extension CalendarViewController: UITableViewDataSource{
         var differenceFromCurrent = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: currentDate).day ?? 1) + 1
         let durationOfWatch = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day ?? 1) + 1
         let dateComparison = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
-        if (differenceFromCurrent != 0 || dateComparison == .orderedSame ){
+        if (dateComparison == .orderedSame ){
             differenceFromCurrent += 1
         }
         if (durationOfWatch - differenceFromCurrent) < anime.numberOfLastDays {

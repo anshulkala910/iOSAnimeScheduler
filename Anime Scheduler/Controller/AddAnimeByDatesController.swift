@@ -128,7 +128,7 @@ class AddAnimeByDatesController: UIViewController {
         let startDate = startDatePicker.date
         let endDate = endDatePicker.date
         let difference = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
-        let differenceInDays = (difference.day ?? 1) + 1
+        let differenceInDays = (difference.day ?? 1) + 2
         var numberOfEpisodesPerDay: Int
         if (animeDetail.episodes ?? 1) % differenceInDays == 0 {
             numberOfEpisodesPerDay = (animeDetail.episodes ?? 1)/differenceInDays
