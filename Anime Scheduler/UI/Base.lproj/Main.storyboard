@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="trY-54-ht0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="trY-54-ht0">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,7 +18,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9r2-FX-fuI">
                                 <rect key="frame" x="0.0" y="88" width="414" height="676"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="cell" textLabel="Ruf-u2-qXW" detailTextLabel="Kka-6y-NEd" imageView="gZk-Se-RZb" style="IBUITableViewCellStyleSubtitle" id="ShE-2M-e0J" customClass="HomeAnimeTableViewCell" customModule="Anime_Scheduler" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
@@ -27,7 +28,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ruf-u2-qXW">
-                                                    <rect key="frame" x="59" y="10" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="59" y="10" width="33" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -57,14 +58,14 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="0Ko-pI-O9K"/>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Cwm-eZ-q2P"/>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ci6-3Y-wrr"/>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ngp-9c-haD"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Currently Watching" id="gaN-Ei-b2d">
@@ -111,7 +112,7 @@
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HfN-cV-6Nt">
                                 <rect key="frame" x="0.0" y="144" width="414" height="620"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="PKm-sF-hr2" detailTextLabel="LQH-sV-0js" imageView="AXa-6A-Hj5" style="IBUITableViewCellStyleSubtitle" id="JAM-cp-8qu" customClass="AnimeTableViewCellController" customModule="Anime_Scheduler" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="57.5"/>
@@ -121,7 +122,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PKm-sF-hr2">
-                                                    <rect key="frame" x="59" y="9" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="59" y="9" width="33" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -152,10 +153,11 @@
                             </tableView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="4hx-QJ-8YM">
                                 <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
-                                <color key="color" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                <color key="color" systemColor="viewFlipsideBackgroundColor"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Wxf-Pe-3p9"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="HfN-cV-6Nt" firstAttribute="bottom" secondItem="Wxf-Pe-3p9" secondAttribute="bottom" id="8Xm-zf-LCl"/>
                             <constraint firstItem="HfN-cV-6Nt" firstAttribute="top" secondItem="QRK-zK-ItK" secondAttribute="bottom" id="HZn-yf-xzh"/>
@@ -167,7 +169,6 @@
                             <constraint firstItem="QRK-zK-ItK" firstAttribute="top" secondItem="Wxf-Pe-3p9" secondAttribute="top" id="qlA-xK-luF"/>
                             <constraint firstItem="HfN-cV-6Nt" firstAttribute="trailing" secondItem="Wxf-Pe-3p9" secondAttribute="trailing" id="zCy-5n-tVj"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Wxf-Pe-3p9"/>
                     </view>
                     <navigationItem key="navigationItem" title="New Anime" id="dAF-IW-Hdz"/>
                     <connections>
@@ -194,7 +195,7 @@
                                     <segment title="By Start/End Date"/>
                                     <segment title="By #Episodes/Day"/>
                                 </segments>
-                                <color key="selectedSegmentTintColor" systemColor="placeholderTextColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="selectedSegmentTintColor" systemColor="placeholderTextColor"/>
                                 <connections>
                                     <action selector="didChangeSegment:" destination="SmC-II-jEd" eventType="valueChanged" id="cnI-cK-zqK"/>
                                 </connections>
@@ -212,7 +213,8 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="DHH-j7-M4A"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Wn-2B-cK5" firstAttribute="bottom" secondItem="DHH-j7-M4A" secondAttribute="bottom" id="9EA-P0-hzb"/>
                             <constraint firstItem="6Wn-2B-cK5" firstAttribute="top" secondItem="XmB-Zu-1R9" secondAttribute="bottom" constant="10" id="Soq-z4-j47"/>
@@ -226,7 +228,6 @@
                             <constraint firstItem="DHH-j7-M4A" firstAttribute="trailing" secondItem="6Wn-2B-cK5" secondAttribute="trailing" id="u01-4T-wb6"/>
                             <constraint firstItem="XmB-Zu-1R9" firstAttribute="centerX" secondItem="fDc-Xx-MKJ" secondAttribute="centerX" id="wau-03-5JL"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="DHH-j7-M4A"/>
                     </view>
                     <navigationItem key="navigationItem" title="You're Watching" id="G2b-5f-eWo"/>
                     <connections>
@@ -249,7 +250,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gO-q4-WgZ" customClass="FSCalendar">
                                 <rect key="frame" x="0.0" y="44" width="414" height="300"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES"/>
                                     <bool key="isElement" value="YES"/>
@@ -259,16 +260,16 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="titleDefaultColor">
-                                        <color key="value" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" systemColor="secondaryLabelColor"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="titlePlaceholderColor">
-                                        <color key="value" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" systemColor="separatorColor"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
-                                        <color key="value" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" systemColor="systemRedColor"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
-                                        <color key="value" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="value" systemColor="systemRedColor"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="headerMinimumDissolvedAlpha">
                                         <real key="value" value="1"/>
@@ -281,7 +282,7 @@
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LdB-x2-KT1">
                                 <rect key="frame" x="0.0" y="352" width="414" height="461"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationWidth="10" reuseIdentifier="cell" textLabel="NH2-Iq-vAJ" detailTextLabel="exu-Mj-RDJ" imageView="TYC-tj-UNw" style="IBUITableViewCellStyleSubtitle" id="TWi-c4-u0m" customClass="CalendarTableViewCell" customModule="Anime_Scheduler" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
@@ -291,7 +292,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NH2-Iq-vAJ">
-                                                    <rect key="frame" x="59" y="10" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="59" y="10" width="33" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -319,7 +320,8 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="uEV-WV-nS0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="uEV-WV-nS0" firstAttribute="bottom" secondItem="LdB-x2-KT1" secondAttribute="bottom" id="9f8-CA-b58"/>
                             <constraint firstItem="LdB-x2-KT1" firstAttribute="centerX" secondItem="uEV-WV-nS0" secondAttribute="centerX" id="HLz-LF-zgw"/>
@@ -329,7 +331,6 @@
                             <constraint firstItem="LdB-x2-KT1" firstAttribute="top" secondItem="6gO-q4-WgZ" secondAttribute="bottom" constant="8" id="xgh-XA-rhW"/>
                             <constraint firstItem="6gO-q4-WgZ" firstAttribute="centerX" secondItem="glB-dN-rcT" secondAttribute="centerX" id="xpL-Gf-nvO"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="uEV-WV-nS0"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Calendar" image="calendar" catalog="system" id="awt-fi-pS8"/>
                     <connections>
@@ -348,10 +349,60 @@
                     <view key="view" contentMode="scaleToFill" id="dhK-Bv-6UK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NjO-rh-efr">
+                                <rect key="frame" x="0.0" y="31" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="About" id="ujy-dB-2cN"/>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Kv-v4-IWr">
+                                <rect key="frame" x="0.0" y="75" width="414" height="147"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="6cI-hJ-uoK" detailTextLabel="ZvX-3N-Tk7" style="IBUITableViewCellStyleValue1" id="w0K-57-zrt">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="w0K-57-zrt" id="O0W-N2-bDL">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6cI-hJ-uoK">
+                                                    <rect key="frame" x="20" y="12" width="33" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZvX-3N-Tk7">
+                                                    <rect key="frame" x="350" y="12" width="44" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="hww-d0-K3n"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hww-d0-K3n" firstAttribute="bottom" secondItem="4Kv-v4-IWr" secondAttribute="bottom" constant="591" id="A7N-3b-PIe"/>
+                            <constraint firstItem="4Kv-v4-IWr" firstAttribute="leading" secondItem="hww-d0-K3n" secondAttribute="leading" id="DJG-YO-4BQ"/>
+                            <constraint firstItem="4Kv-v4-IWr" firstAttribute="top" secondItem="NjO-rh-efr" secondAttribute="bottom" id="Ry0-nX-Nii"/>
+                            <constraint firstItem="NjO-rh-efr" firstAttribute="trailing" secondItem="4Kv-v4-IWr" secondAttribute="trailing" id="c1f-h4-wta"/>
+                            <constraint firstItem="4Kv-v4-IWr" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="cFp-uI-6jW"/>
+                            <constraint firstItem="NjO-rh-efr" firstAttribute="leading" secondItem="4Kv-v4-IWr" secondAttribute="leading" id="rDa-eD-JTB"/>
+                            <constraint firstItem="NjO-rh-efr" firstAttribute="top" secondItem="dhK-Bv-6UK" secondAttribute="topMargin" constant="-13" id="rOg-y1-7hy"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="gear" catalog="system" id="Cew-GE-UAF"/>
+                    <connections>
+                        <outlet property="settingsTableView" destination="4Kv-v4-IWr" id="qVT-sk-tiw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xrz-Ey-4mi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -367,12 +418,12 @@
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Lv4-PZ-7C0">
                                 <rect key="frame" x="37" y="113" width="347" height="90"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="347" id="q0k-hA-QKH"/>
                                     <constraint firstAttribute="height" constant="90" id="yZE-AF-RqZ"/>
                                 </constraints>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -382,10 +433,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buJ-Ht-7c3">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="buJ-Ht-7c3">
                                 <rect key="frame" x="274" y="714" width="51" height="30"/>
                                 <state key="normal" title="Update">
-                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
                                 <connections>
                                     <action selector="update:" destination="P2Q-Rx-KdB" eventType="touchUpInside" id="o5x-rr-29U"/>
@@ -401,13 +452,13 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finished more/less episodes? Update below!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ymJ-IN-FIb">
-                                <rect key="frame" x="36.5" y="211" width="341" height="21"/>
+                                <rect key="frame" x="38" y="211" width="338" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update by End Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hIx-aH-K1G">
-                                <rect key="frame" x="46" y="355" width="154" height="21"/>
+                                <rect key="frame" x="47" y="355" width="152.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -437,23 +488,24 @@
                                 </connections>
                             </switch>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="FA1-31-Tbb">
-                                <rect key="frame" x="46" y="508" width="322" height="152"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <rect key="frame" x="47" y="508" width="320.5" height="152"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTI-t6-cDe">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wTI-t6-cDe">
                                 <rect key="frame" x="67" y="714" width="95" height="30"/>
                                 <state key="normal" title="Check Details">
-                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
                                 <connections>
                                     <action selector="checkDetails:" destination="P2Q-Rx-KdB" eventType="touchUpInside" id="r1H-Sq-3vD"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="UXX-1D-Wn8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="buJ-Ht-7c3" secondAttribute="bottom" constant="20" id="08c-x9-QXu"/>
                             <constraint firstItem="wTI-t6-cDe" firstAttribute="top" secondItem="FA1-31-Tbb" secondAttribute="bottom" constant="54" id="0om-mP-qxD"/>
@@ -483,7 +535,6 @@
                             <constraint firstItem="UXX-1D-Wn8" firstAttribute="bottom" secondItem="wTI-t6-cDe" secondAttribute="bottom" constant="20" id="sqZ-Tp-BqE"/>
                             <constraint firstItem="buJ-Ht-7c3" firstAttribute="top" secondItem="FA1-31-Tbb" secondAttribute="bottom" constant="54" id="urt-ks-4Os"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="UXX-1D-Wn8"/>
                     </view>
                     <navigationItem key="navigationItem" id="Puv-4s-bCJ"/>
                     <connections>
@@ -509,8 +560,8 @@
                     <view key="view" contentMode="scaleToFill" id="iIu-9R-3d3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="cp2-Xv-eVs"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Analysis" image="chart.bar" catalog="system" id="SwO-GI-ILd"/>
                 </viewController>
@@ -594,20 +645,20 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMI-WD-bat">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMI-WD-bat">
                                 <rect key="frame" x="262" y="575" width="75" height="30"/>
                                 <state key="normal" title="Add Anime">
-                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
                                 <connections>
                                     <action selector="addAnime:" destination="ucB-Cf-w3T" eventType="touchUpInside" id="fep-7d-nQc"/>
                                     <segue destination="qUr-YO-cwt" kind="unwind" unwindAction="unwindSegueFromDates:" id="CAV-Tx-MQo"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHW-SP-rtq">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHW-SP-rtq">
                                 <rect key="frame" x="67" y="575" width="95" height="30"/>
                                 <state key="normal" title="Check Details">
-                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
                                 <connections>
                                     <action selector="checkDetails:" destination="ucB-Cf-w3T" eventType="touchUpInside" id="eJj-cV-tnH"/>
@@ -615,13 +666,14 @@
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ull-0g-BPW">
                                 <rect key="frame" x="20" y="248" width="374" height="302"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="hgR-Hl-hNd"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="RMI-WD-bat" firstAttribute="top" secondItem="ull-0g-BPW" secondAttribute="bottom" constant="25" id="3uu-i5-4hr"/>
                             <constraint firstItem="hgR-Hl-hNd" firstAttribute="bottom" secondItem="RMI-WD-bat" secondAttribute="bottom" constant="20" id="5hZ-UD-ea8"/>
@@ -642,7 +694,6 @@
                             <constraint firstItem="Lfw-qA-RiG" firstAttribute="top" secondItem="YNN-Jm-Lhl" secondAttribute="topMargin" constant="27" id="sOV-Qg-n7F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DA6-Of-RY1" secondAttribute="trailing" constant="6" id="tLG-Dj-cvm"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="hgR-Hl-hNd"/>
                     </view>
                     <connections>
                         <outlet property="addAnimeButton" destination="RMI-WD-bat" id="4iq-WV-8WC"/>
@@ -693,10 +744,10 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhv-sU-2pe">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhv-sU-2pe">
                                 <rect key="frame" x="262" y="575" width="75" height="30"/>
                                 <state key="normal" title="Add Anime">
-                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
                                 <connections>
                                     <action selector="addAnime:" destination="d4G-52-LHf" eventType="touchUpInside" id="1vj-TV-zNz"/>
@@ -704,10 +755,10 @@
                                     <segue destination="Es6-G9-X63" kind="unwind" unwindAction="unwindSegueFromEpisodes:" id="MNt-YJ-EEE"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0d-Ij-qB6">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e0d-Ij-qB6">
                                 <rect key="frame" x="67" y="575" width="95" height="30"/>
                                 <state key="normal" title="Check Details">
-                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
                                 <connections>
                                     <action selector="checkDetails:" destination="d4G-52-LHf" eventType="touchUpInside" id="qs0-Uo-Ux9"/>
@@ -715,13 +766,14 @@
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xZ2-Up-4cf">
                                 <rect key="frame" x="20" y="248" width="374" height="302"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="OlR-pa-WLt"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="fxC-s5-C3I" firstAttribute="top" secondItem="uYr-fy-Pbq" secondAttribute="bottom" constant="21" id="2oK-SF-u3x"/>
                             <constraint firstItem="A1A-5a-pUs" firstAttribute="top" secondItem="CpQ-ph-pWJ" secondAttribute="bottom" constant="34.5" id="3O4-Dw-z1p"/>
@@ -742,7 +794,6 @@
                             <constraint firstItem="CpQ-ph-pWJ" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="28" id="nkr-TS-LDU"/>
                             <constraint firstItem="xZ2-Up-4cf" firstAttribute="top" secondItem="fxC-s5-C3I" secondAttribute="bottom" constant="95" id="sHF-Mr-8sl"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="OlR-pa-WLt"/>
                     </view>
                     <connections>
                         <outlet property="addAnimeButton" destination="hhv-sU-2pe" id="wEG-DM-M2K"/>
@@ -762,8 +813,29 @@
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="chart.bar" catalog="system" width="128" height="90"/>
         <image name="gear" catalog="system" width="128" height="119"/>
-        <image name="house" catalog="system" width="128" height="110"/>
+        <image name="house" catalog="system" width="128" height="106"/>
         <image name="pencil.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="placeholderTextColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="separatorColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="viewFlipsideBackgroundColor">
+            <color red="0.1215686274509804" green="0.12941176470588239" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>
