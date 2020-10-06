@@ -386,6 +386,13 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAY-5K-Lsp">
+                                <rect key="frame" x="170" y="247" width="74" height="30"/>
+                                <state key="normal" title="Rate App"/>
+                                <connections>
+                                    <action selector="rateApp:" destination="z4j-rl-i82" eventType="touchUpInside" id="AMF-AR-jOu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hww-d0-K3n"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -393,14 +400,19 @@
                             <constraint firstItem="hww-d0-K3n" firstAttribute="bottom" secondItem="4Kv-v4-IWr" secondAttribute="bottom" constant="591" id="A7N-3b-PIe"/>
                             <constraint firstItem="4Kv-v4-IWr" firstAttribute="leading" secondItem="hww-d0-K3n" secondAttribute="leading" id="DJG-YO-4BQ"/>
                             <constraint firstItem="4Kv-v4-IWr" firstAttribute="top" secondItem="NjO-rh-efr" secondAttribute="bottom" id="Ry0-nX-Nii"/>
+                            <constraint firstItem="gAY-5K-Lsp" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="UIC-5f-iml"/>
                             <constraint firstItem="NjO-rh-efr" firstAttribute="trailing" secondItem="4Kv-v4-IWr" secondAttribute="trailing" id="c1f-h4-wta"/>
                             <constraint firstItem="4Kv-v4-IWr" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="cFp-uI-6jW"/>
                             <constraint firstItem="NjO-rh-efr" firstAttribute="leading" secondItem="4Kv-v4-IWr" secondAttribute="leading" id="rDa-eD-JTB"/>
                             <constraint firstItem="NjO-rh-efr" firstAttribute="top" secondItem="dhK-Bv-6UK" secondAttribute="topMargin" constant="-13" id="rOg-y1-7hy"/>
+                            <constraint firstItem="gAY-5K-Lsp" firstAttribute="top" secondItem="4Kv-v4-IWr" secondAttribute="bottom" constant="25" id="siO-mk-Abr"/>
+                            <constraint firstItem="hww-d0-K3n" firstAttribute="trailing" secondItem="gAY-5K-Lsp" secondAttribute="trailing" constant="170" id="t9x-lh-2KZ"/>
+                            <constraint firstItem="gAY-5K-Lsp" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="vNc-c8-yWG"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="gear" catalog="system" id="Cew-GE-UAF"/>
                     <connections>
+                        <outlet property="rateApp" destination="gAY-5K-Lsp" id="ns4-pe-Ayh"/>
                         <outlet property="settingsTableView" destination="4Kv-v4-IWr" id="qVT-sk-tiw"/>
                     </connections>
                 </viewController>

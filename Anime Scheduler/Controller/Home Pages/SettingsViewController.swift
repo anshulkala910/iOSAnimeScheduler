@@ -11,6 +11,8 @@ import UIKit
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var settingsTableView: UITableView!
+    @IBOutlet weak var rateApp: UIButton!
+    let appID = "" //TODO: Need to get the ID of the app from Apple
     let columnNames = ["Version", "Developer","Have feedback? Email anshulkala910@gmail.com"]
     let columnAnswers = ["1.0", "Anshul Kala", ""]
     override func viewDidLoad() {
@@ -19,11 +21,26 @@ class SettingsViewController: UIViewController {
         settingsTableView.dataSource = self
     }
 
+    @IBAction func rateApp(_ sender: Any) {
+        openURL("itms-apps://itunes.apple.com/app/" + appID)
+    }
+    
+    func openURL(_ urlString:String) {
+        let url = URL(string: urlString)!
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        else {
+            UIApplication.shared.openURL(url)
+            
+        }
+        
+    }
 }
 
-    extension SettingsViewController: UITableViewDelegate{
+extension SettingsViewController: UITableViewDelegate{
     
-    }
+}
 
 extension SettingsViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,4 +55,5 @@ extension SettingsViewController: UITableViewDataSource{
     }
     
     
-    }
+}
+
