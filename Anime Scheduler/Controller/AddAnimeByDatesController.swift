@@ -102,24 +102,33 @@ class AddAnimeByDatesController: UIViewController {
     }
     
     @IBAction func checkDetails(_ sender: Any) {
-        getNumberOfEpisodesPerDay()
-        if numberOfEpisodes.flag == 1 {
-            textView.text = "You will finish \(animeDetail.title ?? "...") before the end date even if you watch 1 episode per day \n\n Advise: Change end date to \(numberOfEpisodes.endDateSuggestion)"
+        //if either one of two text fields does not have anything, show alert
+        if (!startDateTextField.hasText || !endDateTextField.hasText) {
+            let alert = UIAlertController(title: "Error", message: "Please input both start and end dates", preferredStyle: .alert)
+            let dismiss = UIAlertAction.init(title: "Dismiss", style: .default, handler: nil)
+            alert.addAction(dismiss)
+            present(alert,animated: true, completion: nil)
         }
-        else if numberOfEpisodes.numberOfLastDays == 0 {
-            if numberOfEpisodes.episodesPerDay == 1{
-                textView.text = "You will watch 1 episode per day"
+        else{
+            getNumberOfEpisodesPerDay()
+            if numberOfEpisodes.flag == 1 {
+                textView.text = "You will finish \(animeDetail.title ?? "...") before the end date even if you watch 1 episode per day \n\n Advise: Change end date to \(numberOfEpisodes.endDateSuggestion)"
+            }
+            else if numberOfEpisodes.numberOfLastDays == 0 {
+                if numberOfEpisodes.episodesPerDay == 1{
+                    textView.text = "You will watch 1 episode per day"
+                }
+                else {
+                    textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day"
+                }
             }
             else {
-                textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day"
-            }
-        }
-        else {
-            if numberOfEpisodes.episodesPerDay == 1 {
-                textView.text = "You will watch 1 episode per day and \(numberOfEpisodes.episodesPerDay + 1) episodes on the last \(numberOfEpisodes.numberOfLastDays) days "
-            }
-            else {
-                textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day and \(numberOfEpisodes.episodesPerDay + 1) episodes on the last \(numberOfEpisodes.numberOfLastDays) days "
+                if numberOfEpisodes.episodesPerDay == 1 {
+                    textView.text = "You will watch 1 episode per day and \(numberOfEpisodes.episodesPerDay + 1) episodes on the last \(numberOfEpisodes.numberOfLastDays) days "
+                }
+                else {
+                    textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day and \(numberOfEpisodes.episodesPerDay + 1) episodes on the last \(numberOfEpisodes.numberOfLastDays) days "
+                }
             }
         }
     }

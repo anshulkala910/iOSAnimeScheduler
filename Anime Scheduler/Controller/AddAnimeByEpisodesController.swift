@@ -93,14 +93,23 @@ class AddAnimeByEpisodesController: UIViewController {
     
     
     @IBAction func checkDetails(_ sender: Any) {
-        let numberEpisodes = Int(numberOfEpisodes.text ?? "1")
-        if numberEpisodes! > animeDetail.episodes! {
-            showAlert()
-            return
+        //if either one of two text fields does not have anything, show alert
+        if (!startDate.hasText || !numberOfEpisodes.hasText) {
+            let alert = UIAlertController(title: "Error", message: "Please input both start date and number of episodes/day", preferredStyle: .alert)
+            let dismiss = UIAlertAction.init(title: "Dismiss", style: .default, handler: nil)
+            alert.addAction(dismiss)
+            present(alert,animated: true, completion: nil)
         }
-        let endDate = getEndDate()
-        let endDateString = getDateStringFromTextField(endDate)
-        textView.text = "You will finish \(animeDetail.title ?? "...") on \(endDateString)"
+        else{
+            let numberEpisodes = Int(numberOfEpisodes.text ?? "1")
+            if numberEpisodes! > animeDetail.episodes! {
+                showAlert()
+                return
+            }
+            let endDate = getEndDate()
+            let endDateString = getDateStringFromTextField(endDate)
+            textView.text = "You will finish \(animeDetail.title ?? "...") on \(endDateString)"
+        }
     }
     
     func getEndDate() -> Date {
