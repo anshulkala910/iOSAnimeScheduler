@@ -94,6 +94,7 @@ class HomeViewController: UIViewController {
         storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
         storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
         storedAnime.endDate = addAnimeEpisodesController.getEndDate()
+        storedAnime.numberOfLastDays = 0
         storedAnime.episodesFinished = 0
         storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
         storedAnime.dateEpisodesFinishedUpdatedOn = storedAnime.startDate

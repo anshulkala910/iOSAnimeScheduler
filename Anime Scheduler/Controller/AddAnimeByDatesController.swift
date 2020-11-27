@@ -23,6 +23,7 @@ class AddAnimeByDatesController: UIViewController {
     @IBOutlet weak var addAnimeButton: UIButton!
     @IBOutlet weak var textView: UITextView!
     
+    var proceedFlag = true
     var animeDetail: AnimeDetail!
     let startDatePicker = UIDatePicker()
     let endDatePicker = UIDatePicker()
@@ -37,6 +38,8 @@ class AddAnimeByDatesController: UIViewController {
         dateFormatter.timeStyle = .none
         createStartDatePicker()
         createEndDatePicker()
+        addAnimeButton.isEnabled = false
+        addAnimeButton.alpha = 0.5
     }
     
     func createStartDatePicker(){
@@ -75,7 +78,7 @@ class AddAnimeByDatesController: UIViewController {
     }
     
     @objc func doneButtonPressedEndDate(){
-        if endDatePicker.date < startDatePicker.date {
+        if (endDatePicker.date < startDatePicker.date) {
             showAlert()
         }
         endDateTextField.text = getDateStringFromTextField(endDatePicker.date)
@@ -130,6 +133,8 @@ class AddAnimeByDatesController: UIViewController {
                     textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day and \(numberOfEpisodes.episodesPerDay + 1) episodes on the last \(numberOfEpisodes.numberOfLastDays) days "
                 }
             }
+            addAnimeButton.isEnabled = true
+            addAnimeButton.alpha = 1.0
         }
     }
     

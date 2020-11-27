@@ -29,6 +29,8 @@ class AddAnimeByEpisodesController: UIViewController {
         dateFormatter.timeStyle = .none
         createStartDatePicker()
         createNumberPad()
+        addAnimeButton.isEnabled = false
+        addAnimeButton.alpha = 0.5
     }
 
     func createStartDatePicker(){
@@ -109,6 +111,8 @@ class AddAnimeByEpisodesController: UIViewController {
             let endDate = getEndDate()
             let endDateString = getDateStringFromTextField(endDate)
             textView.text = "You will finish \(animeDetail.title ?? "...") on \(endDateString)"
+            addAnimeButton.isEnabled = true
+            addAnimeButton.alpha = 1.0
         }
     }
     

@@ -208,7 +208,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Anshul Kala";
 				TargetAttributes = {
 					B4136F802469856800F8D1A5 = {
@@ -458,11 +458,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6804F963AC05C180796F0A5D /* Pods-Anime Scheduler.debug.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5C8657UP4V;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Anime Scheduler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -480,11 +479,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 23DE36F53444A4908E616B40 /* Pods-Anime Scheduler.release.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5C8657UP4V;
-				EXCLUDED_ARCHS = arm64;
+				EXCLUDED_ARCHS = "";
 				INFOPLIST_FILE = "Anime Scheduler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
