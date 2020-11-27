@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="trY-54-ht0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="trY-54-ht0">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -386,7 +386,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAY-5K-Lsp">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="gAY-5K-Lsp">
                                 <rect key="frame" x="170" y="247" width="74" height="30"/>
                                 <state key="normal" title="Rate App"/>
                                 <connections>
@@ -406,7 +406,7 @@
                             <constraint firstItem="NjO-rh-efr" firstAttribute="leading" secondItem="4Kv-v4-IWr" secondAttribute="leading" id="rDa-eD-JTB"/>
                             <constraint firstItem="NjO-rh-efr" firstAttribute="top" secondItem="dhK-Bv-6UK" secondAttribute="topMargin" constant="-13" id="rOg-y1-7hy"/>
                             <constraint firstItem="gAY-5K-Lsp" firstAttribute="top" secondItem="4Kv-v4-IWr" secondAttribute="bottom" constant="25" id="siO-mk-Abr"/>
-                            <constraint firstItem="hww-d0-K3n" firstAttribute="trailing" secondItem="gAY-5K-Lsp" secondAttribute="trailing" constant="170" id="t9x-lh-2KZ"/>
+                            <constraint firstItem="hww-d0-K3n" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="gAY-5K-Lsp" secondAttribute="trailing" constant="170" id="t9x-lh-2KZ"/>
                             <constraint firstItem="gAY-5K-Lsp" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="vNc-c8-yWG"/>
                         </constraints>
                     </view>
