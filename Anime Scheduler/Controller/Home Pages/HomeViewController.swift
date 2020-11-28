@@ -42,7 +42,7 @@ class HomeViewController: UIViewController {
             let startDateComparator = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
             
             //if currentDate == updatedOn && startDate!= currentDate || startDate == currentDate && updatedFlag = true
-            if ((dateComparator == .orderedSame && startDateComparator != .orderedSame) || (startDateComparator == .orderedSame && anime.updatedFlag == true)){
+            if ((dateComparator == .orderedSame && startDateComparator != .orderedSame) || (startDateComparator == .orderedSame && anime.updatedFlag == true) || (startDateComparator == .orderedAscending)){
                 anime.updatedFlag = true
             }
             else {
