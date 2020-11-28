@@ -41,6 +41,8 @@ class CheckDetailsViewController: UIViewController {
         field.textAlignment = .center
         textView.isEditable = false
         episodesFinishedView.textAlignment = .center
+        updateButton.isEnabled = false
+        updateButton.alpha = 0.5
         createNumberPadEpisodesFinished()
         createNumberPadEpisodesPerDay()
     }
@@ -102,25 +104,43 @@ class CheckDetailsViewController: UIViewController {
     @IBAction func checkDetails(_ sender: Any) {
         let episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1")
         let episodesRemaining = animeStored.episodes - episodesFinished!
-        if slider.isOn {
-            getNumberOfEpisodesPerDay(Int(episodesRemaining))
-            if flag == 1 {
-                textView.text = "You will finish \(animeStored.title ?? "...") before the end date even if you watch 1 episode per day \n\n Advise: Change end date to \(updatedEndDateSuggestion )"
-            }
-            else if updatedLastDays == 0 {
-                textView.text = "You will watch \(updateEpisodesPerDay) episodes per day"
+        if (!field.hasText || !updateFinishedEpisodesField.hasText) {
+            var message: String
+            if (slider.isOn){
+                message = "Please input both number of episodes finished and end date"
             }
             else {
-                textView.text = "You will watch \(updateEpisodesPerDay) episodes per day and \(updateEpisodesPerDay + 1) episodes on the last \(updatedLastDays) days "
+                message = "Please input both number of episodes finished and number of episodes/day"
             }
-            
+            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            let dismiss = UIAlertAction.init(title: "Dismiss", style: .default, handler: nil)
+            alert.addAction(dismiss)
+            present(alert,animated: true, completion: nil)
         }
         else{
-            let endDate = getEndDate(Int(episodesRemaining))
-            updatedEndDate = endDate
-            let endDateString = dateFormatter.string(from: endDate)
-            textView.text = "You will finish \(animeStored.title ?? "...") on \(endDateString)"
-            animeStored.episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1") ?? 1
+            if slider.isOn {
+                getNumberOfEpisodesPerDay(Int(episodesRemaining))
+                if flag == 1 {
+                    textView.text = "You will finish \(animeStored.title ?? "...") before the end date even if you watch 1 episode per day \n\n Advise: Change end date to \(updatedEndDateSuggestion )"
+                }
+                else if updatedLastDays == 0 {
+                    textView.text = "You will watch \(updateEpisodesPerDay) episodes per day"
+                }
+                else {
+                    textView.text = "You will watch \(updateEpisodesPerDay) episodes per day and \(updateEpisodesPerDay + 1) episodes on the last \(updatedLastDays) days "
+                }
+                updateButton.isEnabled = false
+                updateButton.alpha = 0.5
+                
+            }
+            else{
+                let endDate = getEndDate(Int(episodesRemaining))
+                updatedEndDate = endDate
+                let endDateString = dateFormatter.string(from: endDate)
+                textView.text = "You will finish \(animeStored.title ?? "...") on \(endDateString)"
+            }
+            updateButton.isEnabled = true
+            updateButton.alpha = 1.0
         }
     }
     
