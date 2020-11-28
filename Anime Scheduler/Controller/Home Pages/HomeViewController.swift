@@ -85,42 +85,69 @@ class HomeViewController: UIViewController {
         }
     }
     
+    func showAlert(title: String) {
+        let alert = UIAlertController(title: "Error", message: "You already have \(title) in your Currently Watching list!", preferredStyle: .alert)
+        let dismiss = UIAlertAction.init(title: "Dismiss", style: .cancel , handler: nil)
+        alert.addAction(dismiss)
+        present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func unwindSegueFromEpisodes(_ sender: UIStoryboardSegue) {
+        var flag = 0
         let addAnimeEpisodesController = sender.source as! AddAnimeByEpisodesController
-        let storedAnime = StoredAnime(context: AppDelegate.context)
-        storedAnime.title = addAnimeEpisodesController.animeDetail.title
-        storedAnime.synopsis = addAnimeEpisodesController.animeDetail.synopsis
-        storedAnime.startDate = addAnimeEpisodesController.startDatePicker.date
-        storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
-        storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
-        storedAnime.endDate = addAnimeEpisodesController.getEndDate()
-        storedAnime.numberOfLastDays = 0
-        storedAnime.episodesFinished = 0
-        storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
-        storedAnime.dateEpisodesFinishedUpdatedOn = storedAnime.startDate
-        storedAnime.updatedFlag = false
-        AppDelegate.saveContext()
-        self.currentlyWatchingAnime.append(storedAnime)
-        self.currentlyWatchingTableView.reloadData()
+        for anime in currentlyWatchingAnime {
+            if anime.title == addAnimeEpisodesController.animeDetail.title {
+                showAlert(title: anime.title!)
+                flag = 1
+                break
+            }
+        }
+        if flag == 0 {
+            let storedAnime = StoredAnime(context: AppDelegate.context)
+            storedAnime.title = addAnimeEpisodesController.animeDetail.title
+            storedAnime.synopsis = addAnimeEpisodesController.animeDetail.synopsis
+            storedAnime.startDate = addAnimeEpisodesController.startDatePicker.date
+            storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
+            storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
+            storedAnime.endDate = addAnimeEpisodesController.getEndDate()
+            storedAnime.numberOfLastDays = 0
+            storedAnime.episodesFinished = 0
+            storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
+            storedAnime.dateEpisodesFinishedUpdatedOn = storedAnime.startDate
+            storedAnime.updatedFlag = false
+            AppDelegate.saveContext()
+            self.currentlyWatchingAnime.append(storedAnime)
+            self.currentlyWatchingTableView.reloadData()
+        }
     }
     
     @IBAction func unwindSegueFromDates(_ sender: UIStoryboardSegue) {
+        var flag = 0
         let addAnimeDatesController = sender.source as! AddAnimeByDatesController
-        let storedAnime = StoredAnime(context: AppDelegate.context)
-        storedAnime.title = addAnimeDatesController.animeDetail.title
-        storedAnime.synopsis = addAnimeDatesController.animeDetail.synopsis
-        storedAnime.startDate = addAnimeDatesController.startDatePicker.date
-        storedAnime.img_url = addAnimeDatesController.animeDetail.image_url
-        storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes.episodesPerDay)
-        storedAnime.numberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
-        storedAnime.endDate = addAnimeDatesController.endDatePicker.date
-        storedAnime.episodesFinished = 0
-        storedAnime.episodes = Int16(addAnimeDatesController.animeDetail.episodes!)
-        storedAnime.dateEpisodesFinishedUpdatedOn = storedAnime.startDate
-        storedAnime.updatedFlag = false
-        AppDelegate.saveContext()
-        self.currentlyWatchingAnime.append(storedAnime)
-        self.currentlyWatchingTableView.reloadData()
+        for anime in currentlyWatchingAnime {
+            if anime.title == addAnimeDatesController.animeDetail.title {
+                showAlert(title: anime.title!)
+                flag = 1
+                break
+            }
+        }
+        if flag == 0 {
+            let storedAnime = StoredAnime(context: AppDelegate.context)
+            storedAnime.title = addAnimeDatesController.animeDetail.title
+            storedAnime.synopsis = addAnimeDatesController.animeDetail.synopsis
+            storedAnime.startDate = addAnimeDatesController.startDatePicker.date
+            storedAnime.img_url = addAnimeDatesController.animeDetail.image_url
+            storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes.episodesPerDay)
+            storedAnime.numberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
+            storedAnime.endDate = addAnimeDatesController.endDatePicker.date
+            storedAnime.episodesFinished = 0
+            storedAnime.episodes = Int16(addAnimeDatesController.animeDetail.episodes!)
+            storedAnime.dateEpisodesFinishedUpdatedOn = storedAnime.startDate
+            storedAnime.updatedFlag = false
+            AppDelegate.saveContext()
+            self.currentlyWatchingAnime.append(storedAnime)
+            self.currentlyWatchingTableView.reloadData()
+        }
     }
     
     
