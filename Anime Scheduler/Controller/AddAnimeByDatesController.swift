@@ -40,6 +40,12 @@ class AddAnimeByDatesController: UIViewController {
         createEndDatePicker()
         addAnimeButton.isEnabled = false
         addAnimeButton.alpha = 0.5
+        if #available(iOS 14, *) {
+            startDatePicker.preferredDatePickerStyle = .wheels
+            endDatePicker.preferredDatePickerStyle = .wheels
+            startDatePicker.sizeToFit()
+            endDatePicker.sizeToFit()
+        }
     }
     
     func createStartDatePicker(){
