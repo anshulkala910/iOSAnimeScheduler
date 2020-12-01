@@ -84,12 +84,18 @@ class HomeViewController: UIViewController {
             let lastUpdatedDate = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdateDate)
             
             var differenceFromCurrent = start - lastUpdatedDate!
-            let durationOfWatch = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day ?? 1) + 1
-            let dateComparisonFromStart = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
+            let startDate = getDateWithoutTime(date: anime.startDate!)
+            let endDate = getDateWithoutTime(date: anime.endDate!)
+            let durationOfWatch = (Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1) + 1
+            let dateComparisonFromStart = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
             if (dateComparisonFromStart == .orderedSame){
                 differenceFromCurrent += 1
             }
-            if (durationOfWatch - differenceFromCurrent) <= anime.numberOfLastDays {
+            let dateComparisonFromEnd = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
+            if dateComparisonFromEnd == .orderedSame {
+                anime.episodesFinished = anime.episodes
+            }
+            else if (durationOfWatch - differenceFromCurrent) <= anime.numberOfLastDays {
                 let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
                 let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
                 let numberOfSpecialDays = Int16(differenceFromCurrent) - numberOfNormalDays
