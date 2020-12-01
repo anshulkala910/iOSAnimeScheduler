@@ -54,14 +54,34 @@ class HomeViewController: UIViewController {
      This function will update the number of episodes finished each day 
      */
     func updateEpisodesFinished() {
-        let currentDate = Date()
+        let currentDate = getDateWithoutTime(date: Date())
         let start = Calendar.current.ordinality(of: .day, in: .era, for: currentDate)!
         //get every anime and determine the difference in days between current date and start date
+        
+        // Specify date components
+//        var dateComponents = DateComponents()
+//        dateComponents.year = 2020
+//        dateComponents.month = 11
+//        dateComponents.day = 30
+//        dateComponents.hour = 01
+//        dateComponents.minute = 34
+//
+//
+//        // Create date from components
+//        let userCalendar = Calendar.current // user calendar
+//        let someDateTime = userCalendar.date(from: dateComponents)
+//        let lastUpdateTestDate = getDateWithoutTime(date: someDateTime!)
+//        let day = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdateTestDate)
+//        let sstart = getDateWithoutTime(date: currentDate)
+//        let startt = Calendar.current.ordinality(of: .day, in: .era, for: sstart)!
+//        let test = startt - day!
+//        print(test)
         for anime in currentlyWatchingAnime{
             if anime.updatedFlag == true {
                 continue
             }
-            let lastUpdatedDate = Calendar.current.ordinality(of: .day, in: .era, for: anime.dateEpisodesFinishedUpdatedOn!)
+            let lastUpdateDate = getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
+            let lastUpdatedDate = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdateDate)
             
             var differenceFromCurrent = start - lastUpdatedDate!
             let durationOfWatch = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day ?? 1) + 1
@@ -79,7 +99,7 @@ class HomeViewController: UIViewController {
             else{
                 anime.episodesFinished += Int16(differenceFromCurrent) * anime.episodesPerDay
             }
-            anime.dateEpisodesFinishedUpdatedOn = currentDate
+            anime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: currentDate)
             anime.updatedFlag = true
             AppDelegate.saveContext()
         }
@@ -106,14 +126,14 @@ class HomeViewController: UIViewController {
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeEpisodesController.animeDetail.title
             storedAnime.synopsis = addAnimeEpisodesController.animeDetail.synopsis
-            storedAnime.startDate = addAnimeEpisodesController.startDatePicker.date
+            storedAnime.startDate = getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
             storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
             storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
-            storedAnime.endDate = addAnimeEpisodesController.getEndDate()
+            storedAnime.endDate = getDateWithoutTime(date: addAnimeEpisodesController.getEndDate())
             storedAnime.numberOfLastDays = 0
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
-            storedAnime.dateEpisodesFinishedUpdatedOn = storedAnime.startDate
+            storedAnime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
             self.currentlyWatchingAnime.append(storedAnime)
@@ -135,14 +155,14 @@ class HomeViewController: UIViewController {
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeDatesController.animeDetail.title
             storedAnime.synopsis = addAnimeDatesController.animeDetail.synopsis
-            storedAnime.startDate = addAnimeDatesController.startDatePicker.date
+            storedAnime.startDate = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
             storedAnime.img_url = addAnimeDatesController.animeDetail.image_url
             storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes.episodesPerDay)
             storedAnime.numberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
-            storedAnime.endDate = addAnimeDatesController.endDatePicker.date
+            storedAnime.endDate = getDateWithoutTime(date: addAnimeDatesController.endDatePicker.date)
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeDatesController.animeDetail.episodes!)
-            storedAnime.dateEpisodesFinishedUpdatedOn = storedAnime.startDate
+            storedAnime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
             self.currentlyWatchingAnime.append(storedAnime)
@@ -152,13 +172,31 @@ class HomeViewController: UIViewController {
     
     
     @IBAction func unwindSegueFromUpdate(_ sender: UIStoryboardSegue){
+        let currentDate = Date()
         let updateCotnroller = sender.source as! CheckDetailsViewController
         let updatedStoredAnime = updateCotnroller.animeStored
-        updatedStoredAnime!.dateEpisodesFinishedUpdatedOn = updatedStoredAnime!.startDate
-        updatedStoredAnime?.updatedFlag = false
+        updatedStoredAnime!.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: currentDate)
+        updatedStoredAnime?.updatedFlag = true
         currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row] = updatedStoredAnime!
         AppDelegate.saveContext()
         self.currentlyWatchingTableView.reloadData()
+    }
+
+    func getDateComponent(date: Date, _ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+        return calendar.component(component, from: date)
+    }
+    
+    func getDateWithoutTime(date: Date) -> Date {
+        let dayComponent = getDateComponent(date: date, .day)
+        let monthComponent = getDateComponent(date: date, .month)
+        let yearComponent = getDateComponent(date: date, .year)
+        var dateComponents = DateComponents()
+        dateComponents.year = yearComponent
+        dateComponents.month = monthComponent
+        dateComponents.day = dayComponent
+        // Create date from components
+        let returnDate = Calendar.current.date(from: dateComponents)
+        return returnDate!
     }
 }
 
