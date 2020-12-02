@@ -36,10 +36,13 @@ class HomeViewController: UIViewController {
     }
     
     func updateUpdatedFlag() {
-        let currentDate = Date()
+        let currentDate = getDateWithoutTime(date: Date())
+        var index = 0
         for anime in currentlyWatchingAnime {
-            let dateComparator = Calendar.current.compare(currentDate, to: anime.dateEpisodesFinishedUpdatedOn!, toGranularity: .day)
-            let startDateComparator = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
+            let lastUpdatedDate = getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
+            let startDate = getDateWithoutTime(date: anime.startDate!)
+            let dateComparator = Calendar.current.compare(currentDate, to: lastUpdatedDate, toGranularity: .day)
+            let startDateComparator = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
             
             //if currentDate == updatedOn && startDate!= currentDate || startDate == currentDate && updatedFlag = true
             if ((dateComparator == .orderedSame && startDateComparator != .orderedSame) || (startDateComparator == .orderedSame && anime.updatedFlag == true) || (startDateComparator == .orderedAscending)){
@@ -48,6 +51,19 @@ class HomeViewController: UIViewController {
             else {
                 anime.updatedFlag = false
             }
+            let endDate = getDateWithoutTime(date: anime.endDate!)
+            let endDateComparator = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
+            
+            //TODO - Check if the commented line needs to be there
+            if endDateComparator == .orderedDescending {
+                currentlyWatchingTableView.beginUpdates()
+                AppDelegate.context.delete(currentlyWatchingAnime[index])
+                currentlyWatchingAnime.remove(at: index)
+                //currentlyWatchingTableView.deleteRows(at: [index], with: .fade)
+                currentlyWatchingTableView.endUpdates()
+                AppDelegate.saveContext()
+            }
+            index += 1
         }
     }
     /**

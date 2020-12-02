@@ -145,10 +145,17 @@ class AddAnimeByDatesController: UIViewController {
     }
     
     func getNumberOfEpisodesPerDay() {
-        let startDate = startDatePicker.date
-        let endDate = endDatePicker.date
-        let difference = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
-        let differenceInDays = (difference.day ?? 1) + 2
+        let startDate = getDateWithoutTime(date: startDatePicker.date)
+        let endDate = getDateWithoutTime(date: endDatePicker.date)
+        let startDateDay = Calendar.current.ordinality(of: .day, in: .era, for: startDate)
+        let endDateDay = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
+        let difference = endDateDay! - startDateDay!
+       // let difference = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
+       // let differenceInDays = (difference.day ?? 1) + 2
+        print(difference)
+        
+        let differenceInDays = difference + 1
+       // print(differenceInDays)
         var numberOfEpisodesPerDay: Int
         if (animeDetail.episodes ?? 1) % differenceInDays == 0 {
             numberOfEpisodesPerDay = (animeDetail.episodes ?? 1)/differenceInDays
@@ -173,6 +180,23 @@ class AddAnimeByDatesController: UIViewController {
             numberOfEpisodes.episodesPerDay = numberOfEpisodesPerDay
             numberOfEpisodes.numberOfLastDays = numberOfLastDays
         }
+    }
+    
+    func getDateComponent(date: Date, _ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+        return calendar.component(component, from: date)
+    }
+    
+    func getDateWithoutTime(date: Date) -> Date {
+        let dayComponent = getDateComponent(date: date, .day)
+        let monthComponent = getDateComponent(date: date, .month)
+        let yearComponent = getDateComponent(date: date, .year)
+        var dateComponents = DateComponents()
+        dateComponents.year = yearComponent
+        dateComponents.month = monthComponent
+        dateComponents.day = dayComponent
+        // Create date from components
+        let returnDate = Calendar.current.date(from: dateComponents)
+        return returnDate!
     }
 
 }
