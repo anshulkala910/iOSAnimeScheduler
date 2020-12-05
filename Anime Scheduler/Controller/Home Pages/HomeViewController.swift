@@ -102,6 +102,7 @@ class HomeViewController: UIViewController {
             var differenceFromCurrent = start - lastUpdatedDate!
             let startDate = getDateWithoutTime(date: anime.startDate!)
             let endDate = getDateWithoutTime(date: anime.endDate!)
+            let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
             let durationOfWatch = (Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1) + 1
             let dateComparisonFromStart = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
             if (dateComparisonFromStart == .orderedSame){
@@ -111,12 +112,14 @@ class HomeViewController: UIViewController {
             if dateComparisonFromEnd == .orderedSame {
                 anime.episodesFinished = anime.episodes
             }
-            else if (durationOfWatch - differenceFromCurrent) <= anime.numberOfLastDays {
+            else if CalendarViewController.checkIfInLastDays(anime, currentDate) {
                 let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
                 let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
-                let numberOfSpecialDays = Int16(differenceFromCurrent) - numberOfNormalDays
-                let episodesDuringSpecialDays = numberOfSpecialDays * (anime.episodesPerDay + 1)
-                anime.episodesFinished += episodesDuringNormalDays + episodesDuringSpecialDays
+                let numberOfSpecialDays = Int16(durationOfWatch) - numberOfNormalDays
+                let differenceFromEnd = endDateOrdinality! - start
+                let daysInLastDays = numberOfSpecialDays - Int16(differenceFromEnd)
+                let episodesDuringSpecialDays = daysInLastDays * (anime.episodesPerDay + 1)
+                anime.episodesFinished = episodesDuringNormalDays + episodesDuringSpecialDays
             }
             else{
                 anime.episodesFinished += Int16(differenceFromCurrent) * anime.episodesPerDay
