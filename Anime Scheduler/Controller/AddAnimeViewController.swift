@@ -74,7 +74,12 @@ extension AddAnimeViewController: UITableViewDataSource{
         let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
         cell.animeImage.image = UIImage(data: data!)
         cell.titleLabel.text = anime.title
-        cell.detailLabel.text = "\(anime.episodes ?? 0) episodes"
+        if anime.episodes == 1 {
+            cell.detailLabel.text = "1 episode"
+        }
+        else{
+            cell.detailLabel.text = "\(anime.episodes ?? 0) episodes"
+        }
         cell.titleLabel.sizeToFit()
         return cell
     }

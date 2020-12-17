@@ -152,7 +152,7 @@ class AddAnimeByDatesController: UIViewController {
         let difference = endDateDay! - startDateDay!
        // let difference = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
        // let differenceInDays = (difference.day ?? 1) + 2
-        print(difference)
+       // print(difference)
         
         let differenceInDays = difference + 1
        // print(differenceInDays)

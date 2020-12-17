@@ -2,7 +2,7 @@
 //  StoredAnime+CoreDataClass.swift
 //  Anime Scheduler
 //
-//  Created by Anshul Kala on 5/26/20.
+//  Created by Anshul Kala on 12/17/20.
 //  Copyright © 2020 Anshul Kala. All rights reserved.
 //
 //

@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9r2-FX-fuI">
-                                <rect key="frame" x="0.0" y="88" width="414" height="676"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="345"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="cell" textLabel="Ruf-u2-qXW" detailTextLabel="Kka-6y-NEd" imageView="gZk-Se-RZb" style="IBUITableViewCellStyleSubtitle" id="ShE-2M-e0J" customClass="HomeAnimeTableViewCell" customModule="Anime_Scheduler" customModuleProvider="target">
@@ -57,14 +57,66 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vlK-ZI-KoI">
+                                <rect key="frame" x="0.0" y="477" width="414" height="287"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationWidth="10" reuseIdentifier="cell" textLabel="kzc-ta-fLc" detailTextLabel="jwN-81-nTt" imageView="U11-xg-Zs9" style="IBUITableViewCellStyleSubtitle" id="SlQ-k4-6YU" customClass="CompletedAnimeTableViewCell" customModule="Anime_Scheduler" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SlQ-k4-6YU" id="Mjn-Yw-BJz">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kzc-ta-fLc">
+                                                    <rect key="frame" x="59" y="10" width="33" height="20.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jwN-81-nTt">
+                                                    <rect key="frame" x="59" y="31.5" width="44" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="pencil.circle.fill" catalog="system" id="U11-xg-Zs9">
+                                                    <rect key="frame" x="22" y="18" width="20" height="19"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="animeImage" destination="U11-xg-Zs9" id="aE2-us-6Ij"/>
+                                            <outlet property="detailLabel" destination="jwN-81-nTt" id="QKa-6I-f5k"/>
+                                            <outlet property="titleLabel" destination="kzc-ta-fLc" id="Ctn-b0-PeA"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bWt-sI-9Mw">
+                                <rect key="frame" x="0.0" y="433" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="Completed" id="pjR-uX-SIR"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="9r2-FX-fuI" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="0Ko-pI-O9K"/>
+                            <constraint firstItem="9r2-FX-fuI" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-331" id="0Ko-pI-O9K"/>
+                            <constraint firstItem="bWt-sI-9Mw" firstAttribute="top" secondItem="9r2-FX-fuI" secondAttribute="bottom" id="1Dq-UO-qdB"/>
+                            <constraint firstItem="vlK-ZI-KoI" firstAttribute="leading" secondItem="9r2-FX-fuI" secondAttribute="leading" id="B5w-6A-vuq"/>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Cwm-eZ-q2P"/>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ci6-3Y-wrr"/>
+                            <constraint firstItem="vlK-ZI-KoI" firstAttribute="trailing" secondItem="bWt-sI-9Mw" secondAttribute="trailing" id="fzC-D3-SkH"/>
+                            <constraint firstItem="vlK-ZI-KoI" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="hgt-zc-u1s"/>
                             <constraint firstItem="9r2-FX-fuI" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ngp-9c-haD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vlK-ZI-KoI" secondAttribute="bottom" id="p9k-wm-Hp9"/>
+                            <constraint firstItem="vlK-ZI-KoI" firstAttribute="top" secondItem="bWt-sI-9Mw" secondAttribute="bottom" id="tpk-BQ-NNA"/>
+                            <constraint firstItem="vlK-ZI-KoI" firstAttribute="leading" secondItem="bWt-sI-9Mw" secondAttribute="leading" id="yJ6-6I-Ntm"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -87,6 +139,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addAnimeButton" destination="LCx-AO-0Ns" id="6pr-Jx-kjd"/>
+                        <outlet property="completedTableView" destination="vlK-ZI-KoI" id="zQa-vT-Mz2"/>
                         <outlet property="currentlyWatchingTableView" destination="9r2-FX-fuI" id="JfP-LR-k66"/>
                     </connections>
                 </viewController>

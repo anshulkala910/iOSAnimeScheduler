@@ -16,5 +16,9 @@ class AnalysisViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    func numberOfCompletedAnime () -> Int {
+        return 0
+    }
+    
 
 }

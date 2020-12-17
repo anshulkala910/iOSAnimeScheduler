@@ -11,9 +11,11 @@ import CoreData
 class HomeViewController: UIViewController {
     
     @IBOutlet var currentlyWatchingTableView: UITableView!
+    @IBOutlet weak var completedTableView: UITableView!
     @IBOutlet weak var addAnimeButton: UIButton!
     
     var currentlyWatchingAnime = [StoredAnime]()
+    var completedAnime = [CompletedAnime]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,18 +23,39 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
-        
+        let fetchRequestCompletedAnime: NSFetchRequest<CompletedAnime> = CompletedAnime.fetchRequest()
         //gets the saved list from Core Data everytime the app is run
         do {
             let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
             self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
-            self.currentlyWatchingTableView.reloadData()
+            
+            let savedCompletedAnime = try AppDelegate.context.fetch(fetchRequestCompletedAnime)
+            self.completedAnime = savedCompletedAnime
         } catch {}
         self.currentlyWatchingTableView.reloadData()
+        self.completedTableView.reloadData()
         updateUpdatedFlag()
         updateEpisodesFinished()
         currentlyWatchingTableView.delegate = self
         currentlyWatchingTableView.dataSource = self
+        completedTableView.delegate = self
+        completedTableView.dataSource = self
+    }
+
+    func getCompletedAnime(completedAnime: StoredAnime) -> CompletedAnime {
+        let completedAnimeObject = CompletedAnime.init(context: AppDelegate.context)
+        completedAnimeObject.dateEpisodesFinishedUpdatedOn = completedAnime.dateEpisodesFinishedUpdatedOn
+        completedAnimeObject.endDate = completedAnime.endDate
+        completedAnimeObject.episodeLength = completedAnime.episodeLength
+        completedAnimeObject.episodes = completedAnime.episodes
+        completedAnimeObject.episodesPerDay = completedAnime.episodesPerDay
+        completedAnimeObject.img_url = completedAnime.img_url
+        completedAnimeObject.mal_id = completedAnime.mal_id
+        completedAnimeObject.numberOfLastDays = completedAnime.numberOfLastDays
+        completedAnimeObject.startDate = completedAnime.startDate
+        completedAnimeObject.title = completedAnime.title
+        completedAnimeObject.updatedFlag = completedAnime.updatedFlag
+        return completedAnimeObject
     }
     
     func updateUpdatedFlag() {
@@ -54,12 +77,15 @@ class HomeViewController: UIViewController {
             let endDate = getDateWithoutTime(date: anime.endDate!)
             let endDateComparator = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
             
-            //TODO - Check if the commented line needs to be there
+            //MARK: TO DO - Add Analysis Entity with an attribute called animeCompleted, which is an int
             if endDateComparator == .orderedDescending {
+                let completedAnimeObject = getCompletedAnime(completedAnime: anime)
+                completedAnime.append(completedAnimeObject)
                 currentlyWatchingTableView.beginUpdates()
                 AppDelegate.context.delete(currentlyWatchingAnime[index])
                 currentlyWatchingAnime.remove(at: index)
-                //currentlyWatchingTableView.deleteRows(at: [index], with: .fade)
+                let indexPath = IndexPath.init(row: index, section: 0)
+                currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
                 currentlyWatchingTableView.endUpdates()
                 AppDelegate.saveContext()
             }
@@ -73,25 +99,6 @@ class HomeViewController: UIViewController {
         let currentDate = getDateWithoutTime(date: Date())
         let start = Calendar.current.ordinality(of: .day, in: .era, for: currentDate)!
         //get every anime and determine the difference in days between current date and start date
-        
-        // Specify date components
-//        var dateComponents = DateComponents()
-//        dateComponents.year = 2020
-//        dateComponents.month = 11
-//        dateComponents.day = 30
-//        dateComponents.hour = 01
-//        dateComponents.minute = 34
-//
-//
-//        // Create date from components
-//        let userCalendar = Calendar.current // user calendar
-//        let someDateTime = userCalendar.date(from: dateComponents)
-//        let lastUpdateTestDate = getDateWithoutTime(date: someDateTime!)
-//        let day = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdateTestDate)
-//        let sstart = getDateWithoutTime(date: currentDate)
-//        let startt = Calendar.current.ordinality(of: .day, in: .era, for: sstart)!
-//        let test = startt - day!
-//        print(test)
         for anime in currentlyWatchingAnime{
             if anime.updatedFlag == true {
                 continue
@@ -150,7 +157,6 @@ class HomeViewController: UIViewController {
         if flag == 0 {
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeEpisodesController.animeDetail.title
-            storedAnime.synopsis = addAnimeEpisodesController.animeDetail.synopsis
             storedAnime.startDate = getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
             storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
             storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
@@ -179,7 +185,6 @@ class HomeViewController: UIViewController {
         if flag == 0 {
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeDatesController.animeDetail.title
-            storedAnime.synopsis = addAnimeDatesController.animeDetail.synopsis
             storedAnime.startDate = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
             storedAnime.img_url = addAnimeDatesController.animeDetail.image_url
             storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes.episodesPerDay)
@@ -250,27 +255,66 @@ extension HomeViewController: UITableViewDataSource{
      This function declares how many rows there are
      */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentlyWatchingAnime.count
+        switch tableView {
+        case currentlyWatchingTableView:
+            return currentlyWatchingAnime.count
+        case completedTableView:
+            return completedAnime.count
+        default:
+            return 0
+        }
     }
     
     /**
      This function declares a cell template to be used over and over
      */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let anime = currentlyWatchingAnime[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell //uses the "cell" template over and over
-        let url = URL(string: anime.img_url!)
-        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-        cell.animeImage.image = UIImage(data: data!)
-        cell.titleLabel.text = anime.title
-        if CalendarViewController.checkIfInLastDays(anime, Date()) {
-            cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes/day"
+        switch tableView {
+        case currentlyWatchingTableView:
+            let anime = currentlyWatchingAnime[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell //uses the "cell" template over and over
+            let url = URL(string: anime.img_url!)
+            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+            cell.animeImage.image = UIImage(data: data!)
+            cell.titleLabel.text = anime.title
+            if CalendarViewController.checkIfInLastDays(anime, Date()) {
+                cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes/day"
+            }
+            else {
+                if anime.episodesPerDay == 1 {
+                    cell.detailLabel.text = "1 episode/day"
+                }
+                else {
+                    cell.detailLabel.text = "\(anime.episodesPerDay) episodes/day"
+                }
+            }
+            cell.titleLabel.sizeToFit()
+            return cell
+            
+        case completedTableView:
+            let anime = completedAnime[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CompletedAnimeTableViewCell //uses the "cell" template over and over
+            let url = URL(string: anime.img_url!)
+            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+            cell.animeImage.image = UIImage(data: data!)
+            cell.titleLabel.text = anime.title
+            if CalendarViewController.checkIfInLastDays(anime, Date()) {
+                cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes/day"
+            }
+            else {
+                if anime.episodesPerDay == 1 {
+                    cell.detailLabel.text = "1 episode/day"
+                }
+                else {
+                    cell.detailLabel.text = "\(anime.episodesPerDay) episodes/day"
+                }
+            }
+            cell.titleLabel.sizeToFit()
+            return cell
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell
+            return cell
         }
-        else {
-            cell.detailLabel.text = "\(anime.episodesPerDay) episodes/day"
-        }
-        cell.titleLabel.sizeToFit()
-        return cell
     }
     
     /**
@@ -284,13 +328,27 @@ extension HomeViewController: UITableViewDataSource{
      This function deletes the anime from a specific row from Core Data and the global array
      */
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            currentlyWatchingTableView.beginUpdates()
-            AppDelegate.context.delete(currentlyWatchingAnime[indexPath.row])
-            currentlyWatchingAnime.remove(at: indexPath.row)
-            currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
-            currentlyWatchingTableView.endUpdates()
-            AppDelegate.saveContext()
+        switch tableView {
+        case currentlyWatchingTableView:
+            if editingStyle == .delete {
+                currentlyWatchingTableView.beginUpdates()
+                AppDelegate.context.delete(currentlyWatchingAnime[indexPath.row])
+                currentlyWatchingAnime.remove(at: indexPath.row)
+                currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
+                currentlyWatchingTableView.endUpdates()
+                AppDelegate.saveContext()
+            }
+        case completedTableView:
+            if editingStyle == .delete {
+                completedTableView.beginUpdates()
+                AppDelegate.context.delete(completedAnime[indexPath.row])
+                completedAnime.remove(at: indexPath.row)
+                completedTableView.deleteRows(at: [indexPath], with: .fade)
+                completedTableView.endUpdates()
+                AppDelegate.saveContext()
+            }
+        default:
+            return
         }
     }
 }
