@@ -19,6 +19,11 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        completedTableView.layoutMargins = UIEdgeInsets.zero
+        completedTableView.separatorInset = UIEdgeInsets.zero
+        currentlyWatchingTableView.layoutMargins = UIEdgeInsets.zero
+        currentlyWatchingTableView.separatorInset = UIEdgeInsets.zero
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -288,6 +293,7 @@ extension HomeViewController: UITableViewDataSource{
                     cell.detailLabel.text = "\(anime.episodesPerDay) episodes/day"
                 }
             }
+            cell.layoutMargins = UIEdgeInsets.zero
             cell.titleLabel.sizeToFit()
             return cell
             
@@ -309,6 +315,7 @@ extension HomeViewController: UITableViewDataSource{
                     cell.detailLabel.text = "\(anime.episodesPerDay) episodes/day"
                 }
             }
+            cell.layoutMargins = UIEdgeInsets.zero
             cell.titleLabel.sizeToFit()
             return cell
         default:
