@@ -395,7 +395,7 @@
             </objects>
             <point key="canvasLocation" x="2826.0869565217395" y="132.58928571428572"/>
         </scene>
-        <!--Settings-->
+        <!--About-->
         <scene sceneID="uKP-On-6hN">
             <objects>
                 <viewController id="z4j-rl-i82" customClass="SettingsViewController" customModule="Anime_Scheduler" customModuleProvider="target" sceneMemberID="viewController">
@@ -403,21 +403,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NjO-rh-efr">
-                                <rect key="frame" x="0.0" y="31" width="414" height="44"/>
-                                <items>
-                                    <navigationItem title="About" id="ujy-dB-2cN"/>
-                                </items>
-                            </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="3" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Kv-v4-IWr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" sectionIndexMinimumDisplayRowCount="3" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Kv-v4-IWr">
                                 <rect key="frame" x="0.0" y="75" width="414" height="340"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="6cI-hJ-uoK" detailTextLabel="ZvX-3N-Tk7" style="IBUITableViewCellStyleValue1" id="w0K-57-zrt">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="w0K-57-zrt" id="O0W-N2-bDL">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6cI-hJ-uoK">
@@ -451,19 +445,17 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="hww-d0-K3n" firstAttribute="bottom" secondItem="4Kv-v4-IWr" secondAttribute="bottom" constant="398" id="A7N-3b-PIe"/>
+                            <constraint firstItem="4Kv-v4-IWr" firstAttribute="top" secondItem="hww-d0-K3n" secondAttribute="top" constant="31" id="CzG-mh-R48"/>
                             <constraint firstItem="4Kv-v4-IWr" firstAttribute="leading" secondItem="hww-d0-K3n" secondAttribute="leading" id="DJG-YO-4BQ"/>
-                            <constraint firstItem="4Kv-v4-IWr" firstAttribute="top" secondItem="NjO-rh-efr" secondAttribute="bottom" id="Ry0-nX-Nii"/>
                             <constraint firstItem="gAY-5K-Lsp" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="UIC-5f-iml"/>
-                            <constraint firstItem="NjO-rh-efr" firstAttribute="trailing" secondItem="4Kv-v4-IWr" secondAttribute="trailing" id="c1f-h4-wta"/>
                             <constraint firstItem="4Kv-v4-IWr" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="cFp-uI-6jW"/>
                             <constraint firstItem="hww-d0-K3n" firstAttribute="bottom" secondItem="gAY-5K-Lsp" secondAttribute="bottom" constant="31" id="kSg-6p-y6I"/>
-                            <constraint firstItem="NjO-rh-efr" firstAttribute="leading" secondItem="4Kv-v4-IWr" secondAttribute="leading" id="rDa-eD-JTB"/>
-                            <constraint firstItem="NjO-rh-efr" firstAttribute="top" secondItem="dhK-Bv-6UK" secondAttribute="topMargin" constant="-13" id="rOg-y1-7hy"/>
                             <constraint firstItem="hww-d0-K3n" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="gAY-5K-Lsp" secondAttribute="trailing" constant="170" id="t9x-lh-2KZ"/>
                             <constraint firstItem="gAY-5K-Lsp" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="vNc-c8-yWG"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="gear" catalog="system" id="Cew-GE-UAF"/>
+                    <navigationItem key="navigationItem" title="About" id="HNz-Xa-x66"/>
                     <connections>
                         <outlet property="rateApp" destination="gAY-5K-Lsp" id="ns4-pe-Ayh"/>
                         <outlet property="settingsTableView" destination="4Kv-v4-IWr" id="qVT-sk-tiw"/>
