@@ -136,7 +136,6 @@ extension CalendarViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print(indexPath.row)
         if indexPath.row >= animeOnMonth.count {
             let anime = animeOnMonthCompleted[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell

@@ -17,9 +17,13 @@ class HomeViewController: UIViewController {
     var currentlyWatchingAnime = [StoredAnime]()
     var completedAnime = [CompletedAnime]()
     
+    var shouldSortCurrentlyWatchingAnime = false
+    var shouldSortCompletedAnime = false
+    var shouldFetchCoreDataStoredAnime = true
+    var shouldFetchCoreDataCompletedAnime = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // to remove the white space on the left of the line separating cells
         completedTableView.layoutMargins = UIEdgeInsets.zero
         completedTableView.separatorInset = UIEdgeInsets.zero
@@ -29,22 +33,42 @@ class HomeViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // fetch data from core data stack
-        let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
-        let fetchRequestCompletedAnime: NSFetchRequest<CompletedAnime> = CompletedAnime.fetchRequest()
         
-        // gets the saved list from Core Data everytime the app is run
-        do {
-            let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
-            self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
-            
-            let savedCompletedAnime = try AppDelegate.context.fetch(fetchRequestCompletedAnime)
-            self.completedAnime = savedCompletedAnime
-        } catch {}
+        if shouldFetchCoreDataStoredAnime == true {
+            // fetch data from core data stack
+            let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
+            // gets the saved list from Core Data
+            do {
+                let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
+                self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
+            } catch {}
+            // reload data after fetching
+            self.currentlyWatchingTableView.reloadData()
+        }
+        shouldFetchCoreDataStoredAnime = false
         
-        // reload data after fetching
-        self.currentlyWatchingTableView.reloadData()
-        self.completedTableView.reloadData()
+        if shouldFetchCoreDataCompletedAnime == true {
+            // fetch data from core data stack
+            let fetchRequestCompletedAnime: NSFetchRequest<CompletedAnime> = CompletedAnime.fetchRequest()
+            // gets the saved list from Core Data
+            do {
+                let savedCompletedAnime = try AppDelegate.context.fetch(fetchRequestCompletedAnime)
+                self.completedAnime = savedCompletedAnime
+            } catch {}
+            // reload data after fetching
+            self.completedTableView.reloadData()
+        }
+        shouldFetchCoreDataCompletedAnime = false
+        
+        if shouldSortCurrentlyWatchingAnime == true {
+            sortStoredAnimeList()
+        }
+        shouldSortCurrentlyWatchingAnime = false
+        
+        if shouldSortCompletedAnime == true {
+            sortCompletedAnimeList()
+        }
+        shouldSortCompletedAnime = false
         
         updateUpdatedFlag() // check if anime is updated as of right now
         updateEpisodesFinished() // if not, update the number of episodes that should be finished
@@ -86,6 +110,22 @@ class HomeViewController: UIViewController {
         let currentDate = getDateWithoutTime(date: Date())
         var index = 0
         for anime in currentlyWatchingAnime {
+            let endDate = getDateWithoutTime(date: anime.endDate!)
+            let endDateComparator = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
+            
+            if endDateComparator == .orderedDescending && currentlyWatchingTableView.numberOfRows(inSection: 0) != 0 {
+                shouldSortCompletedAnime = true
+                let completedAnimeObject = getCompletedAnime(storedAnime: anime)
+                completedAnime.append(completedAnimeObject)
+                currentlyWatchingTableView.beginUpdates()
+                AppDelegate.context.delete(currentlyWatchingAnime[index])
+                currentlyWatchingAnime.remove(at: index)
+                let indexPath = IndexPath.init(row: index, section: 0)
+                currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
+                currentlyWatchingTableView.endUpdates()
+                AppDelegate.saveContext()
+            }
+            
             let lastUpdatedDate = getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
             let startDate = getDateWithoutTime(date: anime.startDate!)
             let dateComparator = Calendar.current.compare(currentDate, to: lastUpdatedDate, toGranularity: .day)
@@ -97,20 +137,6 @@ class HomeViewController: UIViewController {
             }
             else {
                 anime.updatedFlag = false
-            }
-            let endDate = getDateWithoutTime(date: anime.endDate!)
-            let endDateComparator = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
-            
-            if endDateComparator == .orderedDescending {
-                let completedAnimeObject = getCompletedAnime(storedAnime: anime)
-                completedAnime.append(completedAnimeObject)
-                currentlyWatchingTableView.beginUpdates()
-                AppDelegate.context.delete(currentlyWatchingAnime[index])
-                currentlyWatchingAnime.remove(at: index)
-                let indexPath = IndexPath.init(row: index, section: 0)
-                currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
-                currentlyWatchingTableView.endUpdates()
-                AppDelegate.saveContext()
             }
             index += 1
         }
@@ -191,6 +217,24 @@ class HomeViewController: UIViewController {
     }
     
     /*
+     This function lexicographically sorts the currentlyWatchingAnime list
+     parameters: none
+     returns: none
+     */
+    func sortStoredAnimeList() {
+        currentlyWatchingAnime.sort { $0.title ?? "" < $1.title ?? "" }
+    }
+    
+    /*
+     This function lexicographically sorts the completedAnime list
+     parameters: none
+     returns: none
+     */
+    func sortCompletedAnimeList() {
+        completedAnime.sort { $0.title ?? "" < $1.title ?? "" }
+    }
+    
+    /*
      This function is called when user is adding anime from #eps/day form. It saves the anime to the Core Data stack
      parameters: segue
      returns: none
@@ -209,6 +253,8 @@ class HomeViewController: UIViewController {
         
         // if not in currently watching list, continue
         if flag == 0 {
+            shouldSortCurrentlyWatchingAnime = true
+            shouldFetchCoreDataStoredAnime = true
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeEpisodesController.animeDetail.title
             storedAnime.startDate = getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
@@ -221,7 +267,7 @@ class HomeViewController: UIViewController {
             storedAnime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
-            self.currentlyWatchingAnime.append(storedAnime)
+            //self.currentlyWatchingAnime.append(storedAnime)
             self.currentlyWatchingTableView.reloadData()
         }
     }
@@ -243,6 +289,8 @@ class HomeViewController: UIViewController {
         
         // if not in currently watching list, continue
         if flag == 0 {
+            shouldSortCurrentlyWatchingAnime = true
+            shouldFetchCoreDataStoredAnime = true
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeDatesController.animeDetail.title
             storedAnime.startDate = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
@@ -255,7 +303,7 @@ class HomeViewController: UIViewController {
             storedAnime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
-            self.currentlyWatchingAnime.append(storedAnime)
+            //self.currentlyWatchingAnime.append(storedAnime)
             self.currentlyWatchingTableView.reloadData()
         }
     }
