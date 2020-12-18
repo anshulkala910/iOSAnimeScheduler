@@ -19,6 +19,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // to remove the white space on the left of the line separating cells
         completedTableView.layoutMargins = UIEdgeInsets.zero
         completedTableView.separatorInset = UIEdgeInsets.zero
         currentlyWatchingTableView.layoutMargins = UIEdgeInsets.zero
@@ -27,9 +29,11 @@ class HomeViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // fetch data from core data stack
         let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
         let fetchRequestCompletedAnime: NSFetchRequest<CompletedAnime> = CompletedAnime.fetchRequest()
-        //gets the saved list from Core Data everytime the app is run
+        
+        // gets the saved list from Core Data everytime the app is run
         do {
             let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
             self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
@@ -37,32 +41,47 @@ class HomeViewController: UIViewController {
             let savedCompletedAnime = try AppDelegate.context.fetch(fetchRequestCompletedAnime)
             self.completedAnime = savedCompletedAnime
         } catch {}
+        
+        // reload data after fetching
         self.currentlyWatchingTableView.reloadData()
         self.completedTableView.reloadData()
-        updateUpdatedFlag()
-        updateEpisodesFinished()
+        
+        updateUpdatedFlag() // check if anime is updated as of right now
+        updateEpisodesFinished() // if not, update the number of episodes that should be finished
+        
         currentlyWatchingTableView.delegate = self
         currentlyWatchingTableView.dataSource = self
         completedTableView.delegate = self
         completedTableView.dataSource = self
     }
 
-    func getCompletedAnime(completedAnime: StoredAnime) -> CompletedAnime {
+    /*
+     This funciton is called when an anime is completed and should be transfered from StoredAnime to CompletedAnime
+     parameters: StoredAnime instance
+     returns: CompleterdAnime instance
+     */
+    // transfers data basically
+    func getCompletedAnime(storedAnime: StoredAnime) -> CompletedAnime {
         let completedAnimeObject = CompletedAnime.init(context: AppDelegate.context)
-        completedAnimeObject.dateEpisodesFinishedUpdatedOn = completedAnime.dateEpisodesFinishedUpdatedOn
-        completedAnimeObject.endDate = completedAnime.endDate
-        completedAnimeObject.episodeLength = completedAnime.episodeLength
-        completedAnimeObject.episodes = completedAnime.episodes
-        completedAnimeObject.episodesPerDay = completedAnime.episodesPerDay
-        completedAnimeObject.img_url = completedAnime.img_url
-        completedAnimeObject.mal_id = completedAnime.mal_id
-        completedAnimeObject.numberOfLastDays = completedAnime.numberOfLastDays
-        completedAnimeObject.startDate = completedAnime.startDate
-        completedAnimeObject.title = completedAnime.title
-        completedAnimeObject.updatedFlag = completedAnime.updatedFlag
+        completedAnimeObject.dateEpisodesFinishedUpdatedOn = storedAnime.dateEpisodesFinishedUpdatedOn
+        completedAnimeObject.endDate = storedAnime.endDate
+        completedAnimeObject.episodeLength = storedAnime.episodeLength
+        completedAnimeObject.episodes = storedAnime.episodes
+        completedAnimeObject.episodesPerDay = storedAnime.episodesPerDay
+        completedAnimeObject.img_url = storedAnime.img_url
+        completedAnimeObject.mal_id = storedAnime.mal_id
+        completedAnimeObject.numberOfLastDays = storedAnime.numberOfLastDays
+        completedAnimeObject.startDate = storedAnime.startDate
+        completedAnimeObject.title = storedAnime.title
+        completedAnimeObject.updatedFlag = storedAnime.updatedFlag
         return completedAnimeObject
     }
     
+    /*
+     This function updates the updated flag according to return date
+     parameters: none
+     returns: void
+     */
     func updateUpdatedFlag() {
         let currentDate = getDateWithoutTime(date: Date())
         var index = 0
@@ -82,9 +101,8 @@ class HomeViewController: UIViewController {
             let endDate = getDateWithoutTime(date: anime.endDate!)
             let endDateComparator = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
             
-            //MARK: TO DO - Add Analysis Entity with an attribute called animeCompleted, which is an int
             if endDateComparator == .orderedDescending {
-                let completedAnimeObject = getCompletedAnime(completedAnime: anime)
+                let completedAnimeObject = getCompletedAnime(storedAnime: anime)
                 completedAnime.append(completedAnimeObject)
                 currentlyWatchingTableView.beginUpdates()
                 AppDelegate.context.delete(currentlyWatchingAnime[index])
@@ -97,51 +115,74 @@ class HomeViewController: UIViewController {
             index += 1
         }
     }
-    /**
-     This function will update the number of episodes finished each day 
+    
+    /*
+     This function updates the number of episodes finished each day
+     parameters: none
+     returns: void
      */
     func updateEpisodesFinished() {
+        
         let currentDate = getDateWithoutTime(date: Date())
-        let start = Calendar.current.ordinality(of: .day, in: .era, for: currentDate)!
-        //get every anime and determine the difference in days between current date and start date
+        let current = Calendar.current.ordinality(of: .day, in: .era, for: currentDate)!
+        
+        //iterate through list of anime
         for anime in currentlyWatchingAnime{
+            //if already updated, continue
             if anime.updatedFlag == true {
                 continue
             }
-            let lastUpdateDate = getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
-            let lastUpdatedDate = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdateDate)
+        
+            let lastUpdatedDate = getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
+            let lastUpdatedDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdatedDate)
             
-            var differenceFromCurrent = start - lastUpdatedDate!
+            var differenceFromCurrent = current - lastUpdatedDateOrdinality! // how many days since last update
+            
             let startDate = getDateWithoutTime(date: anime.startDate!)
             let endDate = getDateWithoutTime(date: anime.endDate!)
             let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
             let durationOfWatch = (Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1) + 1
             let dateComparisonFromStart = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
+            // if anime started today, then add a day to differenceFromCurrent or else it would be 0
             if (dateComparisonFromStart == .orderedSame){
                 differenceFromCurrent += 1
             }
+            
             let dateComparisonFromEnd = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
+            // if anime ends today, user should be finished with all episodes
             if dateComparisonFromEnd == .orderedSame {
                 anime.episodesFinished = anime.episodes
             }
+            
+            // if anime in "last days"
             else if CalendarViewController.checkIfInLastDays(anime, currentDate) {
+                // calculate episodes watched during "normal days"
                 let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
                 let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
-                let numberOfSpecialDays = Int16(durationOfWatch) - numberOfNormalDays
-                let differenceFromEnd = endDateOrdinality! - start
-                let daysInLastDays = numberOfSpecialDays - Int16(differenceFromEnd)
-                let episodesDuringSpecialDays = daysInLastDays * (anime.episodesPerDay + 1)
-                anime.episodesFinished = episodesDuringNormalDays + episodesDuringSpecialDays
+                // calculate episodes watched during "last days"
+                let numberOfLastDays = Int16(durationOfWatch) - numberOfNormalDays
+                let differenceFromEnd = endDateOrdinality! - current
+                let daysInLastDays = numberOfLastDays - Int16(differenceFromEnd)
+                let episodesDuringLastDays = daysInLastDays * (anime.episodesPerDay + 1)
+                // add both
+                anime.episodesFinished = episodesDuringNormalDays + episodesDuringLastDays
             }
+            // if anime was added through #eps/day
             else{
                 anime.episodesFinished += Int16(differenceFromCurrent) * anime.episodesPerDay
             }
+            //update last updated date to today
             anime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: currentDate)
             anime.updatedFlag = true
             AppDelegate.saveContext()
         }
     }
     
+    /*
+     This function throws an alert notifying the user that the anime the user is trying to add is already in currently watching list
+     parameters: title of the anime
+     returns: void
+     */
     func showAlert(title: String) {
         let alert = UIAlertController(title: "Error", message: "You already have \(title) in your Currently Watching list!", preferredStyle: .alert)
         let dismiss = UIAlertAction.init(title: "Dismiss", style: .cancel , handler: nil)
@@ -149,9 +190,15 @@ class HomeViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    /*
+     This function is called when user is adding anime from #eps/day form. It saves the anime to the Core Data stack
+     parameters: segue
+     returns: none
+     */
     @IBAction func unwindSegueFromEpisodes(_ sender: UIStoryboardSegue) {
         var flag = 0
         let addAnimeEpisodesController = sender.source as! AddAnimeByEpisodesController
+        // if anime is already in the currently watching list, show alert
         for anime in currentlyWatchingAnime {
             if anime.title == addAnimeEpisodesController.animeDetail.title {
                 showAlert(title: anime.title!)
@@ -159,6 +206,8 @@ class HomeViewController: UIViewController {
                 break
             }
         }
+        
+        // if not in currently watching list, continue
         if flag == 0 {
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeEpisodesController.animeDetail.title
@@ -177,9 +226,13 @@ class HomeViewController: UIViewController {
         }
     }
     
+    /*
+     This function is called when user is adding anime from start date/end date form. It saves the anime to the Core Data stack
+     */
     @IBAction func unwindSegueFromDates(_ sender: UIStoryboardSegue) {
         var flag = 0
         let addAnimeDatesController = sender.source as! AddAnimeByDatesController
+        // if anime is already in the currently watching list, show alert
         for anime in currentlyWatchingAnime {
             if anime.title == addAnimeDatesController.animeDetail.title {
                 showAlert(title: anime.title!)
@@ -187,6 +240,8 @@ class HomeViewController: UIViewController {
                 break
             }
         }
+        
+        // if not in currently watching list, continue
         if flag == 0 {
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeDatesController.animeDetail.title
@@ -205,7 +260,11 @@ class HomeViewController: UIViewController {
         }
     }
     
-    
+    /*
+     This function is called when user updates how many episodes finished for an anime. It saves anime details from the update page
+     parameters: segue
+     returns: none
+     */
     @IBAction func unwindSegueFromUpdate(_ sender: UIStoryboardSegue){
         let currentDate = Date()
         let updateCotnroller = sender.source as! CheckDetailsViewController
@@ -217,11 +276,22 @@ class HomeViewController: UIViewController {
         self.currentlyWatchingTableView.reloadData()
     }
 
+    /*
+     This function returns the date component of a particular Date instnace
+     parameters: date, date component, calendar
+     returns: integer representing date component
+     */
     func getDateComponent(date: Date, _ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
         return calendar.component(component, from: date)
     }
     
+    /*
+     This function returns a date such that it has no time component
+     parameters: date
+     returns: new date instance without time
+     */
     func getDateWithoutTime(date: Date) -> Date {
+        //get date components
         let dayComponent = getDateComponent(date: date, .day)
         let monthComponent = getDateComponent(date: date, .month)
         let yearComponent = getDateComponent(date: date, .year)
@@ -229,6 +299,7 @@ class HomeViewController: UIViewController {
         dateComponents.year = yearComponent
         dateComponents.month = monthComponent
         dateComponents.day = dayComponent
+        
         // Create date from components
         let returnDate = Calendar.current.date(from: dateComponents)
         return returnDate!
@@ -237,13 +308,16 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate{
     
-    /**
+    /*
      This function is called whenever a cell is tapped
+     parameters: segue, sender
+     returns: none
      */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "checkAnimeDetails" {
             let checkDetailsController = segue.destination as! CheckDetailsViewController
             checkDetailsController.animeStored = currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row]
+            
             // These lines change the text of the back button item for the destination controller
             let backButtonItem = UIBarButtonItem()
             backButtonItem.title = "Home"
@@ -256,8 +330,10 @@ extension HomeViewController: UITableViewDelegate{
 
 extension HomeViewController: UITableViewDataSource{
     
-    /**
-     This function declares how many rows there are
+    /*
+     This function declares how many rows there are in a table view
+     parameters: tableview, section number
+     returns: int
      */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch tableView {
@@ -270,8 +346,10 @@ extension HomeViewController: UITableViewDataSource{
         }
     }
     
-    /**
+    /*
      This function declares a cell template to be used over and over
+     parameters: tableview, indexpath
+     returns: UITableViewCell to be used
      */
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableView {
@@ -293,7 +371,7 @@ extension HomeViewController: UITableViewDataSource{
                     cell.detailLabel.text = "\(anime.episodesPerDay) episodes/day"
                 }
             }
-            cell.layoutMargins = UIEdgeInsets.zero
+            cell.layoutMargins = UIEdgeInsets.zero // no white spacing on the left of cell separators
             cell.titleLabel.sizeToFit()
             return cell
             
@@ -315,7 +393,7 @@ extension HomeViewController: UITableViewDataSource{
                     cell.detailLabel.text = "\(anime.episodesPerDay) episodes/day"
                 }
             }
-            cell.layoutMargins = UIEdgeInsets.zero
+            cell.layoutMargins = UIEdgeInsets.zero // no white spacing on the left of cell separators
             cell.titleLabel.sizeToFit()
             return cell
         default:
@@ -324,15 +402,19 @@ extension HomeViewController: UITableViewDataSource{
         }
     }
     
-    /**
-     This functions helps in deleting a row
+    /*
+     This functions helps in deleting a row from a table view
+     parameters: tableview, indexpath
+     returns: EditingStyle for the cell, which is always .delete
      */
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
     
-    /**
+    /*
      This function deletes the anime from a specific row from Core Data and the global array
+     parameters: table view, editing style, index path
+     returns: none
      */
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch tableView {

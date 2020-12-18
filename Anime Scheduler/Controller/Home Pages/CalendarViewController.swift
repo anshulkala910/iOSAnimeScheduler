@@ -22,6 +22,8 @@ class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        animeWatchingTableView.layoutMargins = UIEdgeInsets.zero
+        animeWatchingTableView.separatorInset = UIEdgeInsets.zero
         calendar.delegate = self
         calendar.dataSource = self
         animeWatchingTableView.delegate = self
@@ -162,6 +164,7 @@ extension CalendarViewController: UITableViewDataSource{
                     cell.detailLabel.text = "\(anime.episodesPerDay) episodes"
                 }
             }
+            cell.layoutMargins = UIEdgeInsets.zero
             cell.titleLabel.sizeToFit()
             return cell
         }
@@ -192,6 +195,7 @@ extension CalendarViewController: UITableViewDataSource{
                     cell.detailLabel.text = "\(anime.episodesPerDay) episodes"
                 }
             }
+            cell.layoutMargins = UIEdgeInsets.zero
             cell.titleLabel.sizeToFit()
             return cell
         }

@@ -17,6 +17,8 @@ class SettingsViewController: UIViewController {
     let columnAnswers = ["1.0", "Anshul Kala", ""]
     override func viewDidLoad() {
         super.viewDidLoad()
+        settingsTableView.layoutMargins = UIEdgeInsets.zero
+        settingsTableView.separatorInset = UIEdgeInsets.zero
         settingsTableView.delegate = self
         settingsTableView.dataSource = self
     }
@@ -51,6 +53,7 @@ extension SettingsViewController: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = columnNames[indexPath.row]
         cell.detailTextLabel?.text = columnAnswers[indexPath.row]
+        cell.layoutMargins = UIEdgeInsets.zero
         return cell
     }
     
