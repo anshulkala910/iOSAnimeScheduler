@@ -115,6 +115,8 @@ class HomeViewController: UIViewController {
             
             if endDateComparator == .orderedDescending && currentlyWatchingTableView.numberOfRows(inSection: 0) != 0 {
                 shouldSortCompletedAnime = true
+                shouldFetchCoreDataCompletedAnime = true
+                CalendarViewController.shouldFetchCoreDataCompletedAnime = true
                 let completedAnimeObject = getCompletedAnime(storedAnime: anime)
                 completedAnime.append(completedAnimeObject)
                 currentlyWatchingTableView.beginUpdates()
@@ -255,6 +257,7 @@ class HomeViewController: UIViewController {
         if flag == 0 {
             shouldSortCurrentlyWatchingAnime = true
             shouldFetchCoreDataStoredAnime = true
+            CalendarViewController.shouldFetchCoreDataStoredAnime = true
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeEpisodesController.animeDetail.title
             storedAnime.startDate = getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
@@ -291,6 +294,7 @@ class HomeViewController: UIViewController {
         if flag == 0 {
             shouldSortCurrentlyWatchingAnime = true
             shouldFetchCoreDataStoredAnime = true
+            CalendarViewController.shouldFetchCoreDataStoredAnime = true
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeDatesController.animeDetail.title
             storedAnime.startDate = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
