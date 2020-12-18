@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import Network
+
 class HomeViewController: UIViewController {
     
     @IBOutlet var currentlyWatchingTableView: UITableView!
@@ -22,6 +24,11 @@ class HomeViewController: UIViewController {
     var shouldFetchCoreDataStoredAnime = true
     var shouldFetchCoreDataCompletedAnime = true
     
+    let monitor = NWPathMonitor()
+    let queue = DispatchQueue(label: "InternetConnectionMonitor")
+    
+    var internetFlag = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // to remove the white space on the left of the line separating cells
@@ -30,6 +37,15 @@ class HomeViewController: UIViewController {
         currentlyWatchingTableView.layoutMargins = UIEdgeInsets.zero
         currentlyWatchingTableView.separatorInset = UIEdgeInsets.zero
         
+        monitor.pathUpdateHandler = { pathUpdateHandler in
+            if pathUpdateHandler.status == .satisfied {
+                self.internetFlag = 1
+            } else {
+                self.internetFlag = 0
+            }
+        }
+        
+        monitor.start(queue: queue)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,7 +94,7 @@ class HomeViewController: UIViewController {
         completedTableView.delegate = self
         completedTableView.dataSource = self
     }
-
+    
     /*
      This funciton is called when an anime is completed and should be transfered from StoredAnime to CompletedAnime
      parameters: StoredAnime instance
@@ -160,7 +176,7 @@ class HomeViewController: UIViewController {
             if anime.updatedFlag == true {
                 continue
             }
-        
+            
             let lastUpdatedDate = getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
             let lastUpdatedDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdatedDate)
             
@@ -327,7 +343,7 @@ class HomeViewController: UIViewController {
         AppDelegate.saveContext()
         self.currentlyWatchingTableView.reloadData()
     }
-
+    
     /*
      This function returns the date component of a particular Date instnace
      parameters: date, date component, calendar
@@ -408,9 +424,11 @@ extension HomeViewController: UITableViewDataSource{
         case currentlyWatchingTableView:
             let anime = currentlyWatchingAnime[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell //uses the "cell" template over and over
-            let url = URL(string: anime.img_url!)
-            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-            cell.animeImage.image = UIImage(data: data!)
+            if internetFlag == 1 {
+                let url = URL(string: anime.img_url!)
+                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                cell.animeImage.image = UIImage(data: data!)
+            }
             cell.titleLabel.text = anime.title
             if CalendarViewController.checkIfInLastDays(anime, Date()) {
                 cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes/day"
@@ -430,9 +448,11 @@ extension HomeViewController: UITableViewDataSource{
         case completedTableView:
             let anime = completedAnime[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CompletedAnimeTableViewCell //uses the "cell" template over and over
-            let url = URL(string: anime.img_url!)
-            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-            cell.animeImage.image = UIImage(data: data!)
+            if internetFlag == 1 {
+                let url = URL(string: anime.img_url!)
+                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                cell.animeImage.image = UIImage(data: data!)
+            }
             cell.titleLabel.text = anime.title
             if CalendarViewController.checkIfInLastDays(anime, Date()) {
                 cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes/day"

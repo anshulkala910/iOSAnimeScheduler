@@ -9,6 +9,7 @@
 import UIKit
 import FSCalendar
 import CoreData
+import Network
 
 class CalendarViewController: UIViewController {
     
@@ -24,6 +25,11 @@ class CalendarViewController: UIViewController {
     static var shouldFetchCoreDataStoredAnime = true
     static var shouldFetchCoreDataCompletedAnime = true
     
+    let monitor = NWPathMonitor()
+    let queue = DispatchQueue(label: "InternetConnectionMonitor")
+    
+    var internetFlag = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // to remove the white space on the left of the line separating cells
@@ -35,6 +41,16 @@ class CalendarViewController: UIViewController {
         animeWatchingTableView.delegate = self
         animeWatchingTableView.dataSource = self
         animeWatchingTableView.allowsSelection = false
+        
+        monitor.pathUpdateHandler = { pathUpdateHandler in
+            if pathUpdateHandler.status == .satisfied {
+                self.internetFlag = 1
+            } else {
+                self.internetFlag = 0
+            }
+        }
+        
+        monitor.start(queue: queue)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,7 +99,7 @@ class CalendarViewController: UIViewController {
     func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
         populateDateArrays(calendar.today!) // populate the array showing animes for TODAY
     }
-
+    
     /*
      This function populates the two anime arrays such that all anime in those lists are watched on a selected date
      parameters: date that is selected
@@ -121,7 +137,7 @@ class CalendarViewController: UIViewController {
 extension CalendarViewController: FSCalendarDelegate{
     
     
-
+    
 }
 
 extension CalendarViewController: FSCalendarDataSource {
@@ -176,9 +192,11 @@ extension CalendarViewController: UITableViewDataSource{
             
             let anime = animeOnDateCompleted[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell
-            let url = URL(string: anime.img_url!)
-            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-            cell.animeImage.image = UIImage(data: data!)
+            if internetFlag == 1 {
+                let url = URL(string: anime.img_url!)
+                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                cell.animeImage.image = UIImage(data: data!)
+            }
             cell.titleLabel.text = anime.title
             var episodesWatchedOnNormalDays: Int = 0
             let dateComparator = Calendar.current.compare(anime.endDate!, to: calendar.selectedDate ?? Date(), toGranularity: .day)
@@ -208,9 +226,11 @@ extension CalendarViewController: UITableViewDataSource{
         else {
             let anime = animeOnDate[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell
-            let url = URL(string: anime.img_url!)
-            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-            cell.animeImage.image = UIImage(data: data!)
+            if internetFlag == 1 {
+                let url = URL(string: anime.img_url!)
+                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+                cell.animeImage.image = UIImage(data: data!)
+            }
             cell.titleLabel.text = anime.title
             var episodesWatchedOnNormalDays: Int = 0
             let dateComparator = Calendar.current.compare(anime.endDate!, to: calendar.selectedDate ?? Date(), toGranularity: .day)
