@@ -424,6 +424,7 @@ extension HomeViewController: UITableViewDataSource{
         case currentlyWatchingTableView:
             let anime = currentlyWatchingAnime[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell //uses the "cell" template over and over
+            // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
                 let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
@@ -448,22 +449,18 @@ extension HomeViewController: UITableViewDataSource{
         case completedTableView:
             let anime = completedAnime[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CompletedAnimeTableViewCell //uses the "cell" template over and over
+            // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
                 let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
                 cell.animeImage.image = UIImage(data: data!)
             }
             cell.titleLabel.text = anime.title
-            if CalendarViewController.checkIfInLastDays(anime, Date()) {
-                cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes/day"
+            if anime.episodes == 1 {
+                cell.detailLabel.text = "1 episode"
             }
             else {
-                if anime.episodesPerDay == 1 {
-                    cell.detailLabel.text = "1 episode/day"
-                }
-                else {
-                    cell.detailLabel.text = "\(anime.episodesPerDay) episodes/day"
-                }
+                cell.detailLabel.text = "\(anime.episodes) episodes "
             }
             cell.layoutMargins = UIEdgeInsets.zero // no white spacing on the left of cell separators
             cell.titleLabel.sizeToFit()
