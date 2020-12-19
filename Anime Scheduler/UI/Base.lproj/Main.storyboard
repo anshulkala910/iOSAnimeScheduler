@@ -440,6 +440,12 @@
                                     <action selector="rateApp:" destination="z4j-rl-i82" eventType="touchUpInside" id="AMF-AR-jOu"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uas-cG-UY3">
+                                <rect key="frame" x="184" y="46" width="46" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="hww-d0-K3n"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -447,14 +453,16 @@
                             <constraint firstItem="hww-d0-K3n" firstAttribute="bottom" secondItem="4Kv-v4-IWr" secondAttribute="bottom" constant="398" id="A7N-3b-PIe"/>
                             <constraint firstItem="4Kv-v4-IWr" firstAttribute="top" secondItem="hww-d0-K3n" secondAttribute="top" constant="31" id="CzG-mh-R48"/>
                             <constraint firstItem="4Kv-v4-IWr" firstAttribute="leading" secondItem="hww-d0-K3n" secondAttribute="leading" id="DJG-YO-4BQ"/>
+                            <constraint firstItem="Uas-cG-UY3" firstAttribute="top" secondItem="hww-d0-K3n" secondAttribute="top" constant="2" id="QkA-Y9-ktv"/>
                             <constraint firstItem="gAY-5K-Lsp" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="UIC-5f-iml"/>
+                            <constraint firstItem="Uas-cG-UY3" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="ZVf-ij-Md6"/>
                             <constraint firstItem="4Kv-v4-IWr" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="cFp-uI-6jW"/>
                             <constraint firstItem="hww-d0-K3n" firstAttribute="bottom" secondItem="gAY-5K-Lsp" secondAttribute="bottom" constant="31" id="kSg-6p-y6I"/>
                             <constraint firstItem="hww-d0-K3n" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="gAY-5K-Lsp" secondAttribute="trailing" constant="170" id="t9x-lh-2KZ"/>
                             <constraint firstItem="gAY-5K-Lsp" firstAttribute="centerX" secondItem="hww-d0-K3n" secondAttribute="centerX" id="vNc-c8-yWG"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settings" image="gear" catalog="system" id="Cew-GE-UAF"/>
+                    <tabBarItem key="tabBarItem" title="About" image="info" catalog="system" id="Cew-GE-UAF"/>
                     <navigationItem key="navigationItem" title="About" id="HNz-Xa-x66"/>
                     <connections>
                         <outlet property="rateApp" destination="gAY-5K-Lsp" id="ns4-pe-Ayh"/>
@@ -869,8 +877,8 @@
     <resources>
         <image name="calendar" catalog="system" width="128" height="106"/>
         <image name="chart.bar" catalog="system" width="128" height="90"/>
-        <image name="gear" catalog="system" width="128" height="119"/>
         <image name="house" catalog="system" width="128" height="106"/>
+        <image name="info" catalog="system" width="93" height="128"/>
         <image name="pencil.circle.fill" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">
