@@ -192,21 +192,29 @@ extension CalendarViewController: UITableViewDataSource{
             
             let anime = animeOnDateCompleted[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell
+            
+            // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
                 let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
                 cell.animeImage.image = UIImage(data: data!)
             }
             cell.titleLabel.text = anime.title
-            var episodesWatchedOnNormalDays: Int = 0
+            
+            // if anime was added by #eps/day, eg Death Note has 37 eps and 36 eps might be finished till the last day
+            // so only 1 ep will be watched
+            var episodesWatchedOnNormalDays = 0
             let dateComparator = Calendar.current.compare(anime.endDate!, to: calendar.selectedDate ?? Date(), toGranularity: .day)
+            // calculating the 36 eps
             if anime.numberOfLastDays == 0 {
                 let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
                 episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
             }
+            // calculating the 1 ep
             if dateComparator == .orderedSame && anime.numberOfLastDays == 0 {
                 cell.detailLabel.text = "\(Int(anime.episodes) - episodesWatchedOnNormalDays) episodes"
             }
+            
             else if CalendarViewController.checkIfInLastDays(anime, calendar.selectedDate ?? Date()) {
                 cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes"
             }
@@ -226,18 +234,24 @@ extension CalendarViewController: UITableViewDataSource{
         else {
             let anime = animeOnDate[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell
+            // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
                 let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
                 cell.animeImage.image = UIImage(data: data!)
             }
             cell.titleLabel.text = anime.title
+            
+            // if anime was added by #eps/day, eg Death Note has 37 eps and 36 eps might be finished till the last day
+            // so only 1 ep will be watched
             var episodesWatchedOnNormalDays: Int = 0
             let dateComparator = Calendar.current.compare(anime.endDate!, to: calendar.selectedDate ?? Date(), toGranularity: .day)
+            // calculating the 36 eps
             if anime.numberOfLastDays == 0 {
                 let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
                 episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
             }
+            // calculating the 1 ep
             if dateComparator == .orderedSame && anime.numberOfLastDays == 0 {
                 cell.detailLabel.text = "\(Int(anime.episodes) - episodesWatchedOnNormalDays) episodes"
             }
