@@ -8,11 +8,12 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class AboutViewController: UIViewController {
 
     @IBOutlet weak var settingsTableView: UITableView!
     @IBOutlet weak var rateApp: UIButton!
-    let appID = "" //TODO: Need to get the ID of the app from Apple
+    
+    let appID = "" //MARK: TODO: Need to get the ID of the app from Apple
     let columnNames = ["Version", "Developer","Have feedback? Email anshulkala910@gmail.com"]
     let columnAnswers = ["1.0", "Anshul Kala", ""]
     override func viewDidLoad() {
@@ -40,11 +41,11 @@ class SettingsViewController: UIViewController {
     }
 }
 
-extension SettingsViewController: UITableViewDelegate{
+extension AboutViewController: UITableViewDelegate{
     
 }
 
-extension SettingsViewController: UITableViewDataSource{
+extension AboutViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return columnNames.capacity
     }
