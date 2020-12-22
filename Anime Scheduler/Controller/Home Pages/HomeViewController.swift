@@ -18,7 +18,8 @@ class HomeViewController: UIViewController {
     
     var currentlyWatchingAnime = [StoredAnime]()
     var completedAnime = [CompletedAnime]()
-    
+    static var currentlyWatchingAnimeTemp = [StoredAnime]()
+    static var completedAnimeTemp = [CompletedAnime]()
     var shouldSortCurrentlyWatchingAnime = false
     var shouldSortCompletedAnime = false
     var shouldFetchCoreDataStoredAnime = true
@@ -28,6 +29,7 @@ class HomeViewController: UIViewController {
     let queue = DispatchQueue(label: "InternetConnectionMonitor")
     
     var internetFlag = 0
+    var tempId:Int16 = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +38,8 @@ class HomeViewController: UIViewController {
         completedTableView.separatorInset = UIEdgeInsets.zero
         currentlyWatchingTableView.layoutMargins = UIEdgeInsets.zero
         currentlyWatchingTableView.separatorInset = UIEdgeInsets.zero
-        
+        shouldSortCompletedAnime = true
+        shouldSortCurrentlyWatchingAnime = true
         monitor.pathUpdateHandler = { pathUpdateHandler in
             if pathUpdateHandler.status == .satisfied {
                 self.internetFlag = 1
@@ -89,6 +92,9 @@ class HomeViewController: UIViewController {
         updateUpdatedFlag() // check if anime is updated as of right now
         updateEpisodesFinished() // if not, update the number of episodes that should be finished
         
+        HomeViewController.completedAnimeTemp = completedAnime
+        HomeViewController.currentlyWatchingAnimeTemp = currentlyWatchingAnime
+        
         currentlyWatchingTableView.delegate = self
         currentlyWatchingTableView.dataSource = self
         completedTableView.delegate = self
@@ -100,7 +106,6 @@ class HomeViewController: UIViewController {
      parameters: StoredAnime instance
      returns: CompleterdAnime instance
      */
-    // transfers data basically
     func getCompletedAnime(storedAnime: StoredAnime) -> CompletedAnime {
         let completedAnimeObject = CompletedAnime.init(context: AppDelegate.context)
         completedAnimeObject.dateEpisodesFinishedUpdatedOn = storedAnime.dateEpisodesFinishedUpdatedOn
@@ -126,24 +131,6 @@ class HomeViewController: UIViewController {
         let currentDate = getDateWithoutTime(date: Date())
         var index = 0
         for anime in currentlyWatchingAnime {
-            let endDate = getDateWithoutTime(date: anime.endDate!)
-            let endDateComparator = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
-            
-            if endDateComparator == .orderedDescending && currentlyWatchingTableView.numberOfRows(inSection: 0) != 0 {
-                shouldSortCompletedAnime = true
-                shouldFetchCoreDataCompletedAnime = true
-                CalendarViewController.shouldFetchCoreDataCompletedAnime = true
-                let completedAnimeObject = getCompletedAnime(storedAnime: anime)
-                completedAnime.append(completedAnimeObject)
-                currentlyWatchingTableView.beginUpdates()
-                AppDelegate.context.delete(currentlyWatchingAnime[index])
-                currentlyWatchingAnime.remove(at: index)
-                let indexPath = IndexPath.init(row: index, section: 0)
-                currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
-                currentlyWatchingTableView.endUpdates()
-                AppDelegate.saveContext()
-            }
-            
             let lastUpdatedDate = getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
             let startDate = getDateWithoutTime(date: anime.startDate!)
             let dateComparator = Calendar.current.compare(currentDate, to: lastUpdatedDate, toGranularity: .day)
@@ -155,6 +142,27 @@ class HomeViewController: UIViewController {
             }
             else {
                 anime.updatedFlag = false
+            }
+            
+            let endDate = getDateWithoutTime(date: anime.endDate!)
+            let endDateComparator = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
+            
+            if endDateComparator == .orderedDescending && currentlyWatchingTableView.numberOfRows(inSection: 0) != 0 {
+                shouldSortCompletedAnime = true
+                shouldFetchCoreDataCompletedAnime = true
+                CalendarViewController.shouldFetchCoreDataCompletedAnime = true
+                AnalysisViewController.shouldCountHoursSpent = true
+                let completedAnimeObject = getCompletedAnime(storedAnime: anime)
+                completedAnime.append(completedAnimeObject)
+                currentlyWatchingTableView.beginUpdates()
+                AppDelegate.context.delete(currentlyWatchingAnime[index])
+                currentlyWatchingAnime.remove(at: index)
+                let indexPath = IndexPath.init(row: index, section: 0)
+                currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
+                currentlyWatchingTableView.endUpdates()
+                AppDelegate.saveContext()
+                sortCompletedAnimeList()
+                self.completedTableView.reloadData()
             }
             index += 1
         }
@@ -252,6 +260,50 @@ class HomeViewController: UIViewController {
         completedAnime.sort { $0.title ?? "" < $1.title ?? "" }
     }
     
+    func getDurationInMinutes(duration: String) -> Int16 {
+        if duration.contains("hr") {
+            let splitComponents = duration.components(separatedBy: " ")
+            let hour = Int16(splitComponents[0]) ?? 0
+            print("Hour is \(hour)")
+            let minutes = Int16(splitComponents[2]) ?? 0
+            print("Minutes is \(minutes)")
+            return hour*60 + minutes
+            
+        }
+        else {
+            let splitComponents = duration.components(separatedBy: " ")
+            return Int16(splitComponents[0]) ?? 0
+        }
+    }
+    
+    func getURL(id: Int16) -> URL {
+        //the url for an anime search with custom anime mal_id
+        let idString = String(id)
+        let URLString = "https://api.jikan.moe/v3/anime/\(idString)/"
+        //get URL object if valid
+        guard let resourceURL = URL(string: URLString) else {
+            fatalError() // MARK: TODO: Probably don't wanna do this
+        }
+    
+        return resourceURL
+        
+    }
+    
+    func getDuration (completion: @escaping (String) -> Void) {
+        let requestURL = getURL(id: tempId)
+        URLSession.shared.dataTask(with: requestURL){ (data, response, error) in
+            guard let data = data else {return}
+
+            do {
+                let animeDuration = try JSONDecoder().decode(FillDuration.self, from: data)
+                let answer = animeDuration.duration
+                completion(answer)
+            }catch let error{
+                print("Error in JSON parsing", error)
+            }
+        }.resume()
+    }
+    
     /*
      This function is called when user is adding anime from #eps/day form. It saves the anime to the Core Data stack
      parameters: segue
@@ -280,6 +332,15 @@ class HomeViewController: UIViewController {
             storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
             storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
             storedAnime.endDate = getDateWithoutTime(date: addAnimeEpisodesController.getEndDate())
+            storedAnime.mal_id = Int16(addAnimeEpisodesController.animeDetail.mal_id ?? 0)
+            tempId = storedAnime.mal_id
+            let group = DispatchGroup()
+            group.enter()
+            getDuration() { result in
+                storedAnime.episodeLength =  self.getDurationInMinutes(duration: result)
+                group.leave()
+                }
+            group.wait()
             storedAnime.numberOfLastDays = 0
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
@@ -318,6 +379,19 @@ class HomeViewController: UIViewController {
             storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes.episodesPerDay)
             storedAnime.numberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
             storedAnime.endDate = getDateWithoutTime(date: addAnimeDatesController.endDatePicker.date)
+            storedAnime.mal_id = Int16(addAnimeDatesController.animeDetail.mal_id ?? 0)
+            tempId = storedAnime.mal_id
+            let group = DispatchGroup()
+            group.enter()
+            getDuration() { result in
+                storedAnime.episodeLength =  self.getDurationInMinutes(duration: result)
+                print(storedAnime.episodeLength)
+                group.leave()
+                // do everything in here???
+                }
+            group.wait()
+           // let durationString = getDurationOfAnime(storedAnime.mal_id)
+           // storedAnime.episodeLength = getDurationInMinutes(duration: durationString)
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeDatesController.animeDetail.episodes!)
             storedAnime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
