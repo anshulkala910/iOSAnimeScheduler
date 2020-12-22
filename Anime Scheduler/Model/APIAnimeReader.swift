@@ -43,35 +43,3 @@ struct AnimeRequest {
         }.resume()
     }
 }
-
-struct FillEpisodeLength {
-    let requestURL: URL
-    
-    init (id: Int16){
-        //the url for an anime search with custom anime mal_id
-        let idString = String(id)
-        let URLString = "https://api.jikan.moe/v3/anime/\(idString)/"
-        //get URL object if valid
-        guard let resourceURL = URL(string: URLString) else {
-            fatalError() // MARK: TODO: Probably don't wanna do this
-        }
-        //assign to global variable
-        self.requestURL = resourceURL
-    }
-    
-    func getDuration (completion: @escaping(Result<String, Error>) -> Void) {
-        let task = URLSession.shared.dataTask(with: self.requestURL){ (data, response, error) in
-            guard let data = data else {return}
-
-            do {
-                let animeDuration = try JSONDecoder().decode(FillDuration.self, from: data)
-                let answer = animeDuration.duration
-                completion(.success(answer))
-            }catch let error{
-                print("Error in JSON parsing", error)
-            }
-        }
-        task.resume()
-    }
-    
-}
