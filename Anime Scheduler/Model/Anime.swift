@@ -31,3 +31,7 @@ struct AnimeDetail: Decodable {
     let members: Int?
     let rated: String?
 }
+
+struct FillDuration: Decodable {
+    let duration: String
+}
