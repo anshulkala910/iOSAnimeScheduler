@@ -30,6 +30,9 @@ class CalendarViewController: UIViewController {
     
     var internetFlag = 0
     
+    private var loadedImages = [URL: UIImage]()
+    private var runningRequests = [UUID: URLSessionDataTask]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // to remove the white space on the left of the line separating cells
@@ -132,6 +135,55 @@ class CalendarViewController: UIViewController {
         self.animeWatchingTableView.reloadData()
     }
     
+    
+    func loadImage(_ url: URL, _ completion: @escaping (Result<UIImage, Error>) -> Void) -> UUID? {
+
+      // 1
+      if let image = loadedImages[url] {
+        completion(.success(image))
+        return nil
+      }
+
+      // 2
+      let uuid = UUID()
+
+      let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        // 3
+        defer {self.runningRequests.removeValue(forKey: uuid) }
+
+        // 4
+        if let data = data, let image = UIImage(data: data) {
+          self.loadedImages[url] = image
+          completion(.success(image))
+          return
+        }
+
+        // 5
+        guard let error = error else {
+          // without an image or an error, we'll just ignore this for now
+          // you could add your own special error cases for this scenario
+          return
+        }
+
+        guard (error as NSError).code == NSURLErrorCancelled else {
+          completion(.failure(error))
+          return
+        }
+
+        // the request was cancelled, no need to call the callback
+      }
+      task.resume()
+
+      // 6
+      runningRequests[uuid] = task
+      return uuid
+    }
+    
+    func cancelLoad(_ uuid: UUID) {
+      runningRequests[uuid]?.cancel()
+      runningRequests.removeValue(forKey: uuid)
+    }
+    
 }
 
 extension CalendarViewController: FSCalendarDelegate{
@@ -193,12 +245,34 @@ extension CalendarViewController: UITableViewDataSource{
             let anime = animeOnDateCompleted[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell
             
-            // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
-                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-                cell.animeImage.image = UIImage(data: data!)
+                // 1
+                let token = loadImage(url!) { result in
+                  do {
+                    // 2
+                    let image = try result.get()
+                    // 3
+                    DispatchQueue.main.async {
+                      cell.animeImage.image = image
+                    }
+                  } catch {
+                    // 4
+                    print(error)
+                  }
+                }
+                cell.onReuse = {
+                  if let token = token {
+                    self.cancelLoad(token)
+                  }
+                }
             }
+            // if there is a valid internet connection, retrieve image data
+//            if internetFlag == 1 {
+//                let url = URL(string: anime.img_url!)
+//                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+//                cell.animeImage.image = UIImage(data: data!)
+//            }
             cell.titleLabel.text = anime.title
             
             // if anime was added by #eps/day, eg Death Note has 37 eps and 36 eps might be finished till the last day
@@ -234,12 +308,36 @@ extension CalendarViewController: UITableViewDataSource{
         else {
             let anime = animeOnDate[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell
-            // if there is a valid internet connection, retrieve image data
+            
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
-                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-                cell.animeImage.image = UIImage(data: data!)
+                // 1
+                let token = loadImage(url!) { result in
+                  do {
+                    // 2
+                    let image = try result.get()
+                    // 3
+                    DispatchQueue.main.async {
+                      cell.animeImage.image = image
+                    }
+                  } catch {
+                    // 4
+                    print(error)
+                  }
+                }
+                cell.onReuse = {
+                  if let token = token {
+                    self.cancelLoad(token)
+                  }
+                }
             }
+            
+            // if there is a valid internet connection, retrieve image data
+//            if internetFlag == 1 {
+//                let url = URL(string: anime.img_url!)
+//                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+//                cell.animeImage.image = UIImage(data: data!)
+//            }
             cell.titleLabel.text = anime.title
             
             // if anime was added by #eps/day, eg Death Note has 37 eps and 36 eps might be finished till the last day

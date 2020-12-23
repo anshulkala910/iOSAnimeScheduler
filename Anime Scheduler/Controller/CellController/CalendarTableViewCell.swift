@@ -13,6 +13,7 @@ class CalendarTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var animeImage: UIImageView!
+    var onReuse: () -> Void = {}
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,6 +24,11 @@ class CalendarTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+      super.prepareForReuse()
+      onReuse()
     }
 
 }
