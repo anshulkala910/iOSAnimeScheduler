@@ -9,7 +9,7 @@
 import UIKit
 
 class CheckDetailsViewController: UIViewController {
-
+    
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var episodesFinishedView: UITextView!
     @IBOutlet weak var updateFinishedEpisodesField: UITextField!

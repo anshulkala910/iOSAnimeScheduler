@@ -71,4 +71,4 @@ extension AnalysisViewController: UITableViewDataSource{
     
     
 }
-    
+

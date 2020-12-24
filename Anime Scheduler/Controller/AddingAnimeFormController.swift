@@ -9,7 +9,7 @@
 import UIKit
 
 class AddingAnimeFormController: UIViewController {
-
+    
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var byEpisodesView: UIView!
     @IBOutlet weak var byDatesView: UIView!
@@ -46,5 +46,5 @@ class AddingAnimeFormController: UIViewController {
             byEpisodesView.alpha = 1
         }
     }
-
+    
 }

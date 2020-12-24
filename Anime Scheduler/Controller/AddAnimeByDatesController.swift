@@ -16,7 +16,7 @@ struct NumberOfEpisodes {
 }
 
 class AddAnimeByDatesController: UIViewController {
-
+    
     @IBOutlet weak var startDateTextField: UITextField!
     @IBOutlet weak var endDateTextField: UITextField!
     @IBOutlet weak var checkDetailsButton: UIButton!
@@ -73,7 +73,7 @@ class AddAnimeByDatesController: UIViewController {
         endDateTextField.inputView = endDatePicker
         endDatePicker.datePickerMode = .date
     }
-
+    
     func getCurrentDate() -> String {
         let currentDate = Date()
         return getDateStringFromTextField(currentDate)
@@ -150,12 +150,12 @@ class AddAnimeByDatesController: UIViewController {
         let startDateDay = Calendar.current.ordinality(of: .day, in: .era, for: startDate)
         let endDateDay = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
         let difference = endDateDay! - startDateDay!
-       // let difference = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
-       // let differenceInDays = (difference.day ?? 1) + 2
-       // print(difference)
+        // let difference = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
+        // let differenceInDays = (difference.day ?? 1) + 2
+        // print(difference)
         
         let differenceInDays = difference + 1
-       // print(differenceInDays)
+        // print(differenceInDays)
         var numberOfEpisodesPerDay: Int
         if (animeDetail.episodes ?? 1) % differenceInDays == 0 {
             numberOfEpisodesPerDay = (animeDetail.episodes ?? 1)/differenceInDays
@@ -198,5 +198,5 @@ class AddAnimeByDatesController: UIViewController {
         let returnDate = Calendar.current.date(from: dateComponents)
         return returnDate!
     }
-
+    
 }

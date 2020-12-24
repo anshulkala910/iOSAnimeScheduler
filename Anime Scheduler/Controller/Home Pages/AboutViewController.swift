@@ -9,7 +9,7 @@
 import UIKit
 
 class AboutViewController: UIViewController {
-
+    
     @IBOutlet weak var settingsTableView: UITableView!
     @IBOutlet weak var rateApp: UIButton!
     
@@ -23,7 +23,7 @@ class AboutViewController: UIViewController {
         settingsTableView.delegate = self
         settingsTableView.dataSource = self
     }
-
+    
     @IBAction func rateApp(_ sender: Any) {
         openURL("itms-apps://itunes.apple.com/app/" + appID)
     }

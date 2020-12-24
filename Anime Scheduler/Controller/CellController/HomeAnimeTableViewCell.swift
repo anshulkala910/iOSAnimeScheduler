@@ -9,7 +9,7 @@
 import UIKit
 
 class HomeAnimeTableViewCell: UITableViewCell {
-
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var animeImage: UIImageView!
@@ -36,13 +36,13 @@ class HomeAnimeTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         onReuse()
@@ -75,5 +75,6 @@ class HomeAnimeTableViewCell: UITableViewCell {
         self.detailLabel.frame = CGRect(x: detailX, y: detailY, width: detailWidth, height: detailHeight)
         self.titleLabel.frame = CGRect(x: titleX, y: titleY, width: titleWidth, height: titleHeight)
         self.animeImage.clipsToBounds = true
+        self.titleLabel.sizeToFit()
     }
 }

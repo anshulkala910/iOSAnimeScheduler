@@ -287,7 +287,7 @@ class HomeViewController: UIViewController {
         guard let resourceURL = URL(string: URLString) else {
             fatalError() // MARK: TODO: Probably don't wanna do this
         }
-    
+        
         return resourceURL
         
     }
@@ -296,7 +296,7 @@ class HomeViewController: UIViewController {
         let requestURL = getURL(id: tempId)
         URLSession.shared.dataTask(with: requestURL){ (data, response, error) in
             guard let data = data else {return}
-
+            
             do {
                 let animeDuration = try JSONDecoder().decode(FillDuration.self, from: data)
                 let answer = animeDuration.duration
@@ -342,7 +342,7 @@ class HomeViewController: UIViewController {
             getDuration() { result in
                 storedAnime.episodeLength =  self.getDurationInMinutes(duration: result)
                 group.leave()
-                }
+            }
             group.wait()
             storedAnime.numberOfLastDays = 0
             storedAnime.episodesFinished = 0
@@ -391,10 +391,10 @@ class HomeViewController: UIViewController {
                 print(storedAnime.episodeLength)
                 group.leave()
                 // do everything in here???
-                }
+            }
             group.wait()
-           // let durationString = getDurationOfAnime(storedAnime.mal_id)
-           // storedAnime.episodeLength = getDurationInMinutes(duration: durationString)
+            // let durationString = getDurationOfAnime(storedAnime.mal_id)
+            // storedAnime.episodeLength = getDurationInMinutes(duration: durationString)
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeDatesController.animeDetail.episodes!)
             storedAnime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
@@ -451,51 +451,51 @@ class HomeViewController: UIViewController {
     }
     
     func loadImage(_ url: URL, _ completion: @escaping (Result<UIImage, Error>) -> Void) -> UUID? {
-
-      // 1
-      if let image = loadedImages[url] {
-        completion(.success(image))
-        return nil
-      }
-
-      // 2
-      let uuid = UUID()
-
-      let task = URLSession.shared.dataTask(with: url) { data, response, error in
-        // 3
-        defer {self.runningRequests.removeValue(forKey: uuid) }
-
-        // 4
-        if let data = data, let image = UIImage(data: data) {
-          self.loadedImages[url] = image
-          completion(.success(image))
-          return
+        
+        // 1
+        if let image = loadedImages[url] {
+            completion(.success(image))
+            return nil
         }
-
-        // 5
-        guard let error = error else {
-          // without an image or an error, we'll just ignore this for now
-          // you could add your own special error cases for this scenario
-          return
+        
+        // 2
+        let uuid = UUID()
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            // 3
+            defer {self.runningRequests.removeValue(forKey: uuid) }
+            
+            // 4
+            if let data = data, let image = UIImage(data: data) {
+                self.loadedImages[url] = image
+                completion(.success(image))
+                return
+            }
+            
+            // 5
+            guard let error = error else {
+                // without an image or an error, we'll just ignore this for now
+                // you could add your own special error cases for this scenario
+                return
+            }
+            
+            guard (error as NSError).code == NSURLErrorCancelled else {
+                completion(.failure(error))
+                return
+            }
+            
+            // the request was cancelled, no need to call the callback
         }
-
-        guard (error as NSError).code == NSURLErrorCancelled else {
-          completion(.failure(error))
-          return
-        }
-
-        // the request was cancelled, no need to call the callback
-      }
-      task.resume()
-
-      // 6
-      runningRequests[uuid] = task
-      return uuid
+        task.resume()
+        
+        // 6
+        runningRequests[uuid] = task
+        return uuid
     }
     
     func cancelLoad(_ uuid: UUID) {
-      runningRequests[uuid]?.cancel()
-      runningRequests.removeValue(forKey: uuid)
+        runningRequests[uuid]?.cancel()
+        runningRequests.removeValue(forKey: uuid)
     }
 }
 
@@ -554,22 +554,22 @@ extension HomeViewController: UITableViewDataSource{
                 let url = URL(string: anime.img_url!)
                 // 1
                 let token = loadImage(url!) { result in
-                  do {
-                    // 2
-                    let image = try result.get()
-                    // 3
-                    DispatchQueue.main.async {
-                      cell.animeImage.image = image
+                    do {
+                        // 2
+                        let image = try result.get()
+                        // 3
+                        DispatchQueue.main.async {
+                            cell.animeImage.image = image
+                        }
+                    } catch {
+                        // 4
+                        print(error)
                     }
-                  } catch {
-                    // 4
-                    print(error)
-                  }
                 }
                 cell.onReuse = {
-                  if let token = token {
-                    self.cancelLoad(token)
-                  }
+                    if let token = token {
+                        self.cancelLoad(token)
+                    }
                 }
             }
             cell.titleLabel.text = anime.title
@@ -596,22 +596,22 @@ extension HomeViewController: UITableViewDataSource{
                 let url = URL(string: anime.img_url!)
                 // 1
                 let token = loadImage(url!) { result in
-                  do {
-                    // 2
-                    let image = try result.get()
-                    // 3
-                    DispatchQueue.main.async {
-                      cell.animeImage.image = image
+                    do {
+                        // 2
+                        let image = try result.get()
+                        // 3
+                        DispatchQueue.main.async {
+                            cell.animeImage.image = image
+                        }
+                    } catch {
+                        // 4
+                        print(error)
                     }
-                  } catch {
-                    // 4
-                    print(error)
-                  }
                 }
                 cell.onReuse = {
-                  if let token = token {
-                    self.cancelLoad(token)
-                  }
+                    if let token = token {
+                        self.cancelLoad(token)
+                    }
                 }
             }
             cell.titleLabel.text = anime.title

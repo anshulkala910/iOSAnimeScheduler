@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class AddAnimeByEpisodesController: UIViewController {
- 
+    
     @IBOutlet weak var startDate: UITextField!
     @IBOutlet weak var numberOfEpisodes: UITextField!
     @IBOutlet weak var checkDetailsButton: UIButton!
@@ -36,7 +36,7 @@ class AddAnimeByEpisodesController: UIViewController {
             startDatePicker.sizeToFit()
         }
     }
-
+    
     func createStartDatePicker(){
         startDate.placeholder = getCurrentDate()
         startDate.textAlignment = .center
@@ -136,5 +136,5 @@ class AddAnimeByEpisodesController: UIViewController {
         let nextDate = theCalendar.date(byAdding: dayComponent, to: startDate)
         return nextDate ?? Date()
     }
-
+    
 }
