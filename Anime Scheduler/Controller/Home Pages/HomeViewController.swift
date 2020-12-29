@@ -393,8 +393,6 @@ class HomeViewController: UIViewController {
                 // do everything in here???
             }
             group.wait()
-            // let durationString = getDurationOfAnime(storedAnime.mal_id)
-            // storedAnime.episodeLength = getDurationInMinutes(duration: durationString)
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeDatesController.animeDetail.episodes!)
             storedAnime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)

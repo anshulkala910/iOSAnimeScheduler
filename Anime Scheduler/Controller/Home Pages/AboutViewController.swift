@@ -14,8 +14,8 @@ class AboutViewController: UIViewController {
     @IBOutlet weak var rateApp: UIButton!
     
     let appID = "" //MARK: TODO: Need to get the ID of the app from Apple
-    let columnNames = ["Version", "Developer","Have feedback? Email anshulkala910@gmail.com"]
-    let columnAnswers = ["1.0", "Anshul Kala", ""]
+    let columnNames = ["Version", "Developer","Feedback?"]
+    let columnAnswers = ["1.0", "Anshul Kala", "Email anshulkala910@gmail.com"]
     override func viewDidLoad() {
         super.viewDidLoad()
         settingsTableView.layoutMargins = UIEdgeInsets.zero
