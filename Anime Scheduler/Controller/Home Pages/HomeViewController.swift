@@ -623,6 +623,7 @@ extension HomeViewController: UITableViewDataSource{
             }
             cell.layoutMargins = UIEdgeInsets.zero // no white spacing on the left of cell separators
             cell.titleLabel.sizeToFit()
+            cell.detailLabel.sizeToFit()
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell

@@ -167,6 +167,7 @@ extension AddAnimeViewController: UITableViewDataSource{
             cell.detailLabel.text = "\(anime.episodes ?? 0) episodes"
         }
         cell.titleLabel.sizeToFit()
+        cell.detailLabel.sizeToFit()
         return cell
     }
 }

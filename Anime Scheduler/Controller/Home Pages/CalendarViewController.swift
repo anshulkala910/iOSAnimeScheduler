@@ -286,7 +286,13 @@ extension CalendarViewController: UITableViewDataSource{
             }
             // calculating the 1 ep
             if dateComparator == .orderedSame && anime.numberOfLastDays == 0 {
-                cell.detailLabel.text = "\(Int(anime.episodes) - episodesWatchedOnNormalDays) episodes"
+                let temp = Int(anime.episodes) - episodesWatchedOnNormalDays
+                if temp == 1 {
+                    cell.detailLabel.text = "1 episode"
+                }
+                else {
+                    cell.detailLabel.text = "\(Int(anime.episodes) - episodesWatchedOnNormalDays) episodes"
+                }
             }
             
             else if CalendarViewController.checkIfInLastDays(anime, calendar.selectedDate ?? Date()) {
@@ -351,7 +357,13 @@ extension CalendarViewController: UITableViewDataSource{
             }
             // calculating the 1 ep
             if dateComparator == .orderedSame && anime.numberOfLastDays == 0 {
-                cell.detailLabel.text = "\(Int(anime.episodes) - episodesWatchedOnNormalDays) episodes"
+                let temp = Int(anime.episodes) - episodesWatchedOnNormalDays
+                if temp == 1 {
+                    cell.detailLabel.text = "1 episode"
+                }
+                else {
+                    cell.detailLabel.text = "\(Int(anime.episodes) - episodesWatchedOnNormalDays) episodes"
+                }
             }
             else if CalendarViewController.checkIfInLastDays(anime, calendar.selectedDate ?? Date()) {
                 cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes"
@@ -366,6 +378,7 @@ extension CalendarViewController: UITableViewDataSource{
             }
             cell.layoutMargins = UIEdgeInsets.zero // no white spacing on the left of cell separators
             cell.titleLabel.sizeToFit()
+            cell.detailLabel.sizeToFit()
             return cell
         }
     }
