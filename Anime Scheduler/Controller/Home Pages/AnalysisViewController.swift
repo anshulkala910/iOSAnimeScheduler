@@ -40,16 +40,17 @@ class AnalysisViewController: UIViewController {
             columnAnswers[0] = String(HomeViewController.completedAnimeTemp.count)
             columnAnswers[1] = String(HomeViewController.currentlyWatchingAnimeTemp.count)
             columnAnswers[2] = getHoursSpent()
+            fillChartData()
             self.analysisTableView.reloadData()
         }
         AnalysisViewController.shouldCountHoursSpent = false
         barChart.drawGridBackgroundEnabled = false
         barChart.dragEnabled = false
         let xAxis = barChart.xAxis
-                xAxis.labelPosition = .bottom
-                xAxis.labelFont = .systemFont(ofSize: 10)
-                xAxis.granularity = 1
-                xAxis.labelCount = 7
+        xAxis.labelPosition = .bottom
+        xAxis.labelFont = .systemFont(ofSize: 10)
+        xAxis.granularity = 1
+        xAxis.labelCount = 7
         xAxis.drawGridLinesEnabled = false
         let leftAxis = barChart.leftAxis
         leftAxis.labelFont = .systemFont(ofSize: 10)
@@ -132,7 +133,15 @@ class AnalysisViewController: UIViewController {
             let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
             // if anime is watched on the date, add it
             if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
-                if CalendarViewController.checkIfInLastDays(anime, date) {
+                var episodesWatchedOnNormalDays: Int = 0
+                if anime.numberOfLastDays == 0 {
+                    let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
+                    episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
+                }
+                if endDateComparator == .orderedSame && anime.numberOfLastDays == 0 {
+                    count += Double(Int(anime.episodes) - episodesWatchedOnNormalDays)
+                }
+                else if CalendarViewController.checkIfInLastDays(anime, date) {
                     count += Double(anime.episodesPerDay + 1) * Double(anime.episodeLength)
                 }
                 else {
@@ -147,7 +156,15 @@ class AnalysisViewController: UIViewController {
             let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
             // if anime was watched on the date, add it
             if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
-                if CalendarViewController.checkIfInLastDays(anime, date) {
+                var episodesWatchedOnNormalDays: Int = 0
+                if anime.numberOfLastDays == 0 {
+                    let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
+                    episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
+                }
+                if endDateComparator == .orderedSame && anime.numberOfLastDays == 0 {
+                    count += Double(Int(anime.episodes) - episodesWatchedOnNormalDays)
+                }
+                else if CalendarViewController.checkIfInLastDays(anime, date) {
                     count += Double(anime.episodesPerDay + 1) * Double(anime.episodeLength)
                 }
                 else {

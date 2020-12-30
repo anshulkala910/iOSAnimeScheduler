@@ -376,11 +376,17 @@ extension CalendarViewController: UITableViewDataSource{
      returns: boolean
      */
     static func checkIfInLastDays(_ anime: StoredAnime, _ currentDate: Date) -> Bool{
-        var differenceFromStart = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: currentDate).day ?? 1) + 1
-        let durationOfWatch = (Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day ?? 1) + 1
+        let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
+        let startDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: startDate) ?? 0
+        let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
+        let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate) ?? 0
+        let date = HomeViewController.getDateWithoutTime(date: currentDate)
+        let currentDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: date) ?? 0
+        var differenceFromStart = currentDateOrdinality - startDateOrdinality
+        let durationOfWatch = endDateOrdinality - startDateOrdinality + 1
         let dateComparison = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
         // if anime started today and is not a movie or 1 ep, then add one to differenceFromCurrent
-        if dateComparison == .orderedSame && durationOfWatch != 1{
+        if dateComparison == .orderedSame{
             differenceFromStart += 1
         }
         if (durationOfWatch - differenceFromStart) < anime.numberOfLastDays {

@@ -131,11 +131,11 @@ class HomeViewController: UIViewController {
      returns: void
      */
     func updateUpdatedFlag() {
-        let currentDate = getDateWithoutTime(date: Date())
+        let currentDate = HomeViewController.getDateWithoutTime(date: Date())
         var index = 0
         for anime in currentlyWatchingAnime {
-            let lastUpdatedDate = getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
-            let startDate = getDateWithoutTime(date: anime.startDate!)
+            let lastUpdatedDate = HomeViewController.getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
+            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
             let dateComparator = Calendar.current.compare(currentDate, to: lastUpdatedDate, toGranularity: .day)
             let startDateComparator = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
             
@@ -147,7 +147,7 @@ class HomeViewController: UIViewController {
                 anime.updatedFlag = false
             }
             
-            let endDate = getDateWithoutTime(date: anime.endDate!)
+            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
             let endDateComparator = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
             
             if endDateComparator == .orderedDescending && currentlyWatchingTableView.numberOfRows(inSection: 0) != 0 {
@@ -178,7 +178,7 @@ class HomeViewController: UIViewController {
      */
     func updateEpisodesFinished() {
         
-        let currentDate = getDateWithoutTime(date: Date())
+        let currentDate = HomeViewController.getDateWithoutTime(date: Date())
         let current = Calendar.current.ordinality(of: .day, in: .era, for: currentDate)!
         
         //iterate through list of anime
@@ -188,13 +188,13 @@ class HomeViewController: UIViewController {
                 continue
             }
             
-            let lastUpdatedDate = getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
+            let lastUpdatedDate = HomeViewController.getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
             let lastUpdatedDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdatedDate)
             
             var differenceFromCurrent = current - lastUpdatedDateOrdinality! // how many days since last update
             
-            let startDate = getDateWithoutTime(date: anime.startDate!)
-            let endDate = getDateWithoutTime(date: anime.endDate!)
+            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
+            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
             let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
             let durationOfWatch = (Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1) + 1
             let dateComparisonFromStart = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
@@ -227,7 +227,7 @@ class HomeViewController: UIViewController {
                 anime.episodesFinished += Int16(differenceFromCurrent) * anime.episodesPerDay
             }
             //update last updated date to today
-            anime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: currentDate)
+            anime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: currentDate)
             anime.updatedFlag = true
             AppDelegate.saveContext()
         }
@@ -329,12 +329,13 @@ class HomeViewController: UIViewController {
             shouldSortCurrentlyWatchingAnime = true
             shouldFetchCoreDataStoredAnime = true
             CalendarViewController.shouldFetchCoreDataStoredAnime = true
+            AnalysisViewController.shouldCountHoursSpent = true
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeEpisodesController.animeDetail.title
-            storedAnime.startDate = getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
+            storedAnime.startDate = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
             storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
             storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
-            storedAnime.endDate = getDateWithoutTime(date: addAnimeEpisodesController.getEndDate())
+            storedAnime.endDate = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.getEndDate())
             storedAnime.mal_id = Int16(addAnimeEpisodesController.animeDetail.mal_id ?? 0)
             tempId = storedAnime.mal_id
             let group = DispatchGroup()
@@ -347,7 +348,7 @@ class HomeViewController: UIViewController {
             storedAnime.numberOfLastDays = 0
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
-            storedAnime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
+            storedAnime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
             //self.currentlyWatchingAnime.append(storedAnime)
@@ -375,13 +376,14 @@ class HomeViewController: UIViewController {
             shouldSortCurrentlyWatchingAnime = true
             shouldFetchCoreDataStoredAnime = true
             CalendarViewController.shouldFetchCoreDataStoredAnime = true
+            AnalysisViewController.shouldCountHoursSpent = true
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeDatesController.animeDetail.title
-            storedAnime.startDate = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
+            storedAnime.startDate = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
             storedAnime.img_url = addAnimeDatesController.animeDetail.image_url
             storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes.episodesPerDay)
             storedAnime.numberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
-            storedAnime.endDate = getDateWithoutTime(date: addAnimeDatesController.endDatePicker.date)
+            storedAnime.endDate = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.endDatePicker.date)
             storedAnime.mal_id = Int16(addAnimeDatesController.animeDetail.mal_id ?? 0)
             tempId = storedAnime.mal_id
             let group = DispatchGroup()
@@ -395,7 +397,7 @@ class HomeViewController: UIViewController {
             group.wait()
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeDatesController.animeDetail.episodes!)
-            storedAnime.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
+            storedAnime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
             //self.currentlyWatchingAnime.append(storedAnime)
@@ -412,7 +414,7 @@ class HomeViewController: UIViewController {
         let currentDate = Date()
         let updateCotnroller = sender.source as! CheckDetailsViewController
         let updatedStoredAnime = updateCotnroller.animeStored
-        updatedStoredAnime!.dateEpisodesFinishedUpdatedOn = getDateWithoutTime(date: currentDate)
+        updatedStoredAnime!.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: currentDate)
         updatedStoredAnime?.updatedFlag = true
         currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row] = updatedStoredAnime!
         AppDelegate.saveContext()
@@ -424,7 +426,7 @@ class HomeViewController: UIViewController {
      parameters: date, date component, calendar
      returns: integer representing date component
      */
-    func getDateComponent(date: Date, _ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+    static func getDateComponent(date: Date, _ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
         return calendar.component(component, from: date)
     }
     
@@ -433,7 +435,7 @@ class HomeViewController: UIViewController {
      parameters: date
      returns: new date instance without time
      */
-    func getDateWithoutTime(date: Date) -> Date {
+    static func getDateWithoutTime(date: Date) -> Date {
         //get date components
         let dayComponent = getDateComponent(date: date, .day)
         let monthComponent = getDateComponent(date: date, .month)
