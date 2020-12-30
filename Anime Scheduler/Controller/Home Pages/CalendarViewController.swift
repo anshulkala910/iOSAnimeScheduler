@@ -382,13 +382,8 @@ extension CalendarViewController: UITableViewDataSource{
         let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate) ?? 0
         let date = HomeViewController.getDateWithoutTime(date: currentDate)
         let currentDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: date) ?? 0
-        var differenceFromStart = currentDateOrdinality - startDateOrdinality
+        let differenceFromStart = currentDateOrdinality - startDateOrdinality + 1
         let durationOfWatch = endDateOrdinality - startDateOrdinality + 1
-        let dateComparison = Calendar.current.compare(currentDate, to: anime.startDate!, toGranularity: .day)
-        // if anime started today and is not a movie or 1 ep, then add one to differenceFromCurrent
-        if dateComparison == .orderedSame{
-            differenceFromStart += 1
-        }
         if (durationOfWatch - differenceFromStart) < anime.numberOfLastDays {
             return true
         }
