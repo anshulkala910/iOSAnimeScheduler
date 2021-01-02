@@ -135,30 +135,32 @@ class CalendarViewController: UIViewController {
         self.animeWatchingTableView.reloadData()
     }
     
-    
+    /*
+     
+     */
     func loadImage(_ url: URL, _ completion: @escaping (Result<UIImage, Error>) -> Void) -> UUID? {
         
-        // 1
+        // checks cache if image was already loaded before
         if let image = loadedImages[url] {
-            completion(.success(image))
+            completion(.success(image)) // if already loaded before, simply return that image
             return nil
         }
         
-        // 2
+        // if not in the cache, create an ID object
         let uuid = UUID()
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             // 3
             defer {self.runningRequests.removeValue(forKey: uuid) }
             
-            // 4
+            // if all works perfectly, get image from URL, add that to the cache, and return the image
             if let data = data, let image = UIImage(data: data) {
                 self.loadedImages[url] = image
                 completion(.success(image))
                 return
             }
             
-            // 5
+            // check for an error
             guard let error = error else {
                 // without an image or an error, we'll just ignore this for now
                 // you could add your own special error cases for this scenario
@@ -179,6 +181,9 @@ class CalendarViewController: UIViewController {
         return uuid
     }
     
+    /*
+     
+     */
     func cancelLoad(_ uuid: UUID) {
         runningRequests[uuid]?.cancel()
         runningRequests.removeValue(forKey: uuid)

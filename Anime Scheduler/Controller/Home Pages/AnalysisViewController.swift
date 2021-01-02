@@ -8,7 +8,20 @@
 
 import UIKit
 import Charts
-
+public class BarChartFormatter: NSObject, IAxisValueFormatter {
+    
+    var values = [String]()
+    
+    public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        return values[Int(value)]
+    }
+    public func setValues(values: [String])
+    {
+        self.values = values
+    }
+    
+    
+}
 class AnalysisViewController: UIViewController {
     
     @IBOutlet weak var analysisTableView: UITableView!
@@ -20,7 +33,7 @@ class AnalysisViewController: UIViewController {
     
     var barChart = BarChartView()
     
-    var days = [1,2,3,4,5,6,7]
+    var days = ["1","2","3","4","5","6","7"]
     var hoursForDays = [1.0,2.0,3.0,4.0,5.0,6.0,7.0]
     
     
@@ -44,14 +57,47 @@ class AnalysisViewController: UIViewController {
             self.analysisTableView.reloadData()
         }
         AnalysisViewController.shouldCountHoursSpent = false
+        fillChartData()
+        setChart(dataPoints: days, values: hoursForDays)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        barChart.frame = CGRect(x: fakeLabel.frame.origin.x, y: fakeLabel.frame.origin.y, width: fakeLabel.frame.width, height: fakeLabel.frame.height)
+        view.addSubview(barChart)
+    }
+    
+    
+    func setChart(dataPoints: [String], values: [Double])
+    {
+        let formatter = BarChartFormatter()
+        formatter.setValues(values: dataPoints)
+        let xaxis:XAxis = XAxis()
+
+
+        var dataEntries: [BarChartDataEntry] = []
+
+        for i in 0..<dataPoints.count
+        {
+            let dataEntry = BarChartDataEntry(x: Double(i), y: values[i])
+            dataEntries.append(dataEntry)
+        }
+
+        let chartDataSet = BarChartDataSet(entries: dataEntries)
+
+        let chartData = BarChartData(dataSet: chartDataSet)
+
         barChart.drawGridBackgroundEnabled = false
         barChart.dragEnabled = false
+        
         let xAxis = barChart.xAxis
         xAxis.labelPosition = .bottom
         xAxis.labelFont = .systemFont(ofSize: 10)
-        xAxis.granularity = 1
         xAxis.labelCount = 7
+        xAxis.axisMaxLabels = 7
         xAxis.drawGridLinesEnabled = false
+        
         let leftAxis = barChart.leftAxis
         leftAxis.labelFont = .systemFont(ofSize: 10)
         leftAxis.labelPosition = .outsideChart
@@ -65,34 +111,24 @@ class AnalysisViewController: UIViewController {
         barChart.pinchZoomEnabled = false
         barChart.scaleXEnabled = false
         barChart.scaleYEnabled = false
+        xaxis.valueFormatter = formatter
+        barChart.xAxis.labelPosition = .bottom
+        barChart.xAxis.drawGridLinesEnabled = false
+        barChart.xAxis.valueFormatter = xaxis.valueFormatter
+        barChart.chartDescription?.enabled = false
         barChart.legend.enabled = false
-        fillChartData()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        barChart.frame = CGRect(x: fakeLabel.frame.origin.x, y: fakeLabel.frame.origin.y, width: fakeLabel.frame.width, height: fakeLabel.frame.height)
-        view.addSubview(barChart)
-        var data = [BarChartDataEntry]()
-        for x in 0...6 {
-           // data.append(BarChartDataEntry(x: Double(x), y: Double(x)))
-            data.append(BarChartDataEntry(x: Double(days[x]), y: hoursForDays[x]))
-        }
-        let set = BarChartDataSet(entries: data)
-        let date = BarChartData(dataSet: set)
-        barChart.data = date
-    
+        barChart.data = chartData
     }
     
     func fillChartData() {
         let currentDate = Date()
         let currentDay = getDateComponent(date: currentDate, .day)
-        days[6] = currentDay
+        days[6] = String(currentDay)
         hoursForDays[6] = populateDateArrays(currentDate)
         for range in 1...6 {
-            days[6-range] = currentDay - range
-            hoursForDays[6-range] = populateDateArrays(Calendar.current.date(byAdding: .day, value: 0 - Int(range), to: currentDate) ?? currentDate)
+            let newDate = Calendar.current.date(byAdding: .day, value: 0 - Int(range), to: currentDate)
+            days[6-range] = String(getDateComponent(date: newDate ?? currentDate, .day))
+            hoursForDays[6-range] = populateDateArrays(newDate ?? currentDate)
         }
         
     }
@@ -139,7 +175,7 @@ class AnalysisViewController: UIViewController {
                     episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
                 }
                 if endDateComparator == .orderedSame && anime.numberOfLastDays == 0 {
-                    count += Double(Int(anime.episodes) - episodesWatchedOnNormalDays)
+                    count += Double(Int(anime.episodes) - episodesWatchedOnNormalDays) * Double(anime.episodeLength)
                 }
                 else if CalendarViewController.checkIfInLastDays(anime, date) {
                     count += Double(anime.episodesPerDay + 1) * Double(anime.episodeLength)
@@ -200,3 +236,9 @@ extension AnalysisViewController: UITableViewDataSource{
 extension AnalysisViewController: ChartViewDelegate {
     
 }
+
+//extension AnalysisViewController: IAxisValueFormatter {
+//    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+//        return String(value)
+//    }
+//}

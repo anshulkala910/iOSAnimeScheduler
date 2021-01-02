@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
     var completedAnime = [CompletedAnime]()
     static var currentlyWatchingAnimeTemp = [StoredAnime]()
     static var completedAnimeTemp = [CompletedAnime]()
+    
     var shouldSortCurrentlyWatchingAnime = false
     var shouldSortCompletedAnime = false
     var shouldFetchCoreDataStoredAnime = true
@@ -41,8 +42,12 @@ class HomeViewController: UIViewController {
         completedTableView.separatorInset = UIEdgeInsets.zero
         currentlyWatchingTableView.layoutMargins = UIEdgeInsets.zero
         currentlyWatchingTableView.separatorInset = UIEdgeInsets.zero
+        
+        // should sort both lists on launch
         shouldSortCompletedAnime = true
         shouldSortCurrentlyWatchingAnime = true
+        
+        //checks whether internet access is present or not - sets flag
         monitor.pathUpdateHandler = { pathUpdateHandler in
             if pathUpdateHandler.status == .satisfied {
                 self.internetFlag = 1
@@ -136,11 +141,11 @@ class HomeViewController: UIViewController {
         for anime in currentlyWatchingAnime {
             let lastUpdatedDate = HomeViewController.getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
             let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
-            let dateComparator = Calendar.current.compare(currentDate, to: lastUpdatedDate, toGranularity: .day)
+            let updatedDateComparator = Calendar.current.compare(currentDate, to: lastUpdatedDate, toGranularity: .day)
             let startDateComparator = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
             
-            //if currentDate == updatedOn && startDate!= currentDate || startDate == currentDate && updatedFlag = true
-            if ((dateComparator == .orderedSame && startDateComparator != .orderedSame) || (startDateComparator == .orderedSame && anime.updatedFlag == true) || (startDateComparator == .orderedAscending)){
+            // if updated today AND anime didn't start today OR anime started today AND already checked once OR anime starts after today
+            if ((updatedDateComparator == .orderedSame && startDateComparator != .orderedSame) || (startDateComparator == .orderedSame && anime.updatedFlag == true) || (startDateComparator == .orderedAscending)){
                 anime.updatedFlag = true
             }
             else {
@@ -150,13 +155,19 @@ class HomeViewController: UIViewController {
             let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
             let endDateComparator = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
             
+            // if end date is before today AND there is something in currently watching list
+            // MARK: TODO - Check when to sort both lists or not; better to sort after the loop?
             if endDateComparator == .orderedDescending && currentlyWatchingTableView.numberOfRows(inSection: 0) != 0 {
                 shouldSortCompletedAnime = true
                 shouldFetchCoreDataCompletedAnime = true
                 CalendarViewController.shouldFetchCoreDataCompletedAnime = true
                 AnalysisViewController.shouldCountHoursSpent = true
+                
+                // transfer to completedAnime list
                 let completedAnimeObject = getCompletedAnime(storedAnime: anime)
                 completedAnime.append(completedAnimeObject)
+                
+                // delete from currently watching table
                 currentlyWatchingTableView.beginUpdates()
                 AppDelegate.context.delete(currentlyWatchingAnime[index])
                 currentlyWatchingAnime.remove(at: index)
@@ -164,6 +175,7 @@ class HomeViewController: UIViewController {
                 currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
                 currentlyWatchingTableView.endUpdates()
                 AppDelegate.saveContext()
+                
                 sortCompletedAnimeList()
                 self.completedTableView.reloadData()
             }
@@ -263,38 +275,54 @@ class HomeViewController: UIViewController {
         completedAnime.sort { $0.title ?? "" < $1.title ?? "" }
     }
     
+    /*
+     This function returns the length of an episode of the anime given a string
+     parameters: string
+     returns: length of episode in minutes/int
+     
+     */
     func getDurationInMinutes(duration: String) -> Int16 {
+        // if string contains "hr", split it and get both components
         if duration.contains("hr") {
             let splitComponents = duration.components(separatedBy: " ")
             let hour = Int16(splitComponents[0]) ?? 0
-            print("Hour is \(hour)")
             let minutes = Int16(splitComponents[2]) ?? 0
-            print("Minutes is \(minutes)")
             return hour*60 + minutes
             
         }
+        // simply get the minutes
         else {
             let splitComponents = duration.components(separatedBy: " ")
             return Int16(splitComponents[0]) ?? 0
         }
     }
     
+    /*
+     This function gets the URL needed to search the details about the anime, especially duration
+     parameters: MAL ID
+     returns: URL needed to call and get data from
+     */
     func getURL(id: Int16) -> URL {
         //the url for an anime search with custom anime mal_id
         let idString = String(id)
         let URLString = "https://api.jikan.moe/v3/anime/\(idString)/"
         //get URL object if valid
         guard let resourceURL = URL(string: URLString) else {
-            fatalError() // MARK: TODO: Probably don't wanna do this
+            fatalError() // MARK: TODO: Probably don't wanna do this - show alert or something
         }
-        
         return resourceURL
         
     }
     
+    /*
+     This function gets the duration of the anime by calling the API
+     parameters: completion handler that returns the string of duration on completion
+     returns: technically nothing but "returns" the string of duration
+     */
     func getDuration (completion: @escaping (String) -> Void) {
         let requestURL = getURL(id: tempId)
         URLSession.shared.dataTask(with: requestURL){ (data, response, error) in
+            
             guard let data = data else {return}
             
             do {
@@ -302,7 +330,7 @@ class HomeViewController: UIViewController {
                 let answer = animeDuration.duration
                 completion(answer)
             }catch let error{
-                print("Error in JSON parsing", error)
+                print("Error in JSON parsing", error) //MARK: TODO - Probably check the API for any errors or edge cases for which this can happen
             }
         }.resume()
     }
@@ -330,6 +358,8 @@ class HomeViewController: UIViewController {
             shouldFetchCoreDataStoredAnime = true
             CalendarViewController.shouldFetchCoreDataStoredAnime = true
             AnalysisViewController.shouldCountHoursSpent = true
+            
+            //start transfering data to StoredAnime object
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeEpisodesController.animeDetail.title
             storedAnime.startDate = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
@@ -337,22 +367,24 @@ class HomeViewController: UIViewController {
             storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
             storedAnime.endDate = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.getEndDate())
             storedAnime.mal_id = Int16(addAnimeEpisodesController.animeDetail.mal_id ?? 0)
+            
+            // start the process of getting the duration of the naime
             tempId = storedAnime.mal_id
             let group = DispatchGroup()
-            group.enter()
+            group.enter() // locks the thread
             getDuration() { result in
                 storedAnime.episodeLength =  self.getDurationInMinutes(duration: result)
-                group.leave()
+                group.leave() // unlocks the thread
             }
-            group.wait()
+            group.wait() // waits for the thread to finish
+            
             storedAnime.numberOfLastDays = 0
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
             storedAnime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
-            //self.currentlyWatchingAnime.append(storedAnime)
-            self.currentlyWatchingTableView.reloadData()
+            self.currentlyWatchingTableView.reloadData() // MARK: TODO - Am I double reloading data?
         }
     }
     
@@ -377,6 +409,8 @@ class HomeViewController: UIViewController {
             shouldFetchCoreDataStoredAnime = true
             CalendarViewController.shouldFetchCoreDataStoredAnime = true
             AnalysisViewController.shouldCountHoursSpent = true
+            
+            //start transfering data to StoredAnime object
             let storedAnime = StoredAnime(context: AppDelegate.context)
             storedAnime.title = addAnimeDatesController.animeDetail.title
             storedAnime.startDate = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
@@ -385,23 +419,23 @@ class HomeViewController: UIViewController {
             storedAnime.numberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
             storedAnime.endDate = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.endDatePicker.date)
             storedAnime.mal_id = Int16(addAnimeDatesController.animeDetail.mal_id ?? 0)
+            
+            // start the process of getting the duration of the naime
             tempId = storedAnime.mal_id
             let group = DispatchGroup()
-            group.enter()
+            group.enter() // locks the thread
             getDuration() { result in
                 storedAnime.episodeLength =  self.getDurationInMinutes(duration: result)
-                print(storedAnime.episodeLength)
-                group.leave()
-                // do everything in here???
+                group.leave() // unlocks the thread
             }
-            group.wait()
+            group.wait() // waits for the thread to finish
+            
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeDatesController.animeDetail.episodes!)
             storedAnime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
-            //self.currentlyWatchingAnime.append(storedAnime)
-            self.currentlyWatchingTableView.reloadData()
+            self.currentlyWatchingTableView.reloadData() // MARK: TODO - Am I double reloading data?
         }
     }
     
