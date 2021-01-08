@@ -48,38 +48,48 @@ class AddAnimeByDatesController: UIViewController {
         }
     }
     
+    /*
+     This function creates the start date picker that allows user to select a date
+     parameters: none
+     returns: void
+     */
     func createStartDatePicker(){
         startDateTextField.placeholder = getCurrentDate()
         startDateTextField.textAlignment = .center
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
+        // add done button
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonPressedStartDate))
         toolbar.setItems([doneButton], animated: true)
+        
         startDateTextField.inputAccessoryView = toolbar
         startDateTextField.inputView = startDatePicker
         startDatePicker.datePickerMode = .date
     }
     
+    /*
+     This function creates the start date picker that allows user to select a date
+     parameters: none
+     returns: void
+     */
     func createEndDatePicker(){
         endDateTextField.placeholder = getCurrentDate()
         endDateTextField.textAlignment = .center
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
+        // add done button
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonPressedEndDate))
         toolbar.setItems([doneButton], animated: true)
+        
         endDateTextField.inputAccessoryView = toolbar
         endDateTextField.inputView = endDatePicker
         endDatePicker.datePickerMode = .date
     }
     
-    func getCurrentDate() -> String {
-        let currentDate = Date()
-        return getDateStringFromTextField(currentDate)
-    }
     @objc func doneButtonPressedStartDate(){
-        startDateTextField.text = getDateStringFromTextField(startDatePicker.date)
+        startDateTextField.text = getDateString(startDatePicker.date)
         view.endEditing(true)
     }
     
@@ -87,25 +97,41 @@ class AddAnimeByDatesController: UIViewController {
         if (endDatePicker.date < startDatePicker.date) {
             showAlert()
         }
-        endDateTextField.text = getDateStringFromTextField(endDatePicker.date)
+        endDateTextField.text = getDateString(endDatePicker.date)
         view.endEditing(true)
     }
     
+    /*
+     This function returns the current date as a string
+     parameters: none
+     returns: String
+     */
+    func getCurrentDate() -> String {
+        let currentDate = Date()
+        return getDateString(currentDate)
+    }
     
-    //HELPER FUNCTIONS
-    private func getDateStringFromTextField(_ date: Date) -> String{
+    /*
+     This function returns the string of the date
+     parameters: date
+     returns: String
+     */
+    private func getDateString(_ date: Date) -> String{
         return dateFormatter.string(from: date)
     }
     
+    /*
+     This function shows an alert to the screen when user tries to enter an end date that is before the start date
+     parameters: none
+     returns: void
+     */
     func showAlert() {
         let alert = UIAlertController(title: "Error", message: "Invalid End Date: Please enter a date that is after the start date ", preferredStyle: .alert)
         let dismiss = UIAlertAction.init(title: "Dismiss", style: .default , handler: nil)
         alert.addAction(dismiss)
         present(alert, animated: true, completion: nil)
     }
-    
-    //HELPER FUNCTIONS END
-    
+
     @IBAction func addAnime(_ sender: Any) {
         
     }
@@ -118,11 +144,16 @@ class AddAnimeByDatesController: UIViewController {
             alert.addAction(dismiss)
             present(alert,animated: true, completion: nil)
         }
+        
         else{
-            getNumberOfEpisodesPerDay()
+            getNumberOfEpisodesPerDay() // fills in global variable with data
+            
+            // if date range is longer than number of episodes in anime
             if numberOfEpisodes.flag == 1 {
                 textView.text = "You will finish \(animeDetail.title ?? "...") before the end date even if you watch 1 episode per day \n\n Advise: Change end date to \(numberOfEpisodes.endDateSuggestion)"
             }
+            
+            // if there are no "special days"
             else if numberOfEpisodes.numberOfLastDays == 0 {
                 if numberOfEpisodes.episodesPerDay == 1{
                     textView.text = "You will watch 1 episode per day"
@@ -131,6 +162,8 @@ class AddAnimeByDatesController: UIViewController {
                     textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day"
                 }
             }
+            
+            // if there are "special days"
             else {
                 if numberOfEpisodes.episodesPerDay == 1 {
                     textView.text = "You will watch 1 episode per day and \(numberOfEpisodes.episodesPerDay + 1) episodes on the last \(numberOfEpisodes.numberOfLastDays) days "
@@ -139,29 +172,32 @@ class AddAnimeByDatesController: UIViewController {
                     textView.text = "You will watch \(numberOfEpisodes.episodesPerDay) episodes per day and \(numberOfEpisodes.episodesPerDay + 1) episodes on the last \(numberOfEpisodes.numberOfLastDays) days "
                 }
             }
+            
             addAnimeButton.isEnabled = true
             addAnimeButton.alpha = 1.0
         }
     }
     
+    /*
+     This function fills data into the global struct so that it can be displayed to the user
+     parameters: none
+     returns: void
+     */
     func getNumberOfEpisodesPerDay() {
-        let startDate = getDateWithoutTime(date: startDatePicker.date)
-        let endDate = getDateWithoutTime(date: endDatePicker.date)
+        let startDate = HomeViewController.getDateWithoutTime(date: startDatePicker.date)
+        let endDate = HomeViewController.getDateWithoutTime(date: endDatePicker.date)
         let startDateDay = Calendar.current.ordinality(of: .day, in: .era, for: startDate)
         let endDateDay = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
-        let difference = endDateDay! - startDateDay!
-        // let difference = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
-        // let differenceInDays = (difference.day ?? 1) + 2
-        // print(difference)
+        let durationOfWatch = endDateDay! - startDateDay! + 1
         
-        let differenceInDays = difference + 1
-        // print(differenceInDays)
         var numberOfEpisodesPerDay: Int
-        if (animeDetail.episodes ?? 1) % differenceInDays == 0 {
-            numberOfEpisodesPerDay = (animeDetail.episodes ?? 1)/differenceInDays
-            numberOfEpisodes.episodesPerDay = numberOfEpisodesPerDay
+        // if number of episodes is divisible by the number of days, simply divide to get #eps/day
+        if (animeDetail.episodes ?? 1) % durationOfWatch == 0 {
+            numberOfEpisodes.episodesPerDay = (animeDetail.episodes ?? 1)/durationOfWatch
         }
-        else if (animeDetail.episodes ?? 1) < differenceInDays {
+        // if anime has less episodes than the number of days, give an end date suggestion to teh user
+        else if (animeDetail.episodes ?? 1) < durationOfWatch {
+            // add number of episodes to the start date so that the user will watch 1 ep/day
             var dayComponent = DateComponents()
             dayComponent.day = (animeDetail.episodes ?? 1) - 1
             let theCalendar = Calendar.current
@@ -174,29 +210,13 @@ class AddAnimeByDatesController: UIViewController {
             numberOfEpisodes.flag = 1
             numberOfEpisodes.endDateSuggestion = endDateStringSuggestion
         }
+        
+        // if there are some "special days" required
         else {
-            numberOfEpisodesPerDay = (animeDetail.episodes ?? 1)/differenceInDays
-            let numberOfLastDays = (animeDetail.episodes ?? 1) % differenceInDays
+            numberOfEpisodesPerDay = (animeDetail.episodes ?? 1)/durationOfWatch
+            let numberOfLastDays = (animeDetail.episodes ?? 1) % durationOfWatch
             numberOfEpisodes.episodesPerDay = numberOfEpisodesPerDay
             numberOfEpisodes.numberOfLastDays = numberOfLastDays
         }
     }
-    
-    func getDateComponent(date: Date, _ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
-        return calendar.component(component, from: date)
-    }
-    
-    func getDateWithoutTime(date: Date) -> Date {
-        let dayComponent = getDateComponent(date: date, .day)
-        let monthComponent = getDateComponent(date: date, .month)
-        let yearComponent = getDateComponent(date: date, .year)
-        var dateComponents = DateComponents()
-        dateComponents.year = yearComponent
-        dateComponents.month = monthComponent
-        dateComponents.day = dayComponent
-        // Create date from components
-        let returnDate = Calendar.current.date(from: dateComponents)
-        return returnDate!
-    }
-    
 }
