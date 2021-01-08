@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CheckDetailsViewController: UIViewController {
+class UpdateViewController: UIViewController {
     
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var episodesFinishedView: UITextView!
@@ -34,7 +34,8 @@ class CheckDetailsViewController: UIViewController {
         navigationBar.title = animeStored.title
         slider.isOn = false
         label.text = "Episodes/day"
-        label.textAlignment = .center
+        //label.textAlignment = .center
+        label.sizeToFit()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
         episodesFinishedView.isEditable = false
@@ -49,10 +50,10 @@ class CheckDetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         if animeStored.episodesFinished == 1 {
-            episodesFinishedView.text = "You should be finished with 1 episode at the end of today"
+            episodesFinishedView.text = "You should be finished with 1 episode at the end of today. If you haven't started yet, consider deleting the anime and adding it again"
         }
         else {
-            episodesFinishedView.text = "You should be finished with \(animeStored.episodesFinished) episodes at the end of today"
+            episodesFinishedView.text = "You should be finished with \(animeStored.episodesFinished) episodes at the end of today. If you haven't started yet, consider deleting the anime and adding it again"
         }
     }
     
