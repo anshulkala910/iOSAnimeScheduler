@@ -47,7 +47,7 @@ class HomeViewController: UIViewController {
         shouldSortCompletedAnime = true
         shouldSortCurrentlyWatchingAnime = true
         
-        //checks whether internet access is present or not - sets flag
+        // checks whether internet access is present or not - sets flag
         monitor.pathUpdateHandler = { pathUpdateHandler in
             if pathUpdateHandler.status == .satisfied {
                 self.internetFlag = 1
@@ -475,7 +475,7 @@ class HomeViewController: UIViewController {
      */
     @IBAction func unwindSegueFromUpdate(_ sender: UIStoryboardSegue){
         let currentDate = Date()
-        let updateCotnroller = sender.source as! CheckDetailsViewController
+        let updateCotnroller = sender.source as! UpdateViewController
         let updatedStoredAnime = updateCotnroller.animeStored
         updatedStoredAnime!.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: currentDate)
         updatedStoredAnime?.updatedFlag = true
@@ -581,7 +581,7 @@ extension HomeViewController: UITableViewDelegate{
      */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "checkAnimeDetails" {
-            let checkDetailsController = segue.destination as! CheckDetailsViewController
+            let checkDetailsController = segue.destination as! UpdateViewController
             checkDetailsController.animeStored = currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row]
             
             // These lines change the text of the back button item for the destination controller

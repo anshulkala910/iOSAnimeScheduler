@@ -95,7 +95,6 @@ class AnalysisViewController: UIViewController {
         // get formatter so x-axis can be formatted nicely
         let formatter = BarChartFormatter()
         formatter.setValues(values: dataPoints)
-        let xaxis:XAxis = XAxis()
 
         var dataEntries: [BarChartDataEntry] = []
 

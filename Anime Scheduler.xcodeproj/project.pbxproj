@@ -21,7 +21,7 @@
 		B4186B1A246FC4D50068C665 /* AddAnimeByEpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4186B18246FC4D50068C665 /* AddAnimeByEpisodesController.swift */; };
 		B41A728E246EB69D0056BEA0 /* AddingAnimeFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41A728D246EB69D0056BEA0 /* AddingAnimeFormController.swift */; };
 		B430405C2472919400653BE2 /* HomeAnimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430405B2472919400653BE2 /* HomeAnimeTableViewCell.swift */; };
-		B430406224741F0000653BE2 /* CheckDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430406124741F0000653BE2 /* CheckDetailsViewController.swift */; };
+		B430406224741F0000653BE2 /* UpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B430406124741F0000653BE2 /* UpdateViewController.swift */; };
 		B4304074247FBEB300653BE2 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4304073247FBEB300653BE2 /* CalendarTableViewCell.swift */; };
 		B47E7DF4258B81400045E8D7 /* CompletedAnime+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47E7DF0258B81400045E8D7 /* CompletedAnime+CoreDataClass.swift */; };
 		B47E7DF5258B81400045E8D7 /* CompletedAnime+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47E7DF1258B81400045E8D7 /* CompletedAnime+CoreDataProperties.swift */; };
@@ -54,7 +54,7 @@
 		B4186B18246FC4D50068C665 /* AddAnimeByEpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAnimeByEpisodesController.swift; sourceTree = "<group>"; };
 		B41A728D246EB69D0056BEA0 /* AddingAnimeFormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingAnimeFormController.swift; sourceTree = "<group>"; };
 		B430405B2472919400653BE2 /* HomeAnimeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAnimeTableViewCell.swift; sourceTree = "<group>"; };
-		B430406124741F0000653BE2 /* CheckDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDetailsViewController.swift; sourceTree = "<group>"; };
+		B430406124741F0000653BE2 /* UpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateViewController.swift; sourceTree = "<group>"; };
 		B4304073247FBEB300653BE2 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		B47E7DF0258B81400045E8D7 /* CompletedAnime+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompletedAnime+CoreDataClass.swift"; sourceTree = "<group>"; };
 		B47E7DF1258B81400045E8D7 /* CompletedAnime+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompletedAnime+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 				B41A728D246EB69D0056BEA0 /* AddingAnimeFormController.swift */,
 				B4186B14246FC4BC0068C665 /* AddAnimeByDatesController.swift */,
 				B4186B18246FC4D50068C665 /* AddAnimeByEpisodesController.swift */,
-				B430406124741F0000653BE2 /* CheckDetailsViewController.swift */,
+				B430406124741F0000653BE2 /* UpdateViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -323,7 +323,7 @@
 				B4136F9B2469AAC200F8D1A5 /* AnalysisViewController.swift in Sources */,
 				B47E7DF4258B81400045E8D7 /* CompletedAnime+CoreDataClass.swift in Sources */,
 				B4136F9D2469AD6900F8D1A5 /* AboutViewController.swift in Sources */,
-				B430406224741F0000653BE2 /* CheckDetailsViewController.swift in Sources */,
+				B430406224741F0000653BE2 /* UpdateViewController.swift in Sources */,
 				B49E0890246C16EA0035FC78 /* Anime Scheduler.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

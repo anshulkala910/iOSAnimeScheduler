@@ -82,7 +82,7 @@ class CalendarViewController: UIViewController {
     }
     
     /*
-     This function fetches stroedAnime data from CoreData and stores it in a global list
+     This function fetches StoredAnime data from CoreData and stores it in a global list
      parameters: none
      returns: void
      */
@@ -97,7 +97,7 @@ class CalendarViewController: UIViewController {
     }
     
     /*
-     This function fetches completedAnime data from CoreData and stores it in a global list
+     This function fetches CompletedAnime data from CoreData and stores it in a global list
      parameters: none
      returns: void
      */
