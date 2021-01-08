@@ -35,6 +35,7 @@ class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // to remove the white space on the left of the line separating cells
         animeWatchingTableView.layoutMargins = UIEdgeInsets.zero
         animeWatchingTableView.separatorInset = UIEdgeInsets.zero
@@ -43,8 +44,10 @@ class CalendarViewController: UIViewController {
         calendar.dataSource = self
         animeWatchingTableView.delegate = self
         animeWatchingTableView.dataSource = self
-        animeWatchingTableView.allowsSelection = false
         
+        animeWatchingTableView.allowsSelection = false // disable user interaction with table/cell
+        
+        // if internet connection is present, set flag
         monitor.pathUpdateHandler = { pathUpdateHandler in
             if pathUpdateHandler.status == .satisfied {
                 self.internetFlag = 1
@@ -58,34 +61,56 @@ class CalendarViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         var flag = 0
+        
         if CalendarViewController.shouldFetchCoreDataStoredAnime == true {
-            // fetch data from core data stack
-            let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
-            // gets the saved list from Core Data
-            do {
-                let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
-                self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
-            } catch {}
+            fetchStoredAnimeData()
             populateDateArrays(calendar!.today!)
             flag = 1
         }
         CalendarViewController.shouldFetchCoreDataStoredAnime = false
         
         if CalendarViewController.shouldFetchCoreDataCompletedAnime == true {
-            // fetch data from core data stack
-            let fetchRequestCompletedAnime: NSFetchRequest<CompletedAnime> = CompletedAnime.fetchRequest()
-            // gets the saved list from Core Data
-            do {
-                let savedCompletedAnime = try AppDelegate.context.fetch(fetchRequestCompletedAnime)
-                self.completedAnime = savedCompletedAnime
-            } catch {}
+            fetchCompletedAnimeData()
+            // if not already populated data, populate data
             if flag == 0 {
                 populateDateArrays(calendar!.today!)
             }
         }
         CalendarViewController.shouldFetchCoreDataCompletedAnime = false
-        calendar.reloadData()
+        
+        calendar.reloadData() // refresh calendar view after populating data
     }
+    
+    /*
+     This function fetches stroedAnime data from CoreData and stores it in a global list
+     parameters: none
+     returns: void
+     */
+    func fetchStoredAnimeData() {
+        // fetch data from core data stack
+        let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
+        // gets the saved list from Core Data
+        do {
+            let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
+            self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
+        } catch {}
+    }
+    
+    /*
+     This function fetches completedAnime data from CoreData and stores it in a global list
+     parameters: none
+     returns: void
+     */
+    func fetchCompletedAnimeData() {
+        // fetch data from core data stack
+        let fetchRequestCompletedAnime: NSFetchRequest<CompletedAnime> = CompletedAnime.fetchRequest()
+        // gets the saved list from Core Data
+        do {
+            let savedCompletedAnime = try AppDelegate.context.fetch(fetchRequestCompletedAnime)
+            self.completedAnime = savedCompletedAnime
+        } catch {}
+    }
+    
     /*
      This function is called when a certain date is selected and populates the list of anime watched on a date
      parameters: calendar, date, month
@@ -119,6 +144,7 @@ class CalendarViewController: UIViewController {
             let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
             let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
             // if anime is watched on the date, add it
+            // if start date is before selected data OR data is the start date AND end date is after selected data OR date is end date
             if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
                 animeOnDate.append(anime)
             }
@@ -129,15 +155,19 @@ class CalendarViewController: UIViewController {
             let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
             let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
             // if anime was watched on the date, add it
+            // if start date is before selected data OR data is the start date AND end date is after selected data OR date is end date
             if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
                 animeOnDateCompleted.append(anime)
             }
         }
+        
         self.animeWatchingTableView.reloadData()
     }
     
     /*
-     
+     This function loads the image of animes using cache and asynchronous calling
+     parameters: url for image and completion handler
+     returns: UIUD that identifies the request
      */
     func loadImage(_ url: URL, _ completion: @escaping (Result<UIImage, Error>) -> Void) -> UUID? {
         
@@ -151,7 +181,7 @@ class CalendarViewController: UIViewController {
         let uuid = UUID()
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            // 3
+            // when task is completed, remove from runningRequests list
             defer {self.runningRequests.removeValue(forKey: uuid) }
             
             // if all works perfectly, get image from URL, add that to the cache, and return the image
@@ -177,13 +207,15 @@ class CalendarViewController: UIViewController {
         }
         task.resume()
         
-        // 6
+        // task ID is stored in the runningRequests list
         runningRequests[uuid] = task
         return uuid
     }
     
     /*
-     
+     This function cancels the task and removes it from teh runningRequests list
+     parameters: ID that identifies the task
+     returns: void
      */
     func cancelLoad(_ uuid: UUID) {
         runningRequests[uuid]?.cancel()
@@ -253,37 +285,34 @@ extension CalendarViewController: UITableViewDataSource{
         // if all watching anime are considered, consider completed anime
         if indexPath.row >= animeOnDate.count {
             
-            let anime = animeOnDateCompleted[indexPath.row]
+            let anime = animeOnDateCompleted[indexPath.row] // get anime
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell
             
+            // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
-                // 1
+                // loadImage function is called and the completion handler is entered
                 let token = loadImage(url!) { result in
                     do {
-                        // 2
+                        // get image from completion handnler's result
                         let image = try result.get()
-                        // 3
+                        // set the image just returned as the cell image "in parallel" or asynchronously
                         DispatchQueue.main.async {
                             cell.animeImage.image = image
                         }
                     } catch {
-                        // 4
+                        // MARK: TODO: Do something with the error - probably show alert?
                         print(error)
                     }
                 }
+                
+                // cancel request after completion
                 cell.onReuse = {
                     if let token = token {
                         self.cancelLoad(token)
                     }
                 }
             }
-            // if there is a valid internet connection, retrieve image data
-            //            if internetFlag == 1 {
-            //                let url = URL(string: anime.img_url!)
-            //                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-            //                cell.animeImage.image = UIImage(data: data!)
-            //            }
             cell.titleLabel.text = anime.title
             
             // if anime was added by #eps/day, eg Death Note has 37 eps and 36 eps might be finished till the last day
@@ -295,20 +324,24 @@ extension CalendarViewController: UITableViewDataSource{
                 let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
                 episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
             }
+            
             // calculating the 1 ep
             if dateComparator == .orderedSame && anime.numberOfLastDays == 0 {
-                let temp = Int(anime.episodes) - episodesWatchedOnNormalDays
-                if temp == 1 {
+                let episodesWatched = Int(anime.episodes) - episodesWatchedOnNormalDays
+                if episodesWatched == 1 {
                     cell.detailLabel.text = "1 episode"
                 }
                 else {
-                    cell.detailLabel.text = "\(Int(anime.episodes) - episodesWatchedOnNormalDays) episodes"
+                    cell.detailLabel.text = "\(episodesWatched) episodes"
                 }
             }
             
+            // if anime was added by dates and date is in "last days", + 1 eps were watched
             else if CalendarViewController.checkIfInLastDays(anime, calendar.selectedDate ?? Date()) {
                 cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes"
             }
+            
+            // if anime was added by dates and is in "normal days" or anime was added by #eps/day and is not last day
             else {
                 if anime.episodesPerDay == 1 {
                     cell.detailLabel.text = "1 episode"
@@ -317,44 +350,43 @@ extension CalendarViewController: UITableViewDataSource{
                     cell.detailLabel.text = "\(anime.episodesPerDay) episodes"
                 }
             }
+            
             cell.layoutMargins = UIEdgeInsets.zero // no white spacing on the left of cell separators
             cell.titleLabel.sizeToFit()
+            cell.detailLabel.sizeToFit()
             return cell
         }
         
+        // if currently watching anime list still has animes to be considered
         else {
-            let anime = animeOnDate[indexPath.row]
+            let anime = animeOnDate[indexPath.row] // get anime
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell
             
+            // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
-                // 1
+                // loadImage function is called and the completion handler is entered
                 let token = loadImage(url!) { result in
                     do {
-                        // 2
+                        // get image from completion handnler's result
                         let image = try result.get()
-                        // 3
+                        // set the image just returned as the cell image "in parallel" or asynchronously
                         DispatchQueue.main.async {
                             cell.animeImage.image = image
                         }
                     } catch {
-                        // 4
+                        // MARK: TODO: Do something with the error - probably show alert?
                         print(error)
                     }
                 }
+                
+                // cancel request after completion
                 cell.onReuse = {
                     if let token = token {
                         self.cancelLoad(token)
                     }
                 }
             }
-            
-            // if there is a valid internet connection, retrieve image data
-            //            if internetFlag == 1 {
-            //                let url = URL(string: anime.img_url!)
-            //                let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-            //                cell.animeImage.image = UIImage(data: data!)
-            //            }
             cell.titleLabel.text = anime.title
             
             // if anime was added by #eps/day, eg Death Note has 37 eps and 36 eps might be finished till the last day
@@ -366,19 +398,24 @@ extension CalendarViewController: UITableViewDataSource{
                 let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
                 episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
             }
+            
             // calculating the 1 ep
             if dateComparator == .orderedSame && anime.numberOfLastDays == 0 {
-                let temp = Int(anime.episodes) - episodesWatchedOnNormalDays
-                if temp == 1 {
+                let episodesWatched = Int(anime.episodes) - episodesWatchedOnNormalDays
+                if episodesWatched == 1 {
                     cell.detailLabel.text = "1 episode"
                 }
                 else {
-                    cell.detailLabel.text = "\(Int(anime.episodes) - episodesWatchedOnNormalDays) episodes"
+                    cell.detailLabel.text = "\(episodesWatched) episodes"
                 }
             }
+            
+            // if anime was added by dates and date is in "last days", + 1 eps were watched
             else if CalendarViewController.checkIfInLastDays(anime, calendar.selectedDate ?? Date()) {
                 cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes"
             }
+            
+            // if anime was added by dates and is in "normal days" or anime was added by #eps/day and is not last day
             else {
                 if anime.episodesPerDay == 1 {
                     cell.detailLabel.text = "1 episode"
@@ -387,6 +424,7 @@ extension CalendarViewController: UITableViewDataSource{
                     cell.detailLabel.text = "\(anime.episodesPerDay) episodes"
                 }
             }
+            
             cell.layoutMargins = UIEdgeInsets.zero // no white spacing on the left of cell separators
             cell.titleLabel.sizeToFit()
             cell.detailLabel.sizeToFit()
