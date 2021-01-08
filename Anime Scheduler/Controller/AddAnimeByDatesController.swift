@@ -173,8 +173,10 @@ class AddAnimeByDatesController: UIViewController {
                 }
             }
             
-            addAnimeButton.isEnabled = true
-            addAnimeButton.alpha = 1.0
+            if numberOfEpisodes.flag != 1 {
+                addAnimeButton.isEnabled = true
+                addAnimeButton.alpha = 1.0
+            }
         }
     }
     
@@ -194,6 +196,7 @@ class AddAnimeByDatesController: UIViewController {
         // if number of episodes is divisible by the number of days, simply divide to get #eps/day
         if (animeDetail.episodes ?? 1) % durationOfWatch == 0 {
             numberOfEpisodes.episodesPerDay = (animeDetail.episodes ?? 1)/durationOfWatch
+            numberOfEpisodes.flag = 0
         }
         // if anime has less episodes than the number of days, give an end date suggestion to teh user
         else if (animeDetail.episodes ?? 1) < durationOfWatch {
@@ -217,6 +220,7 @@ class AddAnimeByDatesController: UIViewController {
             let numberOfLastDays = (animeDetail.episodes ?? 1) % durationOfWatch
             numberOfEpisodes.episodesPerDay = numberOfEpisodesPerDay
             numberOfEpisodes.numberOfLastDays = numberOfLastDays
+            numberOfEpisodes.flag = 0
         }
     }
 }
