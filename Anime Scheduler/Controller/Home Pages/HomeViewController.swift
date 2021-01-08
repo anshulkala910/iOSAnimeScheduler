@@ -93,7 +93,11 @@ class HomeViewController: UIViewController {
         completedTableView.dataSource = self
     }
     
-    
+    /*
+     This function fetches StoredAnime data from CoreData and stores it in a global list
+     parameters: none
+     returns: void
+     */
     private func fetchStoredAnimeData() -> Void {
         // fetch data from core data stack
         let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
@@ -106,6 +110,11 @@ class HomeViewController: UIViewController {
         self.currentlyWatchingTableView.reloadData()
     }
     
+    /*
+     This function fetches CompletedAnime data from CoreData and stores it in a global list
+     parameters: none
+     returns: void
+     */
     private func fetchCompletedAnimeData() -> Void {
         // fetch data from core data stack
         let fetchRequestCompletedAnime: NSFetchRequest<CompletedAnime> = CompletedAnime.fetchRequest()
@@ -117,6 +126,7 @@ class HomeViewController: UIViewController {
         // reload data after fetching
         self.completedTableView.reloadData()
     }
+    
     /*
      This funciton is called when an anime is completed and should be transfered from StoredAnime to CompletedAnime
      parameters: StoredAnime instance
@@ -145,7 +155,6 @@ class HomeViewController: UIViewController {
      */
     func updateUpdatedFlag() {
         let currentDate = HomeViewController.getDateWithoutTime(date: Date())
-        var index = 0
         var fetchFlag = 0
         for anime in currentlyWatchingAnime {
             let lastUpdatedDate = HomeViewController.getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
@@ -166,7 +175,6 @@ class HomeViewController: UIViewController {
             let endDateComparator = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
             
             // if end date is before today AND there is something in currently watching list
-            // MARK: TODO - Check when to sort both lists or not; better to sort after the loop?
             if endDateComparator == .orderedDescending {
                 shouldSortCompletedAnime = true
                 shouldFetchCoreDataCompletedAnime = true
@@ -174,9 +182,7 @@ class HomeViewController: UIViewController {
                 CalendarViewController.shouldFetchCoreDataStoredAnime = true
                 AnalysisViewController.shouldCountHoursSpent = true
                 
-                // transfer to completedAnime list
-                // PROBABLY CREATE A COMPLETED ANIME OBJECT LIKE COMPLETEDANIME(CONTEXT) AND THEN ADD
-                // THEN NO NEED TO APPEND TO COMPLETEDANIME JUST NEED TO FETCH OR RELOAD DATA
+                // create completedAnime object and transfer anime details
                 let completedAnimeObject = CompletedAnime(context: AppDelegate.context)
                 completedAnimeObject.dateEpisodesFinishedUpdatedOn = anime.dateEpisodesFinishedUpdatedOn
                 completedAnimeObject.endDate = anime.endDate
@@ -193,11 +199,11 @@ class HomeViewController: UIViewController {
                 // delete from currently watching table and save context
                 AppDelegate.context.delete(anime)
                 AppDelegate.saveContext()
-                index -= 1
                 fetchFlag = 1
             }
-            index += 1
         }
+        
+        // if anime was deleted and transfered to CompletedAnime
         if fetchFlag == 1 {
             fetchStoredAnimeData()
             fetchCompletedAnimeData()
@@ -256,10 +262,12 @@ class HomeViewController: UIViewController {
                 // add both
                 anime.episodesFinished = episodesDuringNormalDays + episodesDuringLastDays
             }
+            
             // if anime was added through #eps/day
             else{
                 anime.episodesFinished += Int16(differenceFromCurrent) * anime.episodesPerDay
             }
+            
             //update last updated date to today
             anime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: currentDate)
             anime.updatedFlag = true
@@ -282,7 +290,7 @@ class HomeViewController: UIViewController {
     /*
      This function lexicographically sorts the currentlyWatchingAnime list
      parameters: none
-     returns: none
+     returns: void
      */
     func sortStoredAnimeList() {
         currentlyWatchingAnime.sort { $0.title ?? "" < $1.title ?? "" }
@@ -291,7 +299,7 @@ class HomeViewController: UIViewController {
     /*
      This function lexicographically sorts the completedAnime list
      parameters: none
-     returns: none
+     returns: void
      */
     func sortCompletedAnimeList() {
         completedAnime.sort { $0.title ?? "" < $1.title ?? "" }
@@ -312,7 +320,7 @@ class HomeViewController: UIViewController {
             return hour*60 + minutes
             
         }
-        // simply get the minutes
+        // if string doesn't contain "hr", simply get the minutes
         else {
             let splitComponents = duration.components(separatedBy: " ")
             return Int16(splitComponents[0]) ?? 0
@@ -405,12 +413,13 @@ class HomeViewController: UIViewController {
             storedAnime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
-           // self.currentlyWatchingTableView.reloadData() // MARK: TODO - Am I double reloading data?
         }
     }
     
     /*
      This function is called when user is adding anime from start date/end date form. It saves the anime to the Core Data stack
+     parameters: segue
+     returns: void
      */
     @IBAction func unwindSegueFromDates(_ sender: UIStoryboardSegue) {
         var flag = 0
@@ -456,14 +465,13 @@ class HomeViewController: UIViewController {
             storedAnime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
-            //self.currentlyWatchingTableView.reloadData() // MARK: TODO - Am I double reloading data?
         }
     }
     
     /*
      This function is called when user updates how many episodes finished for an anime. It saves anime details from the update page
      parameters: segue
-     returns: none
+     returns: void
      */
     @IBAction func unwindSegueFromUpdate(_ sender: UIStoryboardSegue){
         let currentDate = Date()
@@ -505,29 +513,34 @@ class HomeViewController: UIViewController {
         return returnDate!
     }
     
+    /*
+     This function loads the image of animes using cache and asynchronous calling
+     parameters: url for image and completion handler
+     returns: UIUD that identifies the request
+     */
     func loadImage(_ url: URL, _ completion: @escaping (Result<UIImage, Error>) -> Void) -> UUID? {
         
-        // 1
+        // checks cache if image was already loaded before
         if let image = loadedImages[url] {
-            completion(.success(image))
+            completion(.success(image)) // if already loaded before, simply return that image
             return nil
         }
         
-        // 2
+        // if not in the cache, create an ID object
         let uuid = UUID()
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            // 3
+            // when task is completed, remove from runningRequests list
             defer {self.runningRequests.removeValue(forKey: uuid) }
             
-            // 4
+            // if all works perfectly, get image from URL, add that to the cache, and return the image
             if let data = data, let image = UIImage(data: data) {
                 self.loadedImages[url] = image
                 completion(.success(image))
                 return
             }
             
-            // 5
+            // check for an error
             guard let error = error else {
                 // without an image or an error, we'll just ignore this for now
                 // you could add your own special error cases for this scenario
@@ -543,11 +556,16 @@ class HomeViewController: UIViewController {
         }
         task.resume()
         
-        // 6
+        // task ID is stored in the runningRequests list
         runningRequests[uuid] = task
         return uuid
     }
     
+    /*
+     This function cancels the task and removes it from teh runningRequests list
+     parameters: ID that identifies the task
+     returns: void
+     */
     func cancelLoad(_ uuid: UUID) {
         runningRequests[uuid]?.cancel()
         runningRequests.removeValue(forKey: uuid)
@@ -559,7 +577,7 @@ extension HomeViewController: UITableViewDelegate{
     /*
      This function is called whenever a cell is tapped
      parameters: segue, sender
-     returns: none
+     returns: void
      */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "checkAnimeDetails" {
@@ -602,25 +620,29 @@ extension HomeViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch tableView {
         case currentlyWatchingTableView:
-            let anime = currentlyWatchingAnime[indexPath.row]
+            
+            let anime = currentlyWatchingAnime[indexPath.row] // get anime
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell //uses the "cell" template over and over
+            
             // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
-                // 1
+                // loadImage function is called and the completion handler is entered
                 let token = loadImage(url!) { result in
                     do {
-                        // 2
+                        // get image from completion handnler's result
                         let image = try result.get()
-                        // 3
+                        // set the image just returned as the cell image "in parallel" or asynchronously
                         DispatchQueue.main.async {
                             cell.animeImage.image = image
                         }
                     } catch {
-                        // 4
+                        // MARK: TODO: Do something with the error - probably show alert?
                         print(error)
                     }
                 }
+                
+                // cancel request after completion
                 cell.onReuse = {
                     if let token = token {
                         self.cancelLoad(token)
@@ -628,9 +650,13 @@ extension HomeViewController: UITableViewDataSource{
                 }
             }
             cell.titleLabel.text = anime.title
+            
+            // if anime is in "last days", +1 eps should be watched
             if CalendarViewController.checkIfInLastDays(anime, Date()) {
                 cell.detailLabel.text = "\(anime.episodesPerDay + 1) episodes/day"
             }
+            
+            // if anime in "normal days"
             else {
                 if anime.episodesPerDay == 1 {
                     cell.detailLabel.text = "1 episode/day"
@@ -641,28 +667,33 @@ extension HomeViewController: UITableViewDataSource{
             }
             cell.layoutMargins = UIEdgeInsets.zero // no white spacing on the left of cell separators
             cell.titleLabel.sizeToFit()
+            cell.detailLabel.sizeToFit()
             return cell
             
         case completedTableView:
-            let anime = completedAnime[indexPath.row]
+            
+            let anime = completedAnime[indexPath.row] // get anime
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CompletedAnimeTableViewCell //uses the "cell" template over and over
+            
             // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
-                // 1
+                // loadImage function is called and the completion handler is entered
                 let token = loadImage(url!) { result in
                     do {
-                        // 2
+                        // get image from completion handnler's result
                         let image = try result.get()
-                        // 3
+                        // set the image just returned as the cell image "in parallel" or asynchronously
                         DispatchQueue.main.async {
                             cell.animeImage.image = image
                         }
                     } catch {
-                        // 4
+                        // MARK: TODO: Do something with the error - probably show alert?
                         print(error)
                     }
                 }
+                
+                // cancel request after completion
                 cell.onReuse = {
                     if let token = token {
                         self.cancelLoad(token)
@@ -670,16 +701,20 @@ extension HomeViewController: UITableViewDataSource{
                 }
             }
             cell.titleLabel.text = anime.title
+            
+            // state number of episodes in anime
             if anime.episodes == 1 {
                 cell.detailLabel.text = "1 episode"
             }
             else {
-                cell.detailLabel.text = "\(anime.episodes) episodes "
+                cell.detailLabel.text = "\(anime.episodes) episodes"
             }
+            
             cell.layoutMargins = UIEdgeInsets.zero // no white spacing on the left of cell separators
             cell.titleLabel.sizeToFit()
             cell.detailLabel.sizeToFit()
             return cell
+            
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell
             return cell
@@ -698,7 +733,7 @@ extension HomeViewController: UITableViewDataSource{
     /*
      This function deletes the anime from a specific row from Core Data and the global array
      parameters: table view, editing style, index path
-     returns: none
+     returns: void
      */
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch tableView {
