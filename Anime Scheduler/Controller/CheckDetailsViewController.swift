@@ -48,11 +48,12 @@ class CheckDetailsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let dateComparator = Calendar.current.compare(animeStored.endDate!, to: Date(), toGranularity: .day)
-        if dateComparator == .orderedSame {
-            episodesFinishedView.text = "\(animeStored.episodes - animeStored.episodesFinished) episodes"
+        if animeStored.episodesFinished == 1 {
+            episodesFinishedView.text = "You should be finished with 1 episode at the end of today"
         }
-        episodesFinishedView.text = "You should be finished with \(animeStored.episodesFinished) episodes at the end of today"
+        else {
+            episodesFinishedView.text = "You should be finished with \(animeStored.episodesFinished) episodes at the end of today"
+        }
     }
     
     func createNumberPadEpisodesFinished() {
@@ -194,7 +195,6 @@ class CheckDetailsViewController: UIViewController {
         dayComponent.day = 1
         let calendar = Calendar.current
         let tomorrowDate = calendar.date(byAdding: dayComponent, to: date)
-        //print(dateFormatter.string(for: tomorrowDate)!)
         return tomorrowDate ?? date
     }
     

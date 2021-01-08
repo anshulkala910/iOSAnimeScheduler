@@ -166,6 +166,7 @@ extension AddAnimeViewController: UITableViewDataSource{
         else{
             cell.detailLabel.text = "\(anime.episodes ?? 0) episodes"
         }
+        cell.layoutMargins = UIEdgeInsets.zero
         cell.titleLabel.sizeToFit()
         cell.detailLabel.sizeToFit()
         return cell

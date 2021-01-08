@@ -62,28 +62,12 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         if shouldFetchCoreDataStoredAnime == true {
-            // fetch data from core data stack
-            let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
-            // gets the saved list from Core Data
-            do {
-                let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
-                self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
-            } catch {}
-            // reload data after fetching
-            self.currentlyWatchingTableView.reloadData()
+            fetchStoredAnimeData()
         }
         shouldFetchCoreDataStoredAnime = false
         
         if shouldFetchCoreDataCompletedAnime == true {
-            // fetch data from core data stack
-            let fetchRequestCompletedAnime: NSFetchRequest<CompletedAnime> = CompletedAnime.fetchRequest()
-            // gets the saved list from Core Data
-            do {
-                let savedCompletedAnime = try AppDelegate.context.fetch(fetchRequestCompletedAnime)
-                self.completedAnime = savedCompletedAnime
-            } catch {}
-            // reload data after fetching
-            self.completedTableView.reloadData()
+            fetchCompletedAnimeData()
         }
         shouldFetchCoreDataCompletedAnime = false
         
@@ -109,6 +93,30 @@ class HomeViewController: UIViewController {
         completedTableView.dataSource = self
     }
     
+    
+    private func fetchStoredAnimeData() -> Void {
+        // fetch data from core data stack
+        let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
+        // gets the saved list from Core Data
+        do {
+            let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
+            self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
+        } catch {}
+        // reload data after fetching
+        self.currentlyWatchingTableView.reloadData()
+    }
+    
+    private func fetchCompletedAnimeData() -> Void {
+        // fetch data from core data stack
+        let fetchRequestCompletedAnime: NSFetchRequest<CompletedAnime> = CompletedAnime.fetchRequest()
+        // gets the saved list from Core Data
+        do {
+            let savedCompletedAnime = try AppDelegate.context.fetch(fetchRequestCompletedAnime)
+            self.completedAnime = savedCompletedAnime
+        } catch {}
+        // reload data after fetching
+        self.completedTableView.reloadData()
+    }
     /*
      This funciton is called when an anime is completed and should be transfered from StoredAnime to CompletedAnime
      parameters: StoredAnime instance
@@ -138,14 +146,16 @@ class HomeViewController: UIViewController {
     func updateUpdatedFlag() {
         let currentDate = HomeViewController.getDateWithoutTime(date: Date())
         var index = 0
+        var fetchFlag = 0
         for anime in currentlyWatchingAnime {
             let lastUpdatedDate = HomeViewController.getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
             let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
             let updatedDateComparator = Calendar.current.compare(currentDate, to: lastUpdatedDate, toGranularity: .day)
             let startDateComparator = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
             
-            // if updated today AND anime didn't start today OR anime started today AND already checked once OR anime starts after today
-            if ((updatedDateComparator == .orderedSame && startDateComparator != .orderedSame) || (startDateComparator == .orderedSame && anime.updatedFlag == true) || (startDateComparator == .orderedAscending)){
+            // if updated today AND anime didn't start today OR anime started today AND already checked once
+            // if anime starts after today, then updatedFlag should be false but anime will be skipped when updating episodes finished
+            if ((updatedDateComparator == .orderedSame && startDateComparator != .orderedSame) || (startDateComparator == .orderedSame && anime.updatedFlag == true)){
                 anime.updatedFlag = true
             }
             else {
@@ -157,29 +167,41 @@ class HomeViewController: UIViewController {
             
             // if end date is before today AND there is something in currently watching list
             // MARK: TODO - Check when to sort both lists or not; better to sort after the loop?
-            if endDateComparator == .orderedDescending && currentlyWatchingTableView.numberOfRows(inSection: 0) != 0 {
+            if endDateComparator == .orderedDescending {
                 shouldSortCompletedAnime = true
                 shouldFetchCoreDataCompletedAnime = true
                 CalendarViewController.shouldFetchCoreDataCompletedAnime = true
+                CalendarViewController.shouldFetchCoreDataStoredAnime = true
                 AnalysisViewController.shouldCountHoursSpent = true
                 
                 // transfer to completedAnime list
-                let completedAnimeObject = getCompletedAnime(storedAnime: anime)
-                completedAnime.append(completedAnimeObject)
+                // PROBABLY CREATE A COMPLETED ANIME OBJECT LIKE COMPLETEDANIME(CONTEXT) AND THEN ADD
+                // THEN NO NEED TO APPEND TO COMPLETEDANIME JUST NEED TO FETCH OR RELOAD DATA
+                let completedAnimeObject = CompletedAnime(context: AppDelegate.context)
+                completedAnimeObject.dateEpisodesFinishedUpdatedOn = anime.dateEpisodesFinishedUpdatedOn
+                completedAnimeObject.endDate = anime.endDate
+                completedAnimeObject.episodeLength = anime.episodeLength
+                completedAnimeObject.episodes = anime.episodes
+                completedAnimeObject.episodesPerDay = anime.episodesPerDay
+                completedAnimeObject.img_url = anime.img_url
+                completedAnimeObject.mal_id = anime.mal_id
+                completedAnimeObject.numberOfLastDays = anime.numberOfLastDays
+                completedAnimeObject.startDate = anime.startDate
+                completedAnimeObject.title = anime.title
+                completedAnimeObject.updatedFlag = anime.updatedFlag
                 
-                // delete from currently watching table
-                currentlyWatchingTableView.beginUpdates()
-                AppDelegate.context.delete(currentlyWatchingAnime[index])
-                currentlyWatchingAnime.remove(at: index)
-                let indexPath = IndexPath.init(row: index, section: 0)
-                currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
-                currentlyWatchingTableView.endUpdates()
+                // delete from currently watching table and save context
+                AppDelegate.context.delete(anime)
                 AppDelegate.saveContext()
-                
-                sortCompletedAnimeList()
-                self.completedTableView.reloadData()
+                index -= 1
+                fetchFlag = 1
             }
             index += 1
+        }
+        if fetchFlag == 1 {
+            fetchStoredAnimeData()
+            fetchCompletedAnimeData()
+            sortCompletedAnimeList()
         }
     }
     
@@ -195,8 +217,10 @@ class HomeViewController: UIViewController {
         
         //iterate through list of anime
         for anime in currentlyWatchingAnime{
-            //if already updated, continue
-            if anime.updatedFlag == true {
+            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
+            let startDateComparator = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
+            //if already updated or anime starts after today, continue
+            if anime.updatedFlag == true || startDateComparator == .orderedAscending {
                 continue
             }
             
@@ -204,8 +228,6 @@ class HomeViewController: UIViewController {
             let lastUpdatedDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdatedDate)
             
             var differenceFromCurrent = current - lastUpdatedDateOrdinality! // how many days since last update
-            
-            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
             let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
             let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
             let durationOfWatch = (Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1) + 1
@@ -377,14 +399,13 @@ class HomeViewController: UIViewController {
                 group.leave() // unlocks the thread
             }
             group.wait() // waits for the thread to finish
-            
             storedAnime.numberOfLastDays = 0
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
             storedAnime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
-            self.currentlyWatchingTableView.reloadData() // MARK: TODO - Am I double reloading data?
+           // self.currentlyWatchingTableView.reloadData() // MARK: TODO - Am I double reloading data?
         }
     }
     
@@ -435,7 +456,7 @@ class HomeViewController: UIViewController {
             storedAnime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
             storedAnime.updatedFlag = false
             AppDelegate.saveContext()
-            self.currentlyWatchingTableView.reloadData() // MARK: TODO - Am I double reloading data?
+            //self.currentlyWatchingTableView.reloadData() // MARK: TODO - Am I double reloading data?
         }
     }
     

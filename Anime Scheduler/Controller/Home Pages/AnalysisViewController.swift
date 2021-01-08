@@ -57,7 +57,6 @@ class AnalysisViewController: UIViewController {
             self.analysisTableView.reloadData()
         }
         AnalysisViewController.shouldCountHoursSpent = false
-        fillChartData()
         setChart(dataPoints: days, values: hoursForDays)
     }
     
@@ -97,6 +96,8 @@ class AnalysisViewController: UIViewController {
         xAxis.labelCount = 7
         xAxis.axisMaxLabels = 7
         xAxis.drawGridLinesEnabled = false
+        xAxis.drawLabelsEnabled = true
+        
         
         let leftAxis = barChart.leftAxis
         leftAxis.labelFont = .systemFont(ofSize: 10)
@@ -135,10 +136,10 @@ class AnalysisViewController: UIViewController {
     func getHoursSpent() -> String {
         var minutesSpent = 0
         for anime in HomeViewController.completedAnimeTemp {
-            minutesSpent += Int(anime.episodes*anime.episodeLength)
+            minutesSpent += Int(anime.episodes)*Int(anime.episodeLength)
         }
         for anime in HomeViewController.currentlyWatchingAnimeTemp {
-            minutesSpent += Int(anime.episodesFinished*anime.episodeLength)
+            minutesSpent += Int(anime.episodesFinished)*Int(anime.episodeLength)
         }
         let minutes = minutesSpent % 60
         let hours = minutesSpent/60
@@ -198,7 +199,7 @@ class AnalysisViewController: UIViewController {
                     episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
                 }
                 if endDateComparator == .orderedSame && anime.numberOfLastDays == 0 {
-                    count += Double(Int(anime.episodes) - episodesWatchedOnNormalDays)
+                    count += Double(Int(anime.episodes) - episodesWatchedOnNormalDays) * Double(anime.episodeLength)
                 }
                 else if CalendarViewController.checkIfInLastDays(anime, date) {
                     count += Double(anime.episodesPerDay + 1) * Double(anime.episodeLength)
@@ -236,9 +237,3 @@ extension AnalysisViewController: UITableViewDataSource{
 extension AnalysisViewController: ChartViewDelegate {
     
 }
-
-//extension AnalysisViewController: IAxisValueFormatter {
-//    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-//        return String(value)
-//    }
-//}

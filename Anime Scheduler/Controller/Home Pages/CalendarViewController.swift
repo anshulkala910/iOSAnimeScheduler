@@ -84,6 +84,7 @@ class CalendarViewController: UIViewController {
             }
         }
         CalendarViewController.shouldFetchCoreDataCompletedAnime = false
+        calendar.reloadData()
     }
     /*
      This function is called when a certain date is selected and populates the list of anime watched on a date
@@ -205,16 +206,21 @@ extension CalendarViewController: FSCalendarDataSource {
      returns: int
      */
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        let newDate = HomeViewController.getDateWithoutTime(date: date)
         for anime in currentlyWatchingAnime {
-            let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
-            let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
+            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
+            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
+            let startDateComparator = Calendar.current.compare(newDate, to: startDate, toGranularity: .day)
+            let endDateComparator = Calendar.current.compare(newDate, to: endDate, toGranularity: .day)
             if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
                 return 1
             }
         }
         for anime in completedAnime {
-            let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
-            let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
+            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
+            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
+            let startDateComparator = Calendar.current.compare(newDate, to: startDate, toGranularity: .day)
+            let endDateComparator = Calendar.current.compare(newDate, to: endDate, toGranularity: .day)
             if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
                 return 1
             }
