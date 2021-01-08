@@ -818,20 +818,20 @@
                             <constraint firstItem="hgR-Hl-hNd" firstAttribute="bottom" secondItem="RMI-WD-bat" secondAttribute="bottom" constant="20" id="5hZ-UD-ea8"/>
                             <constraint firstItem="hgR-Hl-hNd" firstAttribute="trailing" secondItem="ull-0g-BPW" secondAttribute="trailing" constant="20" id="D6n-1q-8jl"/>
                             <constraint firstItem="RMI-WD-bat" firstAttribute="centerX" secondItem="hgR-Hl-hNd" secondAttribute="centerX" constant="92.5" id="Eln-pN-Rdu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ma2-KY-lfI" secondAttribute="trailing" constant="6" id="JKP-xK-RZy"/>
                             <constraint firstItem="ull-0g-BPW" firstAttribute="top" secondItem="ma2-KY-lfI" secondAttribute="bottom" constant="95" id="Ovj-GO-a4F"/>
                             <constraint firstItem="hgR-Hl-hNd" firstAttribute="bottom" secondItem="xHW-SP-rtq" secondAttribute="bottom" constant="20" id="REo-fd-Rov"/>
                             <constraint firstItem="ull-0g-BPW" firstAttribute="leading" secondItem="hgR-Hl-hNd" secondAttribute="leading" constant="20" id="SDg-xM-82A"/>
+                            <constraint firstItem="hgR-Hl-hNd" firstAttribute="trailing" secondItem="ma2-KY-lfI" secondAttribute="trailing" constant="26" id="XRj-fj-LlX"/>
                             <constraint firstItem="ma2-KY-lfI" firstAttribute="top" secondItem="DA6-Of-RY1" secondAttribute="bottom" constant="21" id="Zhe-db-tTl"/>
                             <constraint firstItem="DA6-Of-RY1" firstAttribute="leading" relation="lessThanOrEqual" secondItem="Lfw-qA-RiG" secondAttribute="trailing" constant="8" symbolic="YES" id="b5r-2d-b0g"/>
+                            <constraint firstItem="Lfw-qA-RiG" firstAttribute="leading" secondItem="hgR-Hl-hNd" secondAttribute="leading" constant="28" id="cKE-ga-dmg"/>
+                            <constraint firstItem="hgR-Hl-hNd" firstAttribute="trailing" secondItem="DA6-Of-RY1" secondAttribute="trailing" constant="26" id="dSU-Zo-uyv"/>
                             <constraint firstItem="z4x-bm-rO3" firstAttribute="top" secondItem="Lfw-qA-RiG" secondAttribute="bottom" constant="34.5" id="gtn-8f-xKu"/>
                             <constraint firstItem="ma2-KY-lfI" firstAttribute="leading" relation="lessThanOrEqual" secondItem="z4x-bm-rO3" secondAttribute="trailing" constant="8" symbolic="YES" id="icS-Gy-kp1"/>
                             <constraint firstItem="xHW-SP-rtq" firstAttribute="centerX" secondItem="hgR-Hl-hNd" secondAttribute="centerX" constant="-92.5" id="ihm-Du-B4p"/>
                             <constraint firstItem="DA6-Of-RY1" firstAttribute="top" secondItem="YNN-Jm-Lhl" secondAttribute="topMargin" constant="20" id="onP-5U-n03"/>
-                            <constraint firstItem="z4x-bm-rO3" firstAttribute="leading" secondItem="YNN-Jm-Lhl" secondAttribute="leadingMargin" constant="8" id="pUm-NN-0nc"/>
-                            <constraint firstItem="Lfw-qA-RiG" firstAttribute="leading" secondItem="YNN-Jm-Lhl" secondAttribute="leadingMargin" constant="8" id="pod-Fk-MW0"/>
+                            <constraint firstItem="z4x-bm-rO3" firstAttribute="leading" secondItem="hgR-Hl-hNd" secondAttribute="leading" constant="28" id="pz2-dZ-MSN"/>
                             <constraint firstItem="Lfw-qA-RiG" firstAttribute="top" secondItem="YNN-Jm-Lhl" secondAttribute="topMargin" constant="27" id="sOV-Qg-n7F"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="DA6-Of-RY1" secondAttribute="trailing" constant="6" id="tLG-Dj-cvm"/>
                         </constraints>
                     </view>
                     <connections>
@@ -928,9 +928,9 @@
                             <constraint firstItem="A1A-5a-pUs" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="28" id="ejF-aE-dIf"/>
                             <constraint firstItem="OlR-pa-WLt" firstAttribute="bottom" secondItem="e0d-Ij-qB6" secondAttribute="bottom" constant="20" id="enl-Qc-uAB"/>
                             <constraint firstItem="OlR-pa-WLt" firstAttribute="bottom" secondItem="hhv-sU-2pe" secondAttribute="bottom" constant="20" id="gRF-Pq-wtt"/>
+                            <constraint firstItem="CpQ-ph-pWJ" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="28" id="hda-c5-jY9"/>
                             <constraint firstItem="OlR-pa-WLt" firstAttribute="trailing" secondItem="uYr-fy-Pbq" secondAttribute="trailing" constant="26" id="jzs-VB-UZg"/>
                             <constraint firstItem="uYr-fy-Pbq" firstAttribute="leading" relation="lessThanOrEqual" secondItem="CpQ-ph-pWJ" secondAttribute="trailing" constant="8" symbolic="YES" id="lfc-t6-v4Y"/>
-                            <constraint firstItem="CpQ-ph-pWJ" firstAttribute="leading" secondItem="OlR-pa-WLt" secondAttribute="leading" constant="28" id="nkr-TS-LDU"/>
                             <constraint firstItem="xZ2-Up-4cf" firstAttribute="top" secondItem="fxC-s5-C3I" secondAttribute="bottom" constant="95" id="sHF-Mr-8sl"/>
                         </constraints>
                     </view>
