@@ -25,6 +25,11 @@ class AddingAnimeFormController: UIViewController {
         byEpisodesView.alpha = 0
     }
     
+    /*
+     This function prepares for the segue depending on the segmented control
+     parameters: segue and sender
+     returns: void
+     */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "byDatesSegue"{
             let animeDateController = segue.destination as! AddAnimeByDatesController
@@ -36,6 +41,11 @@ class AddingAnimeFormController: UIViewController {
         }
     }
     
+    /*
+     This function changes the view on the click of the segmented control button
+     parameters: segmented control
+     returns: void
+     */
     @IBAction func didChangeSegment(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             byDatesView.alpha = 1
