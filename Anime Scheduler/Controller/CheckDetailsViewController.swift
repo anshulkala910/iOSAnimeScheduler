@@ -56,25 +56,29 @@ class CheckDetailsViewController: UIViewController {
         }
     }
     
+    /*
+     This function creates a number pad that allows the user to input the number of episodes finished
+     parameters: none
+     returns: void
+     */
     func createNumberPadEpisodesFinished() {
         updateFinishedEpisodesField.placeholder = "1"
         updateFinishedEpisodesField.textAlignment = .center
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
+        // add done button
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonEpisodesFinished))
         toolbar.setItems([doneButton], animated: true)
+        
         updateFinishedEpisodesField.inputAccessoryView = toolbar
     }
     
-    @objc func doneButtonEpisodesFinished(){
-        let numberEpisodes = Int(updateFinishedEpisodesField.text ?? "1")
-        if (numberEpisodes ?? 1) > animeStored.episodes {
-            showAlert("Invalid Number: Please enter a number that is less than \((animeStored.episodes) + 1)")
-        }
-        view.endEditing(true)
-    }
-    
+    /*
+     This function creates a number pad that allows the user to input the number of episodes/day user wants to watch
+     parameters: none
+     returns: void
+     */
     func createNumberPadEpisodesPerDay() {
         field.placeholder = "1"
         let toolbar = UIToolbar()
@@ -87,6 +91,14 @@ class CheckDetailsViewController: UIViewController {
         field.inputAccessoryView = toolbar
     }
     
+    @objc func doneButtonEpisodesFinished(){
+        let numberEpisodes = Int(updateFinishedEpisodesField.text ?? "1")
+        if (numberEpisodes ?? 1) > animeStored.episodes {
+            showAlert("Invalid Number: Please enter a number that is less than \((animeStored.episodes) + 1)")
+        }
+        view.endEditing(true)
+    }
+    
     @objc func doneButtonEpisodesPerDay(){
         let episodesPerDay = Int(field.text ?? "1")
         if (episodesPerDay ?? 1) > (animeStored.episodes - Int16(updateFinishedEpisodesField.text ?? "1")!) {
@@ -95,6 +107,11 @@ class CheckDetailsViewController: UIViewController {
         view.endEditing(true)
     }
     
+    /*
+     This function shows an alert with the message provided
+     parameters: message
+     returns: void
+     */
     func showAlert(_ message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         let dismiss = UIAlertAction.init(title: "Dismiss", style: .default , handler: nil)
@@ -105,20 +122,27 @@ class CheckDetailsViewController: UIViewController {
     @IBAction func checkDetails(_ sender: Any) {
         let episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1")
         let episodesRemaining = animeStored.episodes - episodesFinished!
+        
+        // if some information is missing, show alert
         if (!field.hasText || !updateFinishedEpisodesField.hasText) {
             var message: String
+            
             if (slider.isOn){
                 message = "Please input both number of episodes finished and end date"
             }
             else {
                 message = "Please input both number of episodes finished and number of episodes/day"
             }
+            
             let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
             let dismiss = UIAlertAction.init(title: "Dismiss", style: .default, handler: nil)
             alert.addAction(dismiss)
             present(alert,animated: true, completion: nil)
         }
+        
         else{
+            
+            // if user wants to enter end date
             if slider.isOn {
                 getNumberOfEpisodesPerDay(Int(episodesRemaining))
                 if flag == 1 {
@@ -130,10 +154,15 @@ class CheckDetailsViewController: UIViewController {
                 else {
                     textView.text = "You will watch \(updateEpisodesPerDay) episodes per day and \(updateEpisodesPerDay + 1) episodes on the last \(updatedLastDays) days "
                 }
-                updateButton.isEnabled = false
-                updateButton.alpha = 0.5
+                
+                if flag != 1 {
+                    updateButton.isEnabled = true
+                    updateButton.alpha = 0.5
+                }
                 
             }
+            
+            // if user wants to enter #eps/day
             else{
                 let endDate = getEndDate(Int(episodesRemaining))
                 updatedEndDate = endDate
