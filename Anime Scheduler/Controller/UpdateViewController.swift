@@ -34,7 +34,6 @@ class UpdateViewController: UIViewController {
         navigationBar.title = animeStored.title
         slider.isOn = false
         label.text = "Episodes/day"
-        //label.textAlignment = .center
         label.sizeToFit()
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
@@ -44,6 +43,10 @@ class UpdateViewController: UIViewController {
         episodesFinishedView.textAlignment = .center
         updateButton.isEnabled = false
         updateButton.alpha = 0.5
+        if #available(iOS 14, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+            datePicker.sizeToFit()
+        }
         createNumberPadEpisodesFinished()
         createNumberPadEpisodesPerDay()
     }
@@ -87,6 +90,8 @@ class UpdateViewController: UIViewController {
         field.keyboardType = .numberPad
         field.inputView = .none
         field.inputAccessoryView = .none
+        
+        // add done button
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(doneButtonEpisodesPerDay))
         toolbar.setItems([doneButton], animated: true)
         field.inputAccessoryView = toolbar
@@ -105,6 +110,11 @@ class UpdateViewController: UIViewController {
         if (episodesPerDay ?? 1) > (animeStored.episodes - Int16(updateFinishedEpisodesField.text ?? "1")!) {
             showAlert("Invalid Number: Please enter a number that is less than \((animeStored.episodes - Int16(updateFinishedEpisodesField.text!)!))")
         }
+        view.endEditing(true)
+    }
+    
+    @objc func doneButtonPressedDate(){
+        field.text = getDateStringFromTextField(datePicker.date)
         view.endEditing(true)
     }
     
@@ -150,15 +160,25 @@ class UpdateViewController: UIViewController {
                     textView.text = "You will finish \(animeStored.title ?? "...") before the end date even if you watch 1 episode per day \n\n Advise: Change end date to \(updatedEndDateSuggestion )"
                 }
                 else if updatedLastDays == 0 {
-                    textView.text = "You will watch \(updateEpisodesPerDay) episodes per day"
+                    if updateEpisodesPerDay == 1 {
+                        textView.text = "You will watch 1 episode per day"
+                    }
+                    else {
+                        textView.text = "You will watch \(updateEpisodesPerDay) episodes per day"
+                    }
                 }
                 else {
-                    textView.text = "You will watch \(updateEpisodesPerDay) episodes per day and \(updateEpisodesPerDay + 1) episodes on the last \(updatedLastDays) days "
+                    if updateEpisodesPerDay == 1 {
+                        textView.text = "You will watch 1 episode per day and \(updateEpisodesPerDay + 1) episodes on the last \(updatedLastDays) days "
+                    }
+                    else {
+                        textView.text = "You will watch \(updateEpisodesPerDay) episodes per day and \(updateEpisodesPerDay + 1) episodes on the last \(updatedLastDays) days "
+                    }
                 }
                 
                 if flag != 1 {
                     updateButton.isEnabled = true
-                    updateButton.alpha = 0.5
+                    updateButton.alpha = 1.0
                 }
                 
             }
@@ -169,11 +189,76 @@ class UpdateViewController: UIViewController {
                 updatedEndDate = endDate
                 let endDateString = dateFormatter.string(from: endDate)
                 textView.text = "You will finish \(animeStored.title ?? "...") on \(endDateString)"
+                
+                updateButton.isEnabled = true
+                updateButton.alpha = 1.0
             }
-            updateButton.isEnabled = true
-            updateButton.alpha = 1.0
         }
     }
+    /*
+     This function fills data into the global struct so that it can be displayed to the user
+     parameters: none
+     returns: void
+     */
+    func getNumberOfEpisodesPerDay(_ episodesRemaining: Int) {
+        let startDate = HomeViewController.getDateWithoutTime(date: getTomorrowsDate())
+        let endDate = HomeViewController.getDateWithoutTime(date: datePicker.date)
+        let startDateDay = Calendar.current.ordinality(of: .day, in: .era, for: startDate)
+        let endDateDay = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
+        let durationOfWatch = endDateDay! - startDateDay! + 1
+        
+        var numberOfEpisodesPerDay: Int
+        // if number of episodes is divisible by the number of days, simply divide to get #eps/day
+        if (episodesRemaining ) % durationOfWatch == 0 {
+            updateEpisodesPerDay = Int16(episodesRemaining/durationOfWatch)
+            flag = 0
+        }
+        // if anime has less episodes than the number of days, give an end date suggestion to teh user
+        else if (episodesRemaining) < durationOfWatch {
+            // add number of episodes to the start date so that the user will watch 1 ep/day
+            var dayComponent = DateComponents()
+            dayComponent.day = episodesRemaining - 1
+            let theCalendar = Calendar.current
+            let startDate = getTomorrowsDate()
+            let nextDate = theCalendar.date(byAdding: dayComponent, to: startDate)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .none
+            let endDateStringSuggestion = dateFormatter.string(from: nextDate ?? datePicker.date)
+            flag = 1
+            updatedEndDateSuggestion = endDateStringSuggestion
+        }
+        
+        // if there are some "special days" required
+        else {
+            numberOfEpisodesPerDay = episodesRemaining / durationOfWatch
+            let numberOfLastDays = episodesRemaining % durationOfWatch
+            updateEpisodesPerDay = Int16(numberOfEpisodesPerDay)
+            updatedLastDays = numberOfLastDays
+            flag = 0
+        }
+    }
+    /*
+     This function calculates the end date according to the #eps/day user wants to watch
+     parameters: number of episodes to be watched
+     return: end date
+     */
+    func getEndDate(_ episodesRemaining: Int) -> Date {
+        let numberEpisodesPerDay = Int(field.text ?? "1")
+        var dayComponent = DateComponents()
+        let additionalDays = (episodesRemaining)/(numberEpisodesPerDay ?? 1) - 1
+        if (episodesRemaining)%(numberEpisodesPerDay ?? 1) != 0{
+            dayComponent.day = additionalDays + 1
+        }
+        else {
+            dayComponent.day = additionalDays
+        }
+        let theCalendar = Calendar.current
+        let startDate = getTomorrowsDate()
+        let nextDate = theCalendar.date(byAdding: dayComponent, to: startDate)
+        return nextDate ?? Date()
+    }
+    
     
     @IBAction func update(_ sender: Any) {
         animeStored.startDate = getTomorrowsDate()
@@ -187,36 +272,9 @@ class UpdateViewController: UIViewController {
             animeStored.endDate = updatedEndDate
             animeStored.episodesPerDay = Int16(field.text ?? "1") ?? 1
         }
-    }
-    
-    func getNumberOfEpisodesPerDay(_ numberOfEpisodes: Int) {
-        let startDate = getTomorrowsDate()
-        let endDate = datePicker.date
-        let difference = Calendar.current.dateComponents([.day], from: startDate, to: endDate)
-        let differenceInDays = (difference.day ?? 1) + 1
-        var numberOfEpisodesPerDay: Int
-        if (numberOfEpisodes) % differenceInDays == 0 {
-            numberOfEpisodesPerDay = numberOfEpisodes/differenceInDays
-            updateEpisodesPerDay = Int16(numberOfEpisodesPerDay)
-        }
-        else if numberOfEpisodes < differenceInDays {
-            var dayComponent = DateComponents()
-            dayComponent.day = numberOfEpisodes - 1
-            let theCalendar = Calendar.current
-            let nextDate = theCalendar.date(byAdding: dayComponent, to: startDate)
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .medium
-            dateFormatter.timeStyle = .none
-            let endDateStringSuggestion = dateFormatter.string(from: nextDate ?? datePicker.date)
-            flag = 1
-            updatedEndDateSuggestion = endDateStringSuggestion
-        }
-        else {
-            numberOfEpisodesPerDay = numberOfEpisodes/differenceInDays
-            let numberOfLastDays = numberOfEpisodes % differenceInDays
-            updateEpisodesPerDay = Int16(numberOfEpisodesPerDay)
-            updatedLastDays = numberOfLastDays
-        }
+        animeStored.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: Date())
+        animeStored.updatedFlag = true
+        AppDelegate.saveContext()
     }
     
     func getTomorrowsDate() -> Date {
@@ -240,11 +298,6 @@ class UpdateViewController: UIViewController {
         datePicker.datePickerMode = .date
     }
     
-    @objc func doneButtonPressedDate(){
-        field.text = getDateStringFromTextField(datePicker.date)
-        view.endEditing(true)
-    }
-    
     private func getDateStringFromTextField(_ date: Date) -> String{
         return dateFormatter.string(from: date)
     }
@@ -256,22 +309,6 @@ class UpdateViewController: UIViewController {
     
     private func clearField (_ fieldRemoved: UITextField){
         fieldRemoved.text?.removeAll()
-    }
-    
-    func getEndDate(_ numberEpisodes: Int) -> Date {
-        let numberEpisodesPerDay = Int(field.text ?? "1")
-        var dayComponent = DateComponents()
-        let additionalDays = (numberEpisodes)/(numberEpisodesPerDay ?? 1) - 1
-        if (numberEpisodes)%(numberEpisodesPerDay ?? 1) != 0{
-            dayComponent.day = additionalDays + 1
-        }
-        else {
-            dayComponent.day = additionalDays
-        }
-        let theCalendar = Calendar.current
-        let startDate = getTomorrowsDate()
-        let nextDate = theCalendar.date(byAdding: dayComponent, to: startDate)
-        return nextDate ?? Date()
     }
     
     @IBAction func enableUpdateByDates(_ sender: Any) {

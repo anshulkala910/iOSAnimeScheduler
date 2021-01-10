@@ -319,9 +319,11 @@ extension CalendarViewController: UITableViewDataSource{
             // so only 1 ep will be watched
             var episodesWatchedOnNormalDays = 0
             let dateComparator = Calendar.current.compare(anime.endDate!, to: calendar.selectedDate ?? Date(), toGranularity: .day)
+            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate ?? Date())
+            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate ?? Date())
             // calculating the 36 eps
             if anime.numberOfLastDays == 0 {
-                let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
+                let durationOfNormalDays = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1
                 episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
             }
             
@@ -393,9 +395,11 @@ extension CalendarViewController: UITableViewDataSource{
             // so only 1 ep will be watched
             var episodesWatchedOnNormalDays: Int = 0
             let dateComparator = Calendar.current.compare(anime.endDate!, to: calendar.selectedDate ?? Date(), toGranularity: .day)
+            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate ?? Date())
+            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate ?? Date())
             // calculating the 36 eps
             if anime.numberOfLastDays == 0 {
-                let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
+                let durationOfNormalDays = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1
                 episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
             }
             

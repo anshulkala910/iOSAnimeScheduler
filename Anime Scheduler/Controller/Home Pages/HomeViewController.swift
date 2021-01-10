@@ -161,7 +161,6 @@ class HomeViewController: UIViewController {
             let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
             let updatedDateComparator = Calendar.current.compare(currentDate, to: lastUpdatedDate, toGranularity: .day)
             let startDateComparator = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
-            
             // if updated today AND anime didn't start today OR anime started today AND already checked once
             // if anime starts after today, then updatedFlag should be false but anime will be skipped when updating episodes finished
             if ((updatedDateComparator == .orderedSame && startDateComparator != .orderedSame) || (startDateComparator == .orderedSame && anime.updatedFlag == true)){
@@ -226,9 +225,9 @@ class HomeViewController: UIViewController {
             let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
             let startDateComparator = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
             //if already updated or anime starts after today, continue
-            if anime.updatedFlag == true || startDateComparator == .orderedAscending {
-                continue
-            }
+//            if anime.updatedFlag == true || startDateComparator == .orderedAscending {
+//                continue
+//            }
             
             let lastUpdatedDate = HomeViewController.getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
             let lastUpdatedDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdatedDate)
@@ -469,18 +468,10 @@ class HomeViewController: UIViewController {
     }
     
     /*
-     This function is called when user updates how many episodes finished for an anime. It saves anime details from the update page
-     parameters: segue
+     This function is called when user updates how many episodes finished for an anime. It simply reloads table data.
      returns: void
      */
-    @IBAction func unwindSegueFromUpdate(_ sender: UIStoryboardSegue){
-        let currentDate = Date()
-        let updateCotnroller = sender.source as! UpdateViewController
-        let updatedStoredAnime = updateCotnroller.animeStored
-        updatedStoredAnime!.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: currentDate)
-        updatedStoredAnime?.updatedFlag = true
-        currentlyWatchingAnime[currentlyWatchingTableView.indexPathForSelectedRow!.row] = updatedStoredAnime!
-        AppDelegate.saveContext()
+    @IBAction func unwindSegueFromUpdate(_ sender: UIStoryboardSegue) {
         self.currentlyWatchingTableView.reloadData()
     }
     
