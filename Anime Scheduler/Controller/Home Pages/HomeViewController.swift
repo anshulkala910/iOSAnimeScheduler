@@ -224,10 +224,10 @@ class HomeViewController: UIViewController {
         for anime in currentlyWatchingAnime{
             let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
             let startDateComparator = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
-            //if already updated or anime starts after today, continue
-//            if anime.updatedFlag == true || startDateComparator == .orderedAscending {
-//                continue
-//            }
+            // if already updated or anime starts after today, continue
+            if anime.updatedFlag == true || startDateComparator == .orderedAscending {
+                continue
+            }
             
             let lastUpdatedDate = HomeViewController.getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
             let lastUpdatedDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdatedDate)
