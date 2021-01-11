@@ -614,7 +614,7 @@ extension HomeViewController: UITableViewDataSource{
         case currentlyWatchingTableView:
             
             let anime = currentlyWatchingAnime[indexPath.row] // get anime
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell //uses the "cell" template over and over
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AnimeTableViewCellController //uses the "cell" template over and over
             
             // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
@@ -665,7 +665,7 @@ extension HomeViewController: UITableViewDataSource{
         case completedTableView:
             
             let anime = completedAnime[indexPath.row] // get anime
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CompletedAnimeTableViewCell //uses the "cell" template over and over
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AnimeTableViewCellController //uses the "cell" template over and over
             
             // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
@@ -708,7 +708,7 @@ extension HomeViewController: UITableViewDataSource{
             return cell
             
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! HomeAnimeTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AnimeTableViewCellController
             return cell
         }
     }

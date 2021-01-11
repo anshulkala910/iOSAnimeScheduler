@@ -312,7 +312,7 @@ extension CalendarViewController: UITableViewDataSource{
         if indexPath.row >= animeOnDate.count {
             
             let anime = animeOnDateCompleted[indexPath.row] // get anime
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AnimeTableViewCellController
             
             // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
@@ -405,7 +405,7 @@ extension CalendarViewController: UITableViewDataSource{
         // if currently watching anime list still has animes to be considered
         else {
             let anime = animeOnDate[indexPath.row] // get anime
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CalendarTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AnimeTableViewCellController
             
             // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {

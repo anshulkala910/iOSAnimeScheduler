@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="345"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="cell" textLabel="Ruf-u2-qXW" detailTextLabel="Kka-6y-NEd" imageView="gZk-Se-RZb" style="IBUITableViewCellStyleSubtitle" id="ShE-2M-e0J" customClass="HomeAnimeTableViewCell" customModule="Anime_Scheduler" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="cell" textLabel="Ruf-u2-qXW" detailTextLabel="Kka-6y-NEd" imageView="gZk-Se-RZb" style="IBUITableViewCellStyleSubtitle" id="ShE-2M-e0J" customClass="AnimeTableViewCellController" customModule="Anime_Scheduler" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ShE-2M-e0J" id="xs6-aE-OmY">
@@ -64,7 +64,7 @@
                                 <rect key="frame" x="0.0" y="477" width="414" height="287"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationWidth="10" reuseIdentifier="cell" textLabel="kzc-ta-fLc" detailTextLabel="jwN-81-nTt" imageView="U11-xg-Zs9" style="IBUITableViewCellStyleSubtitle" id="SlQ-k4-6YU" customClass="CompletedAnimeTableViewCell" customModule="Anime_Scheduler" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationWidth="10" reuseIdentifier="cell" textLabel="kzc-ta-fLc" detailTextLabel="jwN-81-nTt" imageView="U11-xg-Zs9" style="IBUITableViewCellStyleSubtitle" id="SlQ-k4-6YU" customClass="AnimeTableViewCellController" customModule="Anime_Scheduler" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SlQ-k4-6YU" id="Mjn-Yw-BJz">
@@ -344,7 +344,7 @@
                                 <rect key="frame" x="0.0" y="352" width="414" height="461"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationWidth="10" reuseIdentifier="cell" textLabel="NH2-Iq-vAJ" detailTextLabel="exu-Mj-RDJ" imageView="TYC-tj-UNw" style="IBUITableViewCellStyleSubtitle" id="TWi-c4-u0m" customClass="CalendarTableViewCell" customModule="Anime_Scheduler" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="gray" indentationWidth="10" reuseIdentifier="cell" textLabel="NH2-Iq-vAJ" detailTextLabel="exu-Mj-RDJ" imageView="TYC-tj-UNw" style="IBUITableViewCellStyleSubtitle" id="TWi-c4-u0m" customClass="AnimeTableViewCellController" customModule="Anime_Scheduler" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="55.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TWi-c4-u0m" id="q0I-Zy-u7e">
