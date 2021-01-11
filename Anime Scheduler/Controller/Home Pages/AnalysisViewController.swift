@@ -229,6 +229,12 @@ class AnalysisViewController: UIViewController {
      returns: Double that represents minutes spent
      */
     func countMinutesSpentOnAnime(anime: CompletedAnime, date: Date) -> Double {
+        let currentDate = HomeViewController.getDateWithoutTime(date: date)
+        for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
+            if exceptionDay.date == currentDate {
+                return Double(exceptionDay.episodesWatched) * Double(anime.episodeLength)
+            }
+        }
         let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
         let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
         // if anime is watched on the date, add it

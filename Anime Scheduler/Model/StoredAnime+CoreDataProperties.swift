@@ -2,8 +2,8 @@
 //  StoredAnime+CoreDataProperties.swift
 //  Anime Scheduler
 //
-//  Created by Anshul Kala on 12/17/20.
-//  Copyright © 2020 Anshul Kala. All rights reserved.
+//  Created by Anshul Kala on 1/10/21.
+//  Copyright © 2021 Anshul Kala. All rights reserved.
 //
 //
 
@@ -29,6 +29,24 @@ extension StoredAnime {
     @NSManaged public var startDate: Date?
     @NSManaged public var title: String?
     @NSManaged public var updatedFlag: Bool
+    @NSManaged public var exceptionDays: NSSet?
+
+}
+
+// MARK: Generated accessors for exceptionDays
+extension StoredAnime {
+
+    @objc(addExceptionDaysObject:)
+    @NSManaged public func addToExceptionDays(_ value: ExceptionDay)
+
+    @objc(removeExceptionDaysObject:)
+    @NSManaged public func removeFromExceptionDays(_ value: ExceptionDay)
+
+    @objc(addExceptionDays:)
+    @NSManaged public func addToExceptionDays(_ values: NSSet)
+
+    @objc(removeExceptionDays:)
+    @NSManaged public func removeFromExceptionDays(_ values: NSSet)
 
 }
 

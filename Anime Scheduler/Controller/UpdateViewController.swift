@@ -261,8 +261,52 @@ class UpdateViewController: UIViewController {
     
     
     @IBAction func update(_ sender: Any) {
-        animeStored.startDate = getTomorrowsDate()
-        animeStored.episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1") ?? 1
+        // animeStored.startDate = getTomorrowsDate()
+        let episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1") ?? 1
+        
+        // if user watched more episodes than should have watched
+        if episodesFinished > animeStored.episodesFinished {
+            let excessEpisodesWatched = episodesFinished - animeStored.episodesFinished
+            var totalEpisodesWatchedToday = 0
+            if CalendarViewController.checkIfInLastDays(animeStored, Date()) {
+                totalEpisodesWatchedToday = Int(excessEpisodesWatched + animeStored.episodesPerDay + 1)
+            }
+            else {
+                totalEpisodesWatchedToday = Int(excessEpisodesWatched + animeStored.episodesPerDay)
+            }
+            let exceptionDay = ExceptionDay(context: AppDelegate.context)
+            exceptionDay.date = HomeViewController.getDateWithoutTime(date: Date())
+            exceptionDay.episodesWatched = Int16(totalEpisodesWatchedToday)
+            animeStored.addToExceptionDays(exceptionDay)
+        }
+        
+        // if user watched less episodes than should have watched
+        else {
+            let differenceInEpisodesWatched = animeStored.episodesFinished - episodesFinished
+            var episodesShouldHaveWatchedToday = animeStored.episodesPerDay
+            if CalendarViewController.checkIfInLastDays(animeStored, Date()) {
+                episodesShouldHaveWatchedToday += 1
+            }
+            // if watched more episodes than should have watched today
+            if differenceInEpisodesWatched > episodesShouldHaveWatchedToday {
+                // so if user should have finished 15 eps today and should have 5 eps/day
+                // but finished 9 eps, so 2 days have to be changes: today has to change to 0 and yesterday should
+                // change to 4
+                getNumberOfDaysToChange(Int(differenceInEpisodesWatched), Int(episodesShouldHaveWatchedToday), Int(episodesFinished))
+                
+            }
+            
+            // if watched less episodes than should have watched today
+            else {
+                let episodesWatchedToday = episodesShouldHaveWatchedToday - differenceInEpisodesWatched
+                let exceptionDay = ExceptionDay(context: AppDelegate.context)
+                exceptionDay.date = HomeViewController.getDateWithoutTime(date: Date())
+                exceptionDay.episodesWatched = episodesWatchedToday
+                animeStored.addToExceptionDays(exceptionDay)
+            }
+        }
+        
+        animeStored.episodesFinished = episodesFinished
         if slider.isOn{
             animeStored.endDate = datePicker.date
             animeStored.episodesPerDay = updateEpisodesPerDay
@@ -277,6 +321,34 @@ class UpdateViewController: UIViewController {
         AppDelegate.saveContext()
     }
     
+    private func getNumberOfDaysToChange(_ differenceInEpisodesWatched: Int,_ episodesShouldHaveWatchedToday: Int,_ episodesFinished: Int) -> Void {
+        var tempEpisodesWatched = animeStored.episodesFinished
+        var dayComponent = DateComponents()
+        dayComponent.day = 0
+        let currentDate = HomeViewController.getDateWithoutTime(date: Date())
+        while tempEpisodesWatched != episodesFinished {
+            let exceptionDay = ExceptionDay(context: AppDelegate.context)
+            let tempDifferenceInEpisodesWatched = tempEpisodesWatched - Int16(episodesFinished)
+            let newDate = Calendar.current.date(byAdding: dayComponent, to: currentDate)
+            exceptionDay.date = HomeViewController.getDateWithoutTime(date: newDate ?? Date())
+            var episodesWatchedOnDay = animeStored.episodesPerDay
+            if CalendarViewController.checkIfInLastDays(animeStored, newDate ?? Date()) {
+                episodesWatchedOnDay += 1
+            }
+            if tempDifferenceInEpisodesWatched <= episodesWatchedOnDay {
+                let episodesActuallyWatchedOnDay = episodesWatchedOnDay - tempDifferenceInEpisodesWatched
+                exceptionDay.episodesWatched = episodesActuallyWatchedOnDay
+                tempEpisodesWatched -= tempDifferenceInEpisodesWatched
+            }
+            else {
+                exceptionDay.episodesWatched = 0
+                tempEpisodesWatched -= episodesWatchedOnDay
+                dayComponent.day = (dayComponent.day ?? 0) - 1
+            }
+            animeStored.addToExceptionDays(exceptionDay)
+        }
+        AppDelegate.saveContext()
+    }
     func getTomorrowsDate() -> Date {
         let date = Date()
         var dayComponent = DateComponents()

@@ -12,6 +12,13 @@
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="updatedFlag" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="exceptionDays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExceptionDay" inverseName="completedAnime" inverseEntity="ExceptionDay"/>
+    </entity>
+    <entity name="ExceptionDay" representedClassName="ExceptionDay" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="episodesWatched" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="completedAnime" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CompletedAnime" inverseName="exceptionDays" inverseEntity="CompletedAnime"/>
+        <relationship name="storedAnime" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredAnime" inverseName="exceptionDays" inverseEntity="StoredAnime"/>
     </entity>
     <entity name="StoredAnime" representedClassName="StoredAnime" syncable="YES">
         <attribute name="dateEpisodesFinishedUpdatedOn" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -26,9 +33,11 @@
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="updatedFlag" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="exceptionDays" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExceptionDay" inverseName="storedAnime" inverseEntity="ExceptionDay"/>
     </entity>
     <elements>
-        <element name="CompletedAnime" positionX="-63" positionY="54" width="128" height="194"/>
-        <element name="StoredAnime" positionX="-63" positionY="-18" width="128" height="209"/>
+        <element name="CompletedAnime" positionX="-63" positionY="54" width="128" height="209"/>
+        <element name="ExceptionDay" positionX="-63" positionY="99" width="128" height="89"/>
+        <element name="StoredAnime" positionX="-63" positionY="-18" width="128" height="224"/>
     </elements>
 </model>

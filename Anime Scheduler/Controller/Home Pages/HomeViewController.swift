@@ -473,6 +473,7 @@ class HomeViewController: UIViewController {
      */
     @IBAction func unwindSegueFromUpdate(_ sender: UIStoryboardSegue) {
         self.currentlyWatchingTableView.reloadData()
+        CalendarViewController.shouldFetchCoreDataStoredAnime = true
     }
     
     /*
