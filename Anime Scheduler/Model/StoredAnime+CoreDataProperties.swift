@@ -2,7 +2,7 @@
 //  StoredAnime+CoreDataProperties.swift
 //  Anime Scheduler
 //
-//  Created by Anshul Kala on 1/10/21.
+//  Created by Anshul Kala on 1/15/21.
 //  Copyright © 2021 Anshul Kala. All rights reserved.
 //
 //
@@ -29,6 +29,9 @@ extension StoredAnime {
     @NSManaged public var startDate: Date?
     @NSManaged public var title: String?
     @NSManaged public var updatedFlag: Bool
+    @NSManaged public var oldEpisodesPerDay: Int16
+    @NSManaged public var oldNumberOfLastDays: Int16
+    @NSManaged public var oldEndDate: Date?
     @NSManaged public var exceptionDays: NSSet?
 
 }

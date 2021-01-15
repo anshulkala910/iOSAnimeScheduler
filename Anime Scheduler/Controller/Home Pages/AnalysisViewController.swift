@@ -203,8 +203,28 @@ class AnalysisViewController: UIViewController {
     func countMinutesSpentOnAnime(anime: StoredAnime, date: Date) -> Double {
         let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
         let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
+        let oldEndDateComparator = Calendar.current.compare(date, to: anime.oldEndDate ?? Date(), toGranularity: .day)
+        let currentDate = HomeViewController.getDateWithoutTime(date: date)
+        var flag = 0
+        if oldEndDateComparator == .orderedAscending || oldEndDateComparator == .orderedSame {
+            flag = 1
+            if CalendarViewController.checkIfInOldLastDays(anime, date) {
+                return Double(anime.oldEpisodesPerDay + 1) * Double(anime.episodeLength)
+            }
+            else {
+                return Double(anime.oldEpisodesPerDay) * Double(anime.episodeLength)
+            }
+        }
+        
+        else {
+            for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
+                if exceptionDay.date == currentDate {
+                    return Double(exceptionDay.episodesWatched) * Double(anime.episodeLength)
+                }
+            }
+        }
         // if anime is watched on the date, add it
-        if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
+        if (flag == 0) && (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
             var episodesWatchedOnNormalDays: Int = 0
             if anime.numberOfLastDays == 0 {
                 let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
@@ -230,15 +250,28 @@ class AnalysisViewController: UIViewController {
      */
     func countMinutesSpentOnAnime(anime: CompletedAnime, date: Date) -> Double {
         let currentDate = HomeViewController.getDateWithoutTime(date: date)
-        for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
-            if exceptionDay.date == currentDate {
-                return Double(exceptionDay.episodesWatched) * Double(anime.episodeLength)
+        let oldEndDateComparator = Calendar.current.compare(date, to: anime.oldEndDate ?? Date(), toGranularity: .day)
+        var flag = 0
+        if oldEndDateComparator == .orderedAscending || oldEndDateComparator == .orderedSame {
+            flag = 1
+            if CalendarViewController.checkIfInOldLastDays(anime, date) {
+                return Double(anime.oldEpisodesPerDay + 1) * Double(anime.episodeLength)
+            }
+            else {
+                return Double(anime.oldEpisodesPerDay) * Double(anime.episodeLength)
+            }
+        }
+        else {
+            for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
+                if exceptionDay.date == currentDate {
+                    return Double(exceptionDay.episodesWatched) * Double(anime.episodeLength)
+                }
             }
         }
         let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
         let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
         // if anime is watched on the date, add it
-        if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
+        if (flag == 0) && (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
             var episodesWatchedOnNormalDays: Int = 0
             if anime.numberOfLastDays == 0 {
                 let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!

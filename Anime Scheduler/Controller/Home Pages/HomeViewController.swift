@@ -194,12 +194,15 @@ class HomeViewController: UIViewController {
                 completedAnimeObject.startDate = anime.startDate
                 completedAnimeObject.title = anime.title
                 completedAnimeObject.updatedFlag = anime.updatedFlag
-                
+                completedAnimeObject.oldEndDate = anime.oldEndDate
+                completedAnimeObject.oldEpisodesPerDay = anime.oldEpisodesPerDay
+                completedAnimeObject.oldNumberOfLastDays = anime.oldNumberOfLastDays
                 // delete from currently watching table and save context
                 AppDelegate.context.delete(anime)
                 AppDelegate.saveContext()
                 fetchFlag = 1
             }
+            AppDelegate.saveContext()
         }
         
         // if anime was deleted and transfered to CompletedAnime
@@ -394,9 +397,10 @@ class HomeViewController: UIViewController {
             storedAnime.startDate = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
             storedAnime.img_url = addAnimeEpisodesController.animeDetail.image_url
             storedAnime.episodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
+            storedAnime.oldEpisodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
             storedAnime.endDate = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.getEndDate())
+            storedAnime.oldEndDate = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.getEndDate())
             storedAnime.mal_id = Int16(addAnimeEpisodesController.animeDetail.mal_id ?? 0)
-            
             // start the process of getting the duration of the naime
             tempId = storedAnime.mal_id
             let group = DispatchGroup()
@@ -407,6 +411,7 @@ class HomeViewController: UIViewController {
             }
             group.wait() // waits for the thread to finish
             storedAnime.numberOfLastDays = 0
+            storedAnime.oldNumberOfLastDays = 0
             storedAnime.episodesFinished = 0
             storedAnime.episodes = Int16(addAnimeEpisodesController.animeDetail.episodes!)
             storedAnime.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.startDatePicker.date)
@@ -445,8 +450,11 @@ class HomeViewController: UIViewController {
             storedAnime.startDate = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.startDatePicker.date)
             storedAnime.img_url = addAnimeDatesController.animeDetail.image_url
             storedAnime.episodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes.episodesPerDay)
+            storedAnime.oldEpisodesPerDay = Int16(addAnimeDatesController.numberOfEpisodes.episodesPerDay)
             storedAnime.numberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
+            storedAnime.oldNumberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
             storedAnime.endDate = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.endDatePicker.date)
+            storedAnime.oldEndDate = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.endDatePicker.date)
             storedAnime.mal_id = Int16(addAnimeDatesController.animeDetail.mal_id ?? 0)
             
             // start the process of getting the duration of the naime

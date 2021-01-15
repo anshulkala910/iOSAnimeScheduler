@@ -342,19 +342,38 @@ extension CalendarViewController: UITableViewDataSource{
             cell.titleLabel.text = anime.title
             
             var flag = 0
-            for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
-                if exceptionDay.date == dateSelected {
-                    if exceptionDay.episodesWatched == 1 {
+            
+            let oldEndDateComparator = Calendar.current.compare(anime.oldEndDate ?? Date(), to: calendar.selectedDate ?? Date(), toGranularity: .day)
+            let isOldEndDateNewEndDateComparator = Calendar.current.compare(anime.oldEndDate ?? Date(), to: anime.endDate ?? Date(), toGranularity: .day)
+            
+            if isOldEndDateNewEndDateComparator != .orderedSame && (oldEndDateComparator == .orderedDescending || oldEndDateComparator == .orderedSame) {
+                if CalendarViewController.checkIfInOldLastDays(anime, calendar.selectedDate ?? Date()) {
+                    cell.detailLabel.text = "\(anime.oldEpisodesPerDay + 1) episodes"
+                }
+                else {
+                    if anime.oldEpisodesPerDay == 1 {
                         cell.detailLabel.text = "1 episode"
                     }
                     else {
-                        cell.detailLabel.text = "\(exceptionDay.episodesWatched) episodes"
+                        cell.detailLabel.text = "\(anime.oldEpisodesPerDay) episodes"
                     }
-                    flag = 1
-                    break
+                }
+                flag = 1
+            }
+            else {
+                for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
+                    if exceptionDay.date == dateSelected {
+                        if exceptionDay.episodesWatched == 1 {
+                            cell.detailLabel.text = "1 episode"
+                        }
+                        else {
+                            cell.detailLabel.text = "\(exceptionDay.episodesWatched) episodes"
+                        }
+                        flag = 1
+                        break
+                    }
                 }
             }
-            
             if flag == 0 {
                 // if anime was added by #eps/day, eg Death Note has 37 eps and 36 eps might be finished till the last day
                 // so only 1 ep will be watched
@@ -436,16 +455,36 @@ extension CalendarViewController: UITableViewDataSource{
             
             
             var flag = 0
-            for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
-                if exceptionDay.date == dateSelected {
-                    if exceptionDay.episodesWatched == 1 {
+            
+            let oldEndDateComparator = Calendar.current.compare(anime.oldEndDate ?? Date(), to: calendar.selectedDate ?? Date(), toGranularity: .day)
+            let isOldEndDateNewEndDateComparator = Calendar.current.compare(anime.oldEndDate ?? Date(), to: anime.endDate ?? Date(), toGranularity: .day)
+            
+            if isOldEndDateNewEndDateComparator != .orderedSame && (oldEndDateComparator == .orderedDescending || oldEndDateComparator == .orderedSame) {
+                if CalendarViewController.checkIfInOldLastDays(anime, calendar.selectedDate ?? Date()) {
+                    cell.detailLabel.text = "\(anime.oldEpisodesPerDay + 1) episodes"
+                }
+                else {
+                    if anime.oldEpisodesPerDay == 1 {
                         cell.detailLabel.text = "1 episode"
                     }
                     else {
-                        cell.detailLabel.text = "\(exceptionDay.episodesWatched) episodes"
+                        cell.detailLabel.text = "\(anime.oldEpisodesPerDay) episodes"
                     }
-                    flag = 1
-                    break
+                }
+                flag = 1
+            }
+            else {
+                for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
+                    if exceptionDay.date == dateSelected {
+                        if exceptionDay.episodesWatched == 1 {
+                            cell.detailLabel.text = "1 episode"
+                        }
+                        else {
+                            cell.detailLabel.text = "\(exceptionDay.episodesWatched) episodes"
+                        }
+                        flag = 1
+                        break
+                    }
                 }
             }
             
@@ -531,6 +570,46 @@ extension CalendarViewController: UITableViewDataSource{
         let differenceFromStart = currentDateOrdinality - startDateOrdinality + 1
         let durationOfWatch = endDateOrdinality - startDateOrdinality + 1
         if (durationOfWatch - differenceFromStart) < anime.numberOfLastDays {
+            return true
+        }
+        return false
+    }
+    
+    /*
+     This function checks whether the StoredAnime is in the old last days (where user watches 1 more ep)
+     parameters: anime, date
+     returns: boolean
+     */
+    static func checkIfInOldLastDays(_ anime: StoredAnime, _ currentDate: Date) -> Bool{
+        let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
+        let startDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: startDate) ?? 0
+        let endDate = HomeViewController.getDateWithoutTime(date: anime.oldEndDate!)
+        let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate) ?? 0
+        let date = HomeViewController.getDateWithoutTime(date: currentDate)
+        let currentDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: date) ?? 0
+        let differenceFromStart = currentDateOrdinality - startDateOrdinality + 1
+        let durationOfWatch = endDateOrdinality - startDateOrdinality + 1
+        if (durationOfWatch - differenceFromStart) < anime.oldNumberOfLastDays {
+            return true
+        }
+        return false
+    }
+    
+    /*
+     This function checks whether the StoredAnime is in the old last days (where user watches 1 more ep)
+     parameters: anime, date
+     returns: boolean
+     */
+    static func checkIfInOldLastDays(_ anime: CompletedAnime, _ currentDate: Date) -> Bool{
+        let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
+        let startDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: startDate) ?? 0
+        let endDate = HomeViewController.getDateWithoutTime(date: anime.oldEndDate!)
+        let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate) ?? 0
+        let date = HomeViewController.getDateWithoutTime(date: currentDate)
+        let currentDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: date) ?? 0
+        let differenceFromStart = currentDateOrdinality - startDateOrdinality + 1
+        let durationOfWatch = endDateOrdinality - startDateOrdinality + 1
+        if (durationOfWatch - differenceFromStart) < anime.oldNumberOfLastDays {
             return true
         }
         return false

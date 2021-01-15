@@ -263,7 +263,8 @@ class UpdateViewController: UIViewController {
     @IBAction func update(_ sender: Any) {
         // animeStored.startDate = getTomorrowsDate()
         let episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1") ?? 1
-        
+        animeStored.oldEpisodesPerDay = animeStored.episodesPerDay
+        animeStored.oldNumberOfLastDays = animeStored.numberOfLastDays
         // if user watched more episodes than should have watched
         if episodesFinished > animeStored.episodesFinished {
             let excessEpisodesWatched = episodesFinished - animeStored.episodesFinished
@@ -287,7 +288,7 @@ class UpdateViewController: UIViewController {
             if CalendarViewController.checkIfInLastDays(animeStored, Date()) {
                 episodesShouldHaveWatchedToday += 1
             }
-            // if watched more episodes than should have watched today
+            // if more than one day needs to be changed
             if differenceInEpisodesWatched > episodesShouldHaveWatchedToday {
                 // so if user should have finished 15 eps today and should have 5 eps/day
                 // but finished 9 eps, so 2 days have to be changes: today has to change to 0 and yesterday should
@@ -317,6 +318,7 @@ class UpdateViewController: UIViewController {
             animeStored.episodesPerDay = Int16(field.text ?? "1") ?? 1
         }
         animeStored.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: Date())
+        animeStored.oldEndDate = HomeViewController.getDateWithoutTime(date: getYesterdaysDate())
         animeStored.updatedFlag = true
         AppDelegate.saveContext()
     }
@@ -353,6 +355,15 @@ class UpdateViewController: UIViewController {
         let date = Date()
         var dayComponent = DateComponents()
         dayComponent.day = 1
+        let calendar = Calendar.current
+        let yesterdayDate = calendar.date(byAdding: dayComponent, to: date)
+        return yesterdayDate ?? date
+    }
+    
+    func getYesterdaysDate() -> Date {
+        let date = Date()
+        var dayComponent = DateComponents()
+        dayComponent.day = -1
         let calendar = Calendar.current
         let tomorrowDate = calendar.date(byAdding: dayComponent, to: date)
         return tomorrowDate ?? date
