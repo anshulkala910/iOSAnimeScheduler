@@ -108,7 +108,7 @@ class UpdateViewController: UIViewController {
     @objc func doneButtonEpisodesPerDay(){
         let episodesPerDay = Int(field.text ?? "1")
         if (episodesPerDay ?? 1) > (animeStored.episodes - Int16(updateFinishedEpisodesField.text ?? "1")!) {
-            showAlert("Invalid Number: Please enter a number that is less than \((animeStored.episodes - Int16(updateFinishedEpisodesField.text!)!))")
+            showAlert("Invalid Number: Please enter a number that is less than \((animeStored.episodes + 1 - Int16(updateFinishedEpisodesField.text!)!))")
         }
         view.endEditing(true)
     }
@@ -264,7 +264,16 @@ class UpdateViewController: UIViewController {
         // animeStored.startDate = getTomorrowsDate()
         let episodesFinished = Int16(updateFinishedEpisodesField.text ?? "1") ?? 1
         animeStored.oldEpisodesPerDay = animeStored.episodesPerDay
-        animeStored.oldNumberOfLastDays = animeStored.numberOfLastDays
+        // MARK: TODO: Check whether current date is in last days or not
+        // if it is, check how many last days have already occurred and count them up, that is the old one
+        if CalendarViewController.checkIfInLastDays(animeStored, Date()) && animeStored.numberOfLastDays != 0 {
+            animeStored.oldNumberOfLastDays = UpdateViewController.howManyLastDays(animeStored, Date())
+        }
+        // if it is not, old should be 0
+        else {
+            animeStored.oldNumberOfLastDays = 0
+        }
+        
         // if user watched more episodes than should have watched
         if episodesFinished > animeStored.episodesFinished {
             let excessEpisodesWatched = episodesFinished - animeStored.episodesFinished
@@ -316,10 +325,12 @@ class UpdateViewController: UIViewController {
         else {
             animeStored.endDate = updatedEndDate
             animeStored.episodesPerDay = Int16(field.text ?? "1") ?? 1
+            animeStored.numberOfLastDays = 0
         }
         animeStored.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: Date())
-        animeStored.oldEndDate = HomeViewController.getDateWithoutTime(date: getYesterdaysDate())
+        animeStored.oldEndDate = HomeViewController.getDateWithoutTime(date: UpdateViewController.getYesterdaysDate())
         animeStored.updatedFlag = true
+        AnalysisViewController.shouldCountHoursSpent = true
         AppDelegate.saveContext()
     }
     
@@ -360,7 +371,7 @@ class UpdateViewController: UIViewController {
         return yesterdayDate ?? date
     }
     
-    func getYesterdaysDate() -> Date {
+    static func getYesterdaysDate() -> Date {
         let date = Date()
         var dayComponent = DateComponents()
         dayComponent.day = -1
@@ -392,6 +403,32 @@ class UpdateViewController: UIViewController {
     
     private func clearField (_ fieldRemoved: UITextField){
         fieldRemoved.text?.removeAll()
+    }
+    
+    /*
+     This function checks how many last days the StoredAnime has been through (where user watches 1 more ep)
+     parameters: anime, date
+     returns: int
+     */
+    static func howManyLastDays(_ anime: StoredAnime, _ currentDate: Date) -> Int16{
+        let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
+        let startDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: startDate) ?? 0
+        let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
+        let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate) ?? 0
+        let date = HomeViewController.getDateWithoutTime(date: currentDate)
+        let currentDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: date) ?? 0
+        let differenceFromStart = currentDateOrdinality - startDateOrdinality + 1
+        let durationOfWatch = endDateOrdinality - startDateOrdinality + 1
+//        print(anime)
+//        print(differenceFromStart)
+//        print(durationOfWatch)
+//        print(anime.numberOfLastDays)
+//        print(anime.numberOfLastDays - Int16((durationOfWatch - differenceFromStart)))
+        let temp = anime.numberOfLastDays - Int16((durationOfWatch - differenceFromStart)) - 1
+        if temp < 0 {
+            return 0
+        }
+        return temp
     }
     
     @IBAction func enableUpdateByDates(_ sender: Any) {

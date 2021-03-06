@@ -30,7 +30,7 @@ class HomeViewController: UIViewController {
     let queue = DispatchQueue(label: "InternetConnectionMonitor")
     
     var internetFlag = 0
-    var tempId:Int16 = 1
+    var tempId:Int64 = 1
     
     private var loadedImages = [URL: UIImage]()
     private var runningRequests = [UUID: URLSessionDataTask]()
@@ -221,7 +221,7 @@ class HomeViewController: UIViewController {
     func updateEpisodesFinished() {
         
         let currentDate = HomeViewController.getDateWithoutTime(date: Date())
-        let current = Calendar.current.ordinality(of: .day, in: .era, for: currentDate)!
+        let currentDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: currentDate)!
         
         //iterate through list of anime
         for anime in currentlyWatchingAnime{
@@ -235,14 +235,15 @@ class HomeViewController: UIViewController {
             let lastUpdatedDate = HomeViewController.getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn!)
             let lastUpdatedDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: lastUpdatedDate)
             
-            var differenceFromCurrent = current - lastUpdatedDateOrdinality! // how many days since last update
+            var differenceFromLastUpdatedDate = currentDateOrdinality - lastUpdatedDateOrdinality! // how many days since last update
+            print(differenceFromLastUpdatedDate)
             let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
-            let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
-            let durationOfWatch = (Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1) + 1
-            let dateComparisonFromStart = Calendar.current.compare(currentDate, to: startDate, toGranularity: .day)
-            // if anime started today, then add a day to differenceFromCurrent or else it would be 0
-            if (dateComparisonFromStart == .orderedSame){
-                differenceFromCurrent += 1
+//            let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
+//            let durationOfWatch = (Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1) + 1
+            let lastUpdatedDateComparisonStartDate = Calendar.current.compare(lastUpdatedDate, to: startDate, toGranularity: .day)
+            // if anime was last updated on the start date AND anime was added then (episodesPerDay eps watched) or anime was added right now (0 eps watched)
+            if lastUpdatedDateComparisonStartDate == .orderedSame && anime.episodesFinished == 0{
+                differenceFromLastUpdatedDate += 1
             }
             
             let dateComparisonFromEnd = Calendar.current.compare(currentDate, to: endDate, toGranularity: .day)
@@ -253,21 +254,43 @@ class HomeViewController: UIViewController {
             
             // if anime in "last days"
             else if CalendarViewController.checkIfInLastDays(anime, currentDate) {
-                // calculate episodes watched during "normal days"
-                let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
-                let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
-                // calculate episodes watched during "last days"
-                let numberOfLastDays = Int16(durationOfWatch) - numberOfNormalDays
-                let differenceFromEnd = endDateOrdinality! - current
-                let daysInLastDays = numberOfLastDays - Int16(differenceFromEnd)
-                let episodesDuringLastDays = daysInLastDays * (anime.episodesPerDay + 1)
-                // add both
-                anime.episodesFinished = episodesDuringNormalDays + episodesDuringLastDays
+                if differenceFromLastUpdatedDate == 1 {
+                    anime.episodesFinished += anime.episodesPerDay + 1
+                }
+                else {
+                    // MARK: TODO: THIS SHOULD BE CHANGED TO ONLY CONSIDER DAYS AFTER LASTUPDATEDDATE
+                    // this is because episodesDuringNormalDays would not compute the right numeber if it has been updated
+                    // as there are special days involved
+                    // so just consider the days between LASTUPDATEDDATE and CURRENTDATE
+                    
+                    // compute episodes watched during last days
+                    let lastDaysGoneThrough = UpdateViewController.howManyLastDays(anime, Date()) + 1
+                    let episodesDuringLastDays = lastDaysGoneThrough * (anime.episodesPerDay + 1)
+                    
+                    // compute episodes watched during normal days
+                    let normalDaysGoneThrough = differenceFromLastUpdatedDate - Int(lastDaysGoneThrough)
+                    let episodesDuringNormalDays = Int16(normalDaysGoneThrough) * anime.episodesPerDay
+                    print(normalDaysGoneThrough)
+                    print(lastDaysGoneThrough)
+                    print(differenceFromLastUpdatedDate)
+                    // calculate episodes watched during "normal days"
+                    
+//                    let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
+//                    let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
+//                    // calculate episodes watched during "last days"
+//                    let numberOfLastDays = Int16(durationOfWatch) - numberOfNormalDays
+//                    let differenceFromEnd = endDateOrdinality! - currentDateOrdinality
+//                    let daysInLastDays = numberOfLastDays - Int16(differenceFromEnd)
+//                    let episodesDuringLastDays = daysInLastDays * (anime.episodesPerDay + 1)
+                    
+                    // add both
+                    anime.episodesFinished = episodesDuringNormalDays + episodesDuringLastDays
+                }
             }
             
             // if anime was added through #eps/day
             else{
-                anime.episodesFinished += Int16(differenceFromCurrent) * anime.episodesPerDay
+                anime.episodesFinished += Int16(differenceFromLastUpdatedDate) * anime.episodesPerDay
             }
             
             //update last updated date to today
@@ -334,7 +357,7 @@ class HomeViewController: UIViewController {
      parameters: MAL ID
      returns: URL needed to call and get data from
      */
-    func getURL(id: Int16) -> URL {
+    func getURL(id: Int64) -> URL {
         //the url for an anime search with custom anime mal_id
         let idString = String(id)
         let URLString = "https://api.jikan.moe/v3/anime/\(idString)/"
@@ -352,7 +375,7 @@ class HomeViewController: UIViewController {
      returns: technically nothing but "returns" the string of duration
      */
     func getDuration (completion: @escaping (String) -> Void) {
-        let requestURL = getURL(id: tempId)
+        let requestURL = getURL(id: Int64(tempId))
         URLSession.shared.dataTask(with: requestURL){ (data, response, error) in
             
             guard let data = data else {return}
@@ -400,7 +423,7 @@ class HomeViewController: UIViewController {
             storedAnime.oldEpisodesPerDay = Int16(addAnimeEpisodesController.numberOfEpisodes.text!) ?? 1
             storedAnime.endDate = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.getEndDate())
             storedAnime.oldEndDate = HomeViewController.getDateWithoutTime(date: addAnimeEpisodesController.getEndDate())
-            storedAnime.mal_id = Int16(addAnimeEpisodesController.animeDetail.mal_id ?? 0)
+            storedAnime.mal_id = Int64(addAnimeEpisodesController.animeDetail.mal_id ?? 0)
             // start the process of getting the duration of the naime
             tempId = storedAnime.mal_id
             let group = DispatchGroup()
@@ -455,7 +478,7 @@ class HomeViewController: UIViewController {
             storedAnime.oldNumberOfLastDays = Int16(addAnimeDatesController.numberOfEpisodes.numberOfLastDays)
             storedAnime.endDate = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.endDatePicker.date)
             storedAnime.oldEndDate = HomeViewController.getDateWithoutTime(date: addAnimeDatesController.endDatePicker.date)
-            storedAnime.mal_id = Int16(addAnimeDatesController.animeDetail.mal_id ?? 0)
+            storedAnime.mal_id = Int64(addAnimeDatesController.animeDetail.mal_id ?? 0)
             
             // start the process of getting the duration of the naime
             tempId = storedAnime.mal_id

@@ -205,38 +205,47 @@ class AnalysisViewController: UIViewController {
         let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
         let oldEndDateComparator = Calendar.current.compare(date, to: anime.oldEndDate ?? Date(), toGranularity: .day)
         let currentDate = HomeViewController.getDateWithoutTime(date: date)
-        var flag = 0
-        if oldEndDateComparator == .orderedAscending || oldEndDateComparator == .orderedSame {
-            flag = 1
+        let isOldEndDateNewEndDateComparator = Calendar.current.compare(anime.oldEndDate ?? Date(), to: anime.endDate ?? Date(), toGranularity: .day)
+        for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
+            if exceptionDay.date == currentDate {
+                return Double(exceptionDay.episodesWatched * anime.episodeLength)
+            }
+        }
+        print(date)
+        print(anime.title)
+        print(anime)
+        if isOldEndDateNewEndDateComparator != .orderedSame && (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (oldEndDateComparator == .orderedAscending || oldEndDateComparator == .orderedSame) {
             if CalendarViewController.checkIfInOldLastDays(anime, date) {
+                print("a")
+                print(Double(anime.oldEpisodesPerDay + 1) * Double(anime.episodeLength))
                 return Double(anime.oldEpisodesPerDay + 1) * Double(anime.episodeLength)
             }
             else {
+                print("b")
+                print(Double(anime.oldEpisodesPerDay) * Double(anime.episodeLength))
                 return Double(anime.oldEpisodesPerDay) * Double(anime.episodeLength)
             }
         }
-        
-        else {
-            for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
-                if exceptionDay.date == currentDate {
-                    return Double(exceptionDay.episodesWatched) * Double(anime.episodeLength)
-                }
-            }
-        }
         // if anime is watched on the date, add it
-        if (flag == 0) && (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
+        if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
             var episodesWatchedOnNormalDays: Int = 0
             if anime.numberOfLastDays == 0 {
                 let durationOfNormalDays = Calendar.current.dateComponents([.day], from: anime.startDate!, to: anime.endDate!).day!
                 episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
             }
             if endDateComparator == .orderedSame && anime.numberOfLastDays == 0 {
+                print("c")
+                print(Double(Int(anime.episodes) - episodesWatchedOnNormalDays) * Double(anime.episodeLength))
                 return Double(Int(anime.episodes) - episodesWatchedOnNormalDays) * Double(anime.episodeLength)
             }
             else if CalendarViewController.checkIfInLastDays(anime, date) {
+                print("d")
+                print(Double(anime.episodesPerDay + 1) * Double(anime.episodeLength))
                 return Double(anime.episodesPerDay + 1) * Double(anime.episodeLength)
             }
             else {
+                print("e")
+                print(Double(anime.episodesPerDay) * Double(anime.episodeLength))
                 return Double(anime.episodesPerDay) * Double(anime.episodeLength)
             }
         }

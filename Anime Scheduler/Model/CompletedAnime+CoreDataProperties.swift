@@ -2,7 +2,7 @@
 //  CompletedAnime+CoreDataProperties.swift
 //  Anime Scheduler
 //
-//  Created by Anshul Kala on 1/15/21.
+//  Created by Anshul Kala on 2/22/21.
 //  Copyright © 2021 Anshul Kala. All rights reserved.
 //
 //
@@ -23,14 +23,14 @@ extension CompletedAnime {
     @NSManaged public var episodes: Int16
     @NSManaged public var episodesPerDay: Int16
     @NSManaged public var img_url: String?
-    @NSManaged public var mal_id: Int16
+    @NSManaged public var mal_id: Int64
     @NSManaged public var numberOfLastDays: Int16
+    @NSManaged public var oldEndDate: Date?
+    @NSManaged public var oldEpisodesPerDay: Int16
+    @NSManaged public var oldNumberOfLastDays: Int16
     @NSManaged public var startDate: Date?
     @NSManaged public var title: String?
     @NSManaged public var updatedFlag: Bool
-    @NSManaged public var oldEpisodesPerDay: Int16
-    @NSManaged public var oldNumberOfLastDays: Int16
-    @NSManaged public var oldEndDate: Date?
     @NSManaged public var exceptionDays: NSSet?
 
 }

@@ -73,7 +73,7 @@ class CalendarViewController: UIViewController {
             fetchCompletedAnimeData()
             // if not already populated data, populate data
             if flag == 0 {
-                populateDateArrays(calendar!.today!)
+            populateDateArrays(calendar!.today!)
             }
         }
         CalendarViewController.shouldFetchCoreDataCompletedAnime = false
@@ -164,6 +164,7 @@ class CalendarViewController: UIViewController {
         }
         
         // iterate through completed list
+        print(completedAnime)
         for anime in completedAnime {
             var skipAnimeFlag = 0
             for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
@@ -174,6 +175,7 @@ class CalendarViewController: UIViewController {
                     break
                 }
             }
+            print(anime)
             if skipAnimeFlag == 1 {
                 continue
             }
@@ -309,8 +311,7 @@ extension CalendarViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let dateSelected = HomeViewController.getDateWithoutTime(date: calendar.selectedDate ?? Date())
         // if all watching anime are considered, consider completed anime
-        if indexPath.row >= animeOnDate.count {
-            
+        if indexPath.row < animeOnDateCompleted.count {
             let anime = animeOnDateCompleted[indexPath.row] // get anime
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AnimeTableViewCellController
             
@@ -423,9 +424,8 @@ extension CalendarViewController: UITableViewDataSource{
         
         // if currently watching anime list still has animes to be considered
         else {
-            let anime = animeOnDate[indexPath.row] // get anime
+            let anime = animeOnDate[indexPath.row - animeOnDateCompleted.count] // get anime
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AnimeTableViewCellController
-            
             // if there is a valid internet connection, retrieve image data
             if internetFlag == 1 {
                 let url = URL(string: anime.img_url!)
@@ -458,8 +458,20 @@ extension CalendarViewController: UITableViewDataSource{
             
             let oldEndDateComparator = Calendar.current.compare(anime.oldEndDate ?? Date(), to: calendar.selectedDate ?? Date(), toGranularity: .day)
             let isOldEndDateNewEndDateComparator = Calendar.current.compare(anime.oldEndDate ?? Date(), to: anime.endDate ?? Date(), toGranularity: .day)
-            
-            if isOldEndDateNewEndDateComparator != .orderedSame && (oldEndDateComparator == .orderedDescending || oldEndDateComparator == .orderedSame) {
+            for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
+                if exceptionDay.date == dateSelected {
+                    print(exceptionDay.episodesWatched)
+                    if exceptionDay.episodesWatched == 1 {
+                        cell.detailLabel.text = "1 episode"
+                    }
+                    else {
+                        cell.detailLabel.text = "\(exceptionDay.episodesWatched) episodes"
+                    }
+                    flag = 1
+                    break
+                }
+            }
+            if flag == 0 && isOldEndDateNewEndDateComparator != .orderedSame && (oldEndDateComparator == .orderedDescending || oldEndDateComparator == .orderedSame) {
                 if CalendarViewController.checkIfInOldLastDays(anime, calendar.selectedDate ?? Date()) {
                     cell.detailLabel.text = "\(anime.oldEpisodesPerDay + 1) episodes"
                 }
@@ -473,37 +485,37 @@ extension CalendarViewController: UITableViewDataSource{
                 }
                 flag = 1
             }
-            else {
-                for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
-                    if exceptionDay.date == dateSelected {
-                        if exceptionDay.episodesWatched == 1 {
-                            cell.detailLabel.text = "1 episode"
-                        }
-                        else {
-                            cell.detailLabel.text = "\(exceptionDay.episodesWatched) episodes"
-                        }
-                        flag = 1
-                        break
-                    }
-                }
-            }
-            
+            print(anime.title)
+            let currentDate = HomeViewController.getDateWithoutTime(date: Date())
+            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate ?? Date())
             if flag == 0 {
                 // if anime was added by #eps/day, eg Death Note has 37 eps and 36 eps might be finished till the last day
                 // so only 1 ep will be watched
                 var episodesWatchedOnNormalDays: Int = 0
-                let dateComparator = Calendar.current.compare(anime.endDate!, to: calendar.selectedDate ?? Date(), toGranularity: .day)
+                let dateComparator = Calendar.current.compare(endDate, to: calendar.selectedDate ?? Date(), toGranularity: .day)
+                let lastUpdatedDate = HomeViewController.getDateWithoutTime(date: anime.dateEpisodesFinishedUpdatedOn ?? Date())
                 let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate ?? Date())
-                let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate ?? Date())
+                let endDateComparatorSelectedDate = Calendar.current.compare(currentDate, to: calendar.selectedDate ?? Date(), toGranularity: .day)
+                var episodesWatchedOnNormalDaysTemp = 0
                 // calculating the 36 eps
                 if anime.numberOfLastDays == 0 {
-                    let durationOfNormalDays = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1
+                    let durationOfNormalDays = (Calendar.current.dateComponents([.day], from: lastUpdatedDate, to: dateSelected).day ?? 1) - 1
+                    let durationOfNormalDaysTemp = (Calendar.current.dateComponents([.day], from: startDate, to: dateSelected).day ?? 1)
                     episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
+                    episodesWatchedOnNormalDaysTemp = durationOfNormalDaysTemp * Int(anime.episodesPerDay)
+                    print(durationOfNormalDays)
+                    print(episodesWatchedOnNormalDays)
+                    print(durationOfNormalDaysTemp)
+                    print(episodesWatchedOnNormalDaysTemp)
                 }
                 
                 // calculating the 1 ep
                 if dateComparator == .orderedSame && anime.numberOfLastDays == 0 {
-                    let episodesWatched = Int(anime.episodes) - episodesWatchedOnNormalDays
+                    var episodesWatched = Int(anime.episodes) - (episodesWatchedOnNormalDays + Int(anime.episodesFinished))
+                    if endDateComparatorSelectedDate == .orderedSame {
+                        episodesWatched = Int(anime.episodes) - episodesWatchedOnNormalDaysTemp
+                    }
+                    print(episodesWatched)
                     if episodesWatched == 1 {
                         cell.detailLabel.text = "1 episode"
                     }
