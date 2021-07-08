@@ -330,7 +330,7 @@ class UpdateViewController: UIViewController {
         animeStored.dateEpisodesFinishedUpdatedOn = HomeViewController.getDateWithoutTime(date: Date())
         animeStored.oldEndDate = HomeViewController.getDateWithoutTime(date: UpdateViewController.getYesterdaysDate())
         animeStored.updatedFlag = true
-        AnalysisViewController.shouldCountHoursSpent = true
+        StatisticsViewController.shouldCountHoursSpent = true
         AppDelegate.saveContext()
     }
     

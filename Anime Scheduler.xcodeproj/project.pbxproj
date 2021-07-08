@@ -15,7 +15,7 @@
 		B4136F8E2469856A00F8D1A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4136F8D2469856A00F8D1A5 /* Assets.xcassets */; };
 		B4136F912469856A00F8D1A5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4136F8F2469856A00F8D1A5 /* LaunchScreen.storyboard */; };
 		B4136F992469AA9F00F8D1A5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F982469AA9F00F8D1A5 /* HomeViewController.swift */; };
-		B4136F9B2469AAC200F8D1A5 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F9A2469AAC200F8D1A5 /* AnalysisViewController.swift */; };
+		B4136F9B2469AAC200F8D1A5 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F9A2469AAC200F8D1A5 /* StatisticsViewController.swift */; };
 		B4136F9D2469AD6900F8D1A5 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4136F9C2469AD6900F8D1A5 /* AboutViewController.swift */; };
 		B4186B16246FC4BC0068C665 /* AddAnimeByDatesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4186B14246FC4BC0068C665 /* AddAnimeByDatesController.swift */; };
 		B4186B1A246FC4D50068C665 /* AddAnimeByEpisodesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4186B18246FC4D50068C665 /* AddAnimeByEpisodesController.swift */; };
@@ -47,7 +47,7 @@
 		B4136F902469856A00F8D1A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B4136F922469856A00F8D1A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4136F982469AA9F00F8D1A5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		B4136F9A2469AAC200F8D1A5 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
+		B4136F9A2469AAC200F8D1A5 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		B4136F9C2469AD6900F8D1A5 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		B4186B14246FC4BC0068C665 /* AddAnimeByDatesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAnimeByDatesController.swift; sourceTree = "<group>"; };
 		B4186B18246FC4D50068C665 /* AddAnimeByEpisodesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAnimeByEpisodesController.swift; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 			children = (
 				B4136F882469856800F8D1A5 /* CalendarViewController.swift */,
 				B4136F982469AA9F00F8D1A5 /* HomeViewController.swift */,
-				B4136F9A2469AAC200F8D1A5 /* AnalysisViewController.swift */,
+				B4136F9A2469AAC200F8D1A5 /* StatisticsViewController.swift */,
 				B4136F9C2469AD6900F8D1A5 /* AboutViewController.swift */,
 			);
 			path = "Home Pages";
@@ -316,7 +316,7 @@
 				B47E7DF6258B81400045E8D7 /* StoredAnime+CoreDataClass.swift in Sources */,
 				B4136F992469AA9F00F8D1A5 /* HomeViewController.swift in Sources */,
 				B4B8E77B25AB8D41004ACCC0 /* ExceptionDay+CoreDataClass.swift in Sources */,
-				B4136F9B2469AAC200F8D1A5 /* AnalysisViewController.swift in Sources */,
+				B4136F9B2469AAC200F8D1A5 /* StatisticsViewController.swift in Sources */,
 				B47E7DF4258B81400045E8D7 /* CompletedAnime+CoreDataClass.swift in Sources */,
 				B4136F9D2469AD6900F8D1A5 /* AboutViewController.swift in Sources */,
 				B430406224741F0000653BE2 /* UpdateViewController.swift in Sources */,

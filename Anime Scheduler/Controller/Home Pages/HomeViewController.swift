@@ -179,7 +179,7 @@ class HomeViewController: UIViewController {
                 shouldFetchCoreDataCompletedAnime = true
                 CalendarViewController.shouldFetchCoreDataCompletedAnime = true
                 CalendarViewController.shouldFetchCoreDataStoredAnime = true
-                AnalysisViewController.shouldCountHoursSpent = true
+                StatisticsViewController.shouldCountHoursSpent = true
                 
                 // create completedAnime object and transfer anime details
                 let completedAnimeObject = CompletedAnime(context: AppDelegate.context)
@@ -270,6 +270,7 @@ class HomeViewController: UIViewController {
                     // compute episodes watched during normal days
                     let normalDaysGoneThrough = differenceFromLastUpdatedDate - Int(lastDaysGoneThrough)
                     let episodesDuringNormalDays = Int16(normalDaysGoneThrough) * anime.episodesPerDay
+                    print(anime.title)
                     print(normalDaysGoneThrough)
                     print(lastDaysGoneThrough)
                     print(differenceFromLastUpdatedDate)
@@ -290,7 +291,7 @@ class HomeViewController: UIViewController {
             
             // if anime was added through #eps/day
             else{
-                anime.episodesFinished += Int16(differenceFromLastUpdatedDate) * anime.episodesPerDay
+                anime.episodesFinished += (Int16(differenceFromLastUpdatedDate) * anime.episodesPerDay)
             }
             
             //update last updated date to today
@@ -412,7 +413,7 @@ class HomeViewController: UIViewController {
             shouldSortCurrentlyWatchingAnime = true
             shouldFetchCoreDataStoredAnime = true
             CalendarViewController.shouldFetchCoreDataStoredAnime = true
-            AnalysisViewController.shouldCountHoursSpent = true
+            StatisticsViewController.shouldCountHoursSpent = true
             
             //start transfering data to StoredAnime object
             let storedAnime = StoredAnime(context: AppDelegate.context)
@@ -465,7 +466,7 @@ class HomeViewController: UIViewController {
             shouldSortCurrentlyWatchingAnime = true
             shouldFetchCoreDataStoredAnime = true
             CalendarViewController.shouldFetchCoreDataStoredAnime = true
-            AnalysisViewController.shouldCountHoursSpent = true
+            StatisticsViewController.shouldCountHoursSpent = true
             
             //start transfering data to StoredAnime object
             let storedAnime = StoredAnime(context: AppDelegate.context)
@@ -768,7 +769,7 @@ extension HomeViewController: UITableViewDataSource{
                 HomeViewController.currentlyWatchingAnimeTemp.remove(at: indexPath.row)
                 currentlyWatchingTableView.deleteRows(at: [indexPath], with: .fade)
                 currentlyWatchingTableView.endUpdates()
-                AnalysisViewController.shouldCountHoursSpent = true
+                StatisticsViewController.shouldCountHoursSpent = true
                 CalendarViewController.shouldFetchCoreDataStoredAnime = true
                 AppDelegate.saveContext()
             }
@@ -780,7 +781,7 @@ extension HomeViewController: UITableViewDataSource{
                 HomeViewController.completedAnimeTemp.remove(at: indexPath.row)
                 completedTableView.deleteRows(at: [indexPath], with: .fade)
                 completedTableView.endUpdates()
-                AnalysisViewController.shouldCountHoursSpent = true
+                StatisticsViewController.shouldCountHoursSpent = true
                 CalendarViewController.shouldFetchCoreDataCompletedAnime = true
                 AppDelegate.saveContext()
             }

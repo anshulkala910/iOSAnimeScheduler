@@ -36,7 +36,7 @@ public class BarChartFormatter: NSObject, IAxisValueFormatter {
     
 }
 
-class AnalysisViewController: UIViewController {
+class StatisticsViewController: UIViewController {
     
     @IBOutlet weak var analysisTableView: UITableView!
     static var shouldCountHoursSpent = true
@@ -66,7 +66,7 @@ class AnalysisViewController: UIViewController {
         fakeLabel.isHidden = true // hide the label that is only required to position the chart correctly
         
         // if data should be counted again, populate data
-        if AnalysisViewController.shouldCountHoursSpent == true {
+        if StatisticsViewController.shouldCountHoursSpent == true {
             columnAnswers[0] = String(HomeViewController.completedAnimeTemp.count)
             columnAnswers[1] = String(HomeViewController.currentlyWatchingAnimeTemp.count) // MARK: TODO: This will consider anime that are to be started in the future
             
@@ -74,7 +74,7 @@ class AnalysisViewController: UIViewController {
             fillChartData()
             self.analysisTableView.reloadData()
         }
-        AnalysisViewController.shouldCountHoursSpent = false
+        StatisticsViewController.shouldCountHoursSpent = false
         
         setChart(dataPoints: days, values: hoursForDays)
     }
@@ -321,11 +321,11 @@ class AnalysisViewController: UIViewController {
     
 }
 
-extension AnalysisViewController: UITableViewDelegate{
+extension StatisticsViewController: UITableViewDelegate{
     
 }
 
-extension AnalysisViewController: UITableViewDataSource{
+extension StatisticsViewController: UITableViewDataSource{
     
     /*
      This function determines the number of rows to be present in the table
@@ -355,6 +355,6 @@ extension AnalysisViewController: UITableViewDataSource{
     
 }
 
-extension AnalysisViewController: ChartViewDelegate {
+extension StatisticsViewController: ChartViewDelegate {
     
 }
