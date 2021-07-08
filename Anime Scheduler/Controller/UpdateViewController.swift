@@ -345,8 +345,12 @@ class UpdateViewController: UIViewController {
             let newDate = Calendar.current.date(byAdding: dayComponent, to: currentDate)
             exceptionDay.date = HomeViewController.getDateWithoutTime(date: newDate ?? Date())
             var episodesWatchedOnDay = animeStored.episodesPerDay
+            let dateComparator = Calendar.current.compare(animeStored.endDate!, to: newDate ?? Date(), toGranularity: .day)
             if CalendarViewController.checkIfInLastDays(animeStored, newDate ?? Date()) {
                 episodesWatchedOnDay += 1
+            }
+            else if dateComparator == .orderedSame {
+                episodesWatchedOnDay = getEpsWatchedOnLastDay()
             }
             if tempDifferenceInEpisodesWatched <= episodesWatchedOnDay {
                 let episodesActuallyWatchedOnDay = episodesWatchedOnDay - tempDifferenceInEpisodesWatched
@@ -361,6 +365,18 @@ class UpdateViewController: UIViewController {
             animeStored.addToExceptionDays(exceptionDay)
         }
         AppDelegate.saveContext()
+    }
+    
+    private func getEpsWatchedOnLastDay() -> Int16 {
+        let startDate = HomeViewController.getDateWithoutTime(date: animeStored.startDate ?? Date())
+        let endDate = HomeViewController.getDateWithoutTime(date: animeStored.endDate ?? Date())
+        var episodesWatchedOnNormalDays = 0
+        // calculating the 36 eps
+        if animeStored.numberOfLastDays == 0 {
+            let durationOfNormalDays = Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1
+            episodesWatchedOnNormalDays = durationOfNormalDays * Int(animeStored.episodesPerDay)
+        }
+        return animeStored.episodes - Int16(episodesWatchedOnNormalDays)
     }
     func getTomorrowsDate() -> Date {
         let date = Date()

@@ -266,24 +266,74 @@ extension CalendarViewController: FSCalendarDataSource {
      */
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         let newDate = HomeViewController.getDateWithoutTime(date: date)
+        // iterate through watching list
         for anime in currentlyWatchingAnime {
-            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
-            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
-            let startDateComparator = Calendar.current.compare(newDate, to: startDate, toGranularity: .day)
-            let endDateComparator = Calendar.current.compare(newDate, to: endDate, toGranularity: .day)
+            var skipAnimeFlag = 0
+            for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
+                if exceptionDay.date == newDate {
+                    if exceptionDay.episodesWatched == 0 {
+                        skipAnimeFlag = 1
+                    }
+                    else {
+                        return 1
+                    }
+                }
+            }
+            if skipAnimeFlag == 1 {
+                continue
+            }
+            let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
+            let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
+            // if anime is watched on the date, add it
+            // if start date is before selected data OR data is the start date AND end date is after selected data OR date is end date
             if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
                 return 1
             }
         }
+        
+        // iterate through completed list
         for anime in completedAnime {
-            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
-            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
-            let startDateComparator = Calendar.current.compare(newDate, to: startDate, toGranularity: .day)
-            let endDateComparator = Calendar.current.compare(newDate, to: endDate, toGranularity: .day)
+            var skipAnimeFlag = 0
+            for exceptionDay in anime.exceptionDays as! Set<ExceptionDay>{
+                if exceptionDay.date == newDate {
+                    if exceptionDay.episodesWatched == 0 {
+                        skipAnimeFlag = 1
+                    }
+                    else {
+                        return 1
+                    }
+                    break
+                }
+            }
+            if skipAnimeFlag == 1 {
+                continue
+            }
+            let startDateComparator = Calendar.current.compare(date, to: anime.startDate!, toGranularity: .day)
+            let endDateComparator = Calendar.current.compare(date, to: anime.endDate!, toGranularity: .day)
+            // if anime was watched on the date, add it
+            // if start date is before selected data OR data is the start date AND end date is after selected data OR date is end date
             if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
                 return 1
             }
         }
+//        for anime in currentlyWatchingAnime {
+//            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
+//            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
+//            let startDateComparator = Calendar.current.compare(newDate, to: startDate, toGranularity: .day)
+//            let endDateComparator = Calendar.current.compare(newDate, to: endDate, toGranularity: .day)
+//            if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
+//                return 1
+//            }
+//        }
+//        for anime in completedAnime {
+//            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
+//            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
+//            let startDateComparator = Calendar.current.compare(newDate, to: startDate, toGranularity: .day)
+//            let endDateComparator = Calendar.current.compare(newDate, to: endDate, toGranularity: .day)
+//            if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
+//                return 1
+//            }
+//        }
         return 0
     }
 }
