@@ -260,8 +260,9 @@ class StatisticsViewController: UIViewController {
     func countMinutesSpentOnAnime(anime: CompletedAnime, date: Date) -> Double {
         let currentDate = HomeViewController.getDateWithoutTime(date: date)
         let oldEndDateComparator = Calendar.current.compare(date, to: anime.oldEndDate ?? Date(), toGranularity: .day)
+        let isOldEndDateNewEndDateComparator = Calendar.current.compare(anime.oldEndDate ?? Date(), to: anime.endDate ?? Date(), toGranularity: .day)
         var flag = 0
-        if oldEndDateComparator == .orderedAscending || oldEndDateComparator == .orderedSame {
+        if (oldEndDateComparator == .orderedAscending || oldEndDateComparator == .orderedSame) && isOldEndDateNewEndDateComparator != .orderedSame{
             flag = 1
             if CalendarViewController.checkIfInOldLastDays(anime, date) {
                 return Double(anime.oldEpisodesPerDay + 1) * Double(anime.episodeLength)
