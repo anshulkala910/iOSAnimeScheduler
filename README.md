@@ -84,7 +84,7 @@ struct AnimeRequest {
 }
 ```
 
-Here is how the struct was used to store the results of the request into a list:
+Here is how the struct was used to store the results of the request in a list:
 ```swift
 /*
 This function gets the list of anime on the click of the "Search" button
@@ -109,16 +109,16 @@ animeRequest.getAnimes {[weak self] result in
 ```
 
 
-
 #### Updating an Anime
+If users have watched more or less episodes than they should have, they can simply update the number of episodes finished by tapping tha anime from the home page and filling out the details. Users have to provide the number of episodes they have finished and their desired start date or number of episodes to be watched a day. 
 
-
+Here is an example of updating an anime:
 <p align="center">
 <img src = "https://user-images.githubusercontent.com/62824259/125517842-b2f56776-386a-4256-8754-ac4a5d92e07e.gif" height = "700" width = "350" />
 </p>
 
 ###### Techniques Used
-1. **Relationship between CoreData Entities**:
+1. **Relationship between CoreData Entities**: 
 
 ## Calendar Page
 
