@@ -25,11 +25,19 @@ Here is a screenshot to show what the home page looks like:
     <img src = "https://user-images.githubusercontent.com/62824259/125513400-b77ebec0-b09e-4afe-8b92-5382c24fd6d5.png" height = "700" width = "350"/>
 </p>
 
+[comment]: <> (Maybe show use of https://www.donnywals.com/efficiently-loading-images-in-table-views-and-collection-views/ in app)
+
+###### Techniques Used
+1. CoreData: CoreData is a persistence framework that saves application data onto the user's device. In this app, the list of currently watching and completed anime was stored onto the user's device using CoreData by creating object entities of anime that store necessary details, such as start/end date, number of episodes to be watched a day, etc. 
+2. Asynchronously loading and caching images: 
+
 #### Adding a New Anime
 
 <p align="center">
 <img src = "https://user-images.githubusercontent.com/62824259/125517813-0a05ff7e-dc34-4097-b90f-b2428c0db0ef.gif" height = "700" width = "350" />
 </p>
+
+###### Techniques Used
 
 #### Updating an Anime
 
@@ -37,15 +45,22 @@ Here is a screenshot to show what the home page looks like:
 <img src = "https://user-images.githubusercontent.com/62824259/125517842-b2f56776-386a-4256-8754-ac4a5d92e07e.gif" height = "700" width = "350" />
 </p>
 
+###### Techniques Used
+
+
 ## Calendar Page
 
 <p align="center">
 <img src = "https://user-images.githubusercontent.com/62824259/125513446-3a4ff616-09bf-4e84-ae65-5ebc8addc4a5.png" height = "700" width = "350" />
 </p>
 
+###### Techniques Used
+
 ## Statistics Page
 
 <p align="center">
 <img src = "https://user-images.githubusercontent.com/62824259/125513512-0c13735f-50fa-41bb-b6f3-2e4c6546be29.png" height = "700" width = "350" />
 </p>
+
+###### Techniques Used
 
