@@ -33,6 +33,9 @@ Here is a screenshot to show what the home page looks like:
 
 #### Adding a New Anime
 
+After tapping the "+" button, users can search the name of an anime they would like to add using the search bar on the top. Relevant anime are then displayed, from which the user can choose their desired one. Now, users can decide how they want to add the anime: by providing the desired start and end date or by providing the desired start date and number of episodes to be watched a day. Before deciding to add the anime to their list, users can check how many episodes they will be watching a day (when anime is added using start and end date) or when they will finish the anime (when anime is added using start date and number of episodes to be wathced a day)
+
+Here is an example on how to add an anime:
 <p align="center">
 <img src = "https://user-images.githubusercontent.com/62824259/125517813-0a05ff7e-dc34-4097-b90f-b2428c0db0ef.gif" height = "700" width = "350" />
 </p>
