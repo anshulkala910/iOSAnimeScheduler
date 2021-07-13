@@ -118,8 +118,24 @@ Here is an example of updating an anime:
 </p>
 
 ###### Techniques Used
-1. **Relationship between CoreData Entities**: 
+1. **Relationship between CoreData Entities**: When an anime is updated, it is possible that there are days when an unusual amount of episodes (that is neither the previous nor current number of episodes per day) are watched. To store the number of episodes watched on such days, a new entity, ExceptionDay, was created that has a relationship with the anime entities. Each anime has a one-to-many relationship with ExceptionDay, so that if appropriate, a set of ExceptionDay obejcts are related to one anime. 
 
+Here is a snippet of how the relationship is used:
+
+```swift
+// if user watched more episodes than should have
+if episodesFinished > animeStored.episodesFinished {
+        let excessEpisodesWatched = episodesFinished - animeStored.episodesFinished
+        var totalEpisodesWatchedToday = Int(excessEpisodesWatched + animeStored.episodesPerDay)
+        if CalendarViewController.checkIfInLastDays(animeStored, Date()) {
+            totalEpisodesWatchedToday += 1 // in "last days", one more episode is watched
+        }
+        let exceptionDay = ExceptionDay(context: AppDelegate.context) // instantiate an ExceptionDay entity object
+        exceptionDay.date = HomeViewController.getDateWithoutTime(date: Date()) // set the date
+        exceptionDay.episodesWatched = Int16(totalEpisodesWatchedToday) // set the episodes watched on the date
+        animeStored.addToExceptionDays(exceptionDay) // add to the list of exception days related to the anime
+    }
+```
 ## Calendar Page
 
 <p align="center">
