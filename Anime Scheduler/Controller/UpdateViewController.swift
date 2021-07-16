@@ -432,11 +432,6 @@ class UpdateViewController: UIViewController {
         let currentDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: date) ?? 0
         let differenceFromStart = currentDateOrdinality - startDateOrdinality + 1
         let durationOfWatch = endDateOrdinality - startDateOrdinality + 1
-//        print(anime)
-//        print(differenceFromStart)
-//        print(durationOfWatch)
-//        print(anime.numberOfLastDays)
-//        print(anime.numberOfLastDays - Int16((durationOfWatch - differenceFromStart)))
         let temp = anime.numberOfLastDays - Int16((durationOfWatch - differenceFromStart)) - 1
         if temp < 0 {
             return 0
