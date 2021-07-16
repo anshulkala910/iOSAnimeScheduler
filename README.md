@@ -136,19 +136,26 @@ if episodesFinished > animeStored.episodesFinished {
         animeStored.addToExceptionDays(exceptionDay) // add to the list of exception days related to the anime
     }
 ```
+
+
+
 ## Calendar Page
 
+The calendar page utilizes [FSCalendar](https://github.com/WenchaoD/FSCalendar) to provide a calendar interface, which helps the users gain a better understanding of when they're watching anime. The calendar indicates, via blue dots, the days that users have to watch anime on. Additionally, tapping on a date, leads to a list of anime, along with the number of episodes watched or expected to watch, corresponding to that date. 
+
+Here is a screenshot to show what the calendar page looks like:
 <p align="center">
 <img src = "https://user-images.githubusercontent.com/62824259/125513446-3a4ff616-09bf-4e84-ae65-5ebc8addc4a5.png" height = "700" width = "350" />
 </p>
 
-###### Techniques Used
+
 
 ## Statistics Page
 
+The statistics page displays some basic statistics that help users quantify the amount of time spent on watching anime. The page displays the number of currently watching anime, number of completed anime, total hours spent, and a bar chart (made using [Charts](https://github.com/danielgindi/Charts)) that displays the number of minutes spent a day for the past week. 
+
+Here is a screenshot to show what the statistics page looks like:
 <p align="center">
 <img src = "https://user-images.githubusercontent.com/62824259/125513512-0c13735f-50fa-41bb-b6f3-2e4c6546be29.png" height = "700" width = "350" />
 </p>
-
-###### Techniques Used
 
