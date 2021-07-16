@@ -27,6 +27,27 @@ Here is a screenshot to show what the home page looks like:
 
 ###### Techniques Used
 * **CoreData:** CoreData is a persistence framework that saves application data onto the user's device. In this app, the list of currently watching and completed anime was stored onto the user's device using CoreData by creating object entities of anime that store necessary details, such as start/end date, number of episodes to be watched a day, etc. 
+
+Here is snippet of how CoreData was used to retrieve stored data:
+
+``` swift
+    /*
+     This function fetches StoredAnime data from CoreData and stores it in a global list
+     parameters: none
+     returns: void
+     */
+    private func fetchStoredAnimeData() -> Void {
+        // fetch data from core data stack
+        let fetchRequest: NSFetchRequest<StoredAnime> = StoredAnime.fetchRequest()
+        // gets the saved list from Core Data
+        do {
+            let listOfCurrentlyWatchingAnime = try AppDelegate.context.fetch(fetchRequest)
+            self.currentlyWatchingAnime = listOfCurrentlyWatchingAnime
+        } catch {}
+        // reload data after fetching
+        self.currentlyWatchingTableView.reloadData()
+    }
+```
 * **Asynchronously loading and caching images:** Early on, the images of anime were noticed to be loading slowly, which would then result in a slow scrolling ability. Thus, in order to improve efficiency of scrolling, not only were images asynchronously loaded, but they were also cached so any further encounters with the same image would be efficient. [Efficiently loading images in table views and collection views](https://www.donnywals.com/efficiently-loading-images-in-table-views-and-collection-views/) proved to be very helpful in learning more about the technique and solving the problem.
 
 
