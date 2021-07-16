@@ -277,17 +277,14 @@ class UpdateViewController: UIViewController {
         // if user watched more episodes than should have watched
         if episodesFinished > animeStored.episodesFinished {
             let excessEpisodesWatched = episodesFinished - animeStored.episodesFinished
-            var totalEpisodesWatchedToday = 0
+            var totalEpisodesWatchedToday = Int(excessEpisodesWatched + animeStored.episodesPerDay)
             if CalendarViewController.checkIfInLastDays(animeStored, Date()) {
-                totalEpisodesWatchedToday = Int(excessEpisodesWatched + animeStored.episodesPerDay + 1)
+                totalEpisodesWatchedToday +=  1 // in "last days", one more episode is watched
             }
-            else {
-                totalEpisodesWatchedToday = Int(excessEpisodesWatched + animeStored.episodesPerDay)
-            }
-            let exceptionDay = ExceptionDay(context: AppDelegate.context)
-            exceptionDay.date = HomeViewController.getDateWithoutTime(date: Date())
-            exceptionDay.episodesWatched = Int16(totalEpisodesWatchedToday)
-            animeStored.addToExceptionDays(exceptionDay)
+            let exceptionDay = ExceptionDay(context: AppDelegate.context) // instantiate an ExceptionDay entity object
+            exceptionDay.date = HomeViewController.getDateWithoutTime(date: Date())  // set the date
+            exceptionDay.episodesWatched = Int16(totalEpisodesWatchedToday) // set the episodes watched on the date
+            animeStored.addToExceptionDays(exceptionDay) // add to the list of exception days related to the anime
         }
         
         // if user watched less episodes than should have watched

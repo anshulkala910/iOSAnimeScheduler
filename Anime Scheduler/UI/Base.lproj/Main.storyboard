@@ -673,11 +673,17 @@
                                 </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1c-YV-BAP">
-                                <rect key="frame" x="57" y="389" width="318" height="334"/>
+                                <rect key="frame" x="48" y="401" width="318" height="324"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="318" id="atg-lS-5De"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="229" id="sBZ-dg-Dz1"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minutes spent watching anime for the past week" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mED-L8-KaT">
+                                <rect key="frame" x="23" y="372" width="368" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -687,21 +693,24 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="qYi-ZG-oPT" firstAttribute="width" secondItem="iIu-9R-3d3" secondAttribute="width" id="AJm-Mr-L7d"/>
-                            <constraint firstItem="cp2-Xv-eVs" firstAttribute="bottom" secondItem="W1c-YV-BAP" secondAttribute="bottom" constant="90" id="AW5-p6-lS8"/>
+                            <constraint firstItem="cp2-Xv-eVs" firstAttribute="bottom" secondItem="W1c-YV-BAP" secondAttribute="bottom" constant="88" id="AW5-p6-lS8"/>
+                            <constraint firstItem="mED-L8-KaT" firstAttribute="centerX" secondItem="cp2-Xv-eVs" secondAttribute="centerX" id="CKD-3K-d5Q"/>
                             <constraint firstItem="cp2-Xv-eVs" firstAttribute="bottom" secondItem="qYi-ZG-oPT" secondAttribute="bottom" constant="464" id="E3M-sj-j7e"/>
-                            <constraint firstItem="W1c-YV-BAP" firstAttribute="centerX" secondItem="cp2-Xv-eVs" secondAttribute="centerX" constant="9" id="Rgs-zl-Bcx"/>
+                            <constraint firstItem="W1c-YV-BAP" firstAttribute="centerX" secondItem="cp2-Xv-eVs" secondAttribute="centerX" id="Rgs-zl-Bcx"/>
                             <constraint firstItem="ecC-Gb-7Ap" firstAttribute="top" secondItem="cp2-Xv-eVs" secondAttribute="top" constant="8" id="cAQ-Uj-gb7"/>
                             <constraint firstItem="qYi-ZG-oPT" firstAttribute="top" secondItem="ecC-Gb-7Ap" secondAttribute="bottom" constant="19" id="ckR-gR-dlb"/>
                             <constraint firstItem="ecC-Gb-7Ap" firstAttribute="centerX" secondItem="cp2-Xv-eVs" secondAttribute="centerX" id="dAX-LF-GdM"/>
-                            <constraint firstItem="W1c-YV-BAP" firstAttribute="top" secondItem="qYi-ZG-oPT" secondAttribute="bottom" constant="40" id="hVG-wh-LYg"/>
+                            <constraint firstItem="W1c-YV-BAP" firstAttribute="top" relation="lessThanOrEqual" secondItem="qYi-ZG-oPT" secondAttribute="bottom" constant="52" id="hVG-wh-LYg"/>
                             <constraint firstItem="qYi-ZG-oPT" firstAttribute="leading" secondItem="cp2-Xv-eVs" secondAttribute="leading" id="ijm-CS-bRe"/>
-                            <constraint firstItem="W1c-YV-BAP" firstAttribute="centerX" secondItem="cp2-Xv-eVs" secondAttribute="centerX" constant="9" id="oT3-Bk-VG6"/>
+                            <constraint firstItem="W1c-YV-BAP" firstAttribute="centerX" secondItem="cp2-Xv-eVs" secondAttribute="centerX" id="oT3-Bk-VG6"/>
+                            <constraint firstItem="W1c-YV-BAP" firstAttribute="top" secondItem="mED-L8-KaT" secondAttribute="bottom" constant="8" symbolic="YES" id="v0S-6D-mlc"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Statistics" image="chart.bar" catalog="system" id="SwO-GI-ILd"/>
                     <connections>
                         <outlet property="analysisTableView" destination="qYi-ZG-oPT" id="jod-aD-50N"/>
                         <outlet property="fakeLabel" destination="W1c-YV-BAP" id="zk6-80-VWA"/>
+                        <outlet property="titleLabelForChart" destination="mED-L8-KaT" id="aMD-RP-zrz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FjW-fh-0Mh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

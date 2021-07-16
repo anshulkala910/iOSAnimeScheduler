@@ -223,7 +223,6 @@ extension AddAnimeViewController: UISearchBarDelegate{
             }
         }
         searchBar.endEditing(true)
-        
     }
     
     /*

@@ -316,24 +316,6 @@ extension CalendarViewController: FSCalendarDataSource {
                 return 1
             }
         }
-//        for anime in currentlyWatchingAnime {
-//            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
-//            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
-//            let startDateComparator = Calendar.current.compare(newDate, to: startDate, toGranularity: .day)
-//            let endDateComparator = Calendar.current.compare(newDate, to: endDate, toGranularity: .day)
-//            if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
-//                return 1
-//            }
-//        }
-//        for anime in completedAnime {
-//            let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
-//            let startDate = HomeViewController.getDateWithoutTime(date: anime.startDate!)
-//            let startDateComparator = Calendar.current.compare(newDate, to: startDate, toGranularity: .day)
-//            let endDateComparator = Calendar.current.compare(newDate, to: endDate, toGranularity: .day)
-//            if (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (endDateComparator == .orderedAscending || endDateComparator == .orderedSame) {
-//                return 1
-//            }
-//        }
         return 0
     }
 }
@@ -521,6 +503,8 @@ extension CalendarViewController: UITableViewDataSource{
                     break
                 }
             }
+            
+            // when anime was updated but selected date is before old end date
             if flag == 0 && isOldEndDateNewEndDateComparator != .orderedSame && (oldEndDateComparator == .orderedDescending || oldEndDateComparator == .orderedSame) {
                 if CalendarViewController.checkIfInOldLastDays(anime, calendar.selectedDate ?? Date()) {
                     cell.detailLabel.text = "\(anime.oldEpisodesPerDay + 1) episodes"
@@ -548,6 +532,7 @@ extension CalendarViewController: UITableViewDataSource{
                 let endDateComparatorSelectedDate = Calendar.current.compare(currentDate, to: calendar.selectedDate ?? Date(), toGranularity: .day)
                 var episodesWatchedOnNormalDaysTemp = 0
                 // calculating the 36 eps
+                // MARK: TODO: This doesn't work for the end date in the case of updated anime as you have to consider exception days and different episodes watched before update
                 if anime.numberOfLastDays == 0 {
                     let durationOfNormalDays = (Calendar.current.dateComponents([.day], from: lastUpdatedDate, to: dateSelected).day ?? 1) - 1
                     let durationOfNormalDaysTemp = (Calendar.current.dateComponents([.day], from: startDate, to: dateSelected).day ?? 1)

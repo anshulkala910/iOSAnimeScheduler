@@ -25,8 +25,10 @@ struct AnimeRequest {
         self.requestURL = resourceURL
     }
     
-    /**
+    /*
      This function reads the animes from the REST API
+     parameters: completion handler
+     returns: void
      */
     func getAnimes (completion: @escaping(Result<[AnimeDetail], Error>) -> Void) {
         URLSession.shared.dataTask(with: self.requestURL){ (data, response, error) in

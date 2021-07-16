@@ -285,7 +285,7 @@ class HomeViewController: UIViewController {
 //                    let episodesDuringLastDays = daysInLastDays * (anime.episodesPerDay + 1)
                     
                     // add both
-                    anime.episodesFinished = episodesDuringNormalDays + episodesDuringLastDays
+                    anime.episodesFinished += episodesDuringNormalDays + episodesDuringLastDays
                 }
             }
             

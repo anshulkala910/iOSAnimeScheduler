@@ -40,6 +40,7 @@ class StatisticsViewController: UIViewController {
     
     @IBOutlet weak var analysisTableView: UITableView!
     static var shouldCountHoursSpent = true
+    @IBOutlet weak var titleLabelForChart: UILabel!
     @IBOutlet weak var fakeLabel: UILabel! // this label is used to position the chart correctly
     
     let columnNames = ["Completed", "Currently Watching","Hours Spent"]
@@ -64,7 +65,7 @@ class StatisticsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         fakeLabel.isHidden = true // hide the label that is only required to position the chart correctly
-        
+        titleLabelForChart.sizeToFit()
         // if data should be counted again, populate data
         if StatisticsViewController.shouldCountHoursSpent == true {
             columnAnswers[0] = String(HomeViewController.completedAnimeTemp.count)
