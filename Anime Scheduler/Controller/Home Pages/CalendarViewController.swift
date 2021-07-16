@@ -519,7 +519,6 @@ extension CalendarViewController: UITableViewDataSource{
                 }
                 flag = 1
             }
-            print(anime.title)
             let currentDate = HomeViewController.getDateWithoutTime(date: Date())
             let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate ?? Date())
             if flag == 0 {

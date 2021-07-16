@@ -238,8 +238,6 @@ class HomeViewController: UIViewController {
             var differenceFromLastUpdatedDate = currentDateOrdinality - lastUpdatedDateOrdinality! // how many days since last update
             print(differenceFromLastUpdatedDate)
             let endDate = HomeViewController.getDateWithoutTime(date: anime.endDate!)
-//            let endDateOrdinality = Calendar.current.ordinality(of: .day, in: .era, for: endDate)
-//            let durationOfWatch = (Calendar.current.dateComponents([.day], from: startDate, to: endDate).day ?? 1) + 1
             let lastUpdatedDateComparisonStartDate = Calendar.current.compare(lastUpdatedDate, to: startDate, toGranularity: .day)
             // if anime was last updated on the start date AND anime was added then (episodesPerDay eps watched) or anime was added right now (0 eps watched)
             if lastUpdatedDateComparisonStartDate == .orderedSame && anime.episodesFinished == 0{
@@ -270,19 +268,6 @@ class HomeViewController: UIViewController {
                     // compute episodes watched during normal days
                     let normalDaysGoneThrough = differenceFromLastUpdatedDate - Int(lastDaysGoneThrough)
                     let episodesDuringNormalDays = Int16(normalDaysGoneThrough) * anime.episodesPerDay
-                    print(anime.title)
-                    print(normalDaysGoneThrough)
-                    print(lastDaysGoneThrough)
-                    print(differenceFromLastUpdatedDate)
-                    // calculate episodes watched during "normal days"
-                    
-//                    let numberOfNormalDays = Int16(durationOfWatch) - anime.numberOfLastDays
-//                    let episodesDuringNormalDays = numberOfNormalDays * anime.episodesPerDay
-//                    // calculate episodes watched during "last days"
-//                    let numberOfLastDays = Int16(durationOfWatch) - numberOfNormalDays
-//                    let differenceFromEnd = endDateOrdinality! - currentDateOrdinality
-//                    let daysInLastDays = numberOfLastDays - Int16(differenceFromEnd)
-//                    let episodesDuringLastDays = daysInLastDays * (anime.episodesPerDay + 1)
                     
                     // add both
                     anime.episodesFinished += episodesDuringNormalDays + episodesDuringLastDays

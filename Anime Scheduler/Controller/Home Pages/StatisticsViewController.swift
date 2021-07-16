@@ -212,18 +212,11 @@ class StatisticsViewController: UIViewController {
                 return Double(exceptionDay.episodesWatched * anime.episodeLength)
             }
         }
-        print(date)
-        print(anime.title)
-        print(anime)
         if isOldEndDateNewEndDateComparator != .orderedSame && (startDateComparator == .orderedDescending || startDateComparator == .orderedSame) && (oldEndDateComparator == .orderedAscending || oldEndDateComparator == .orderedSame) {
             if CalendarViewController.checkIfInOldLastDays(anime, date) {
-                print("a")
-                print(Double(anime.oldEpisodesPerDay + 1) * Double(anime.episodeLength))
                 return Double(anime.oldEpisodesPerDay + 1) * Double(anime.episodeLength)
             }
             else {
-                print("b")
-                print(Double(anime.oldEpisodesPerDay) * Double(anime.episodeLength))
                 return Double(anime.oldEpisodesPerDay) * Double(anime.episodeLength)
             }
         }
@@ -235,18 +228,12 @@ class StatisticsViewController: UIViewController {
                 episodesWatchedOnNormalDays = durationOfNormalDays * Int(anime.episodesPerDay)
             }
             if endDateComparator == .orderedSame && anime.numberOfLastDays == 0 {
-                print("c")
-                print(Double(Int(anime.episodes) - episodesWatchedOnNormalDays) * Double(anime.episodeLength))
                 return Double(Int(anime.episodes) - episodesWatchedOnNormalDays) * Double(anime.episodeLength)
             }
             else if CalendarViewController.checkIfInLastDays(anime, date) {
-                print("d")
-                print(Double(anime.episodesPerDay + 1) * Double(anime.episodeLength))
                 return Double(anime.episodesPerDay + 1) * Double(anime.episodeLength)
             }
             else {
-                print("e")
-                print(Double(anime.episodesPerDay) * Double(anime.episodeLength))
                 return Double(anime.episodesPerDay) * Double(anime.episodeLength)
             }
         }
